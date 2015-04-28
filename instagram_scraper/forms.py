@@ -4,5 +4,5 @@ from wtforms.validators import DataRequired, length
 
 class InstagramScraper(Form):
   instagram_scrape = TextField(
-    'Reverse', validators=[DataRequired(), length(min=2)])
+    'Scrape', validators=[DataRequired(), length(min=2)])
   

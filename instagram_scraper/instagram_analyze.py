@@ -3,6 +3,7 @@ import requests
 import json
 from pandas.io.json import json_normalize
 from glasses import *
+import matplotlib
 
 
 def instagram_scraper(word):
@@ -34,3 +35,5 @@ def instagram_scraper(word):
           inplace=True)
     
     return df
+
+
