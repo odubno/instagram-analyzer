@@ -1,5 +1,4 @@
 venv
 *.pyc
 *.db
-*.ipynb_checkpoints
 glasses.py
