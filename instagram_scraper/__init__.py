@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, flash, \
   flash, url_for, redirect
 
+from glasses import *
+
 from forms import InstagramScraper
 
 import pandas as pd
@@ -14,8 +16,6 @@ app.config.from_object('instagram_scraper.config')
 
 def instagram_scraper(word):
 
-    client_id = '768fcf1f36c94eb08506bae0a9caffa3'
-    secret = '54efcbaed7f64673bc93b4e28ca9e8b2'
     base_url = "https://api.instagram.com/v1"
     query=word
 
