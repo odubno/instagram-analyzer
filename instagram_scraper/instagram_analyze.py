@@ -17,8 +17,8 @@ def instagram_scraper(word):
 	total_posts = len(df)
 	total_comments = df['comments.count'].sum()
 	total_likes = df['likes.count'].sum()
-	print total_likes, 'people like',total_posts, 'recent posts containing #'+word+'!'
-	print str(float(total_comments)/float(total_likes))[:5]+'% of Instagram users who have liked posts containing #'+word, 'have commented on a post.'
+	return total_likes, 'people like',total_posts, 'recent posts containing #'+word+'!'
+	return str(float(total_comments)/float(total_likes))[:5]+'% of Instagram users who have liked posts containing #'+word, 'have commented on a post.'
 
     
     #df = df[['user.username','caption.text','tags','comments.count','likes.count',
