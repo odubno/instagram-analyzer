@@ -10,7 +10,7 @@ def instagram_scraper(word):
 	
 	base_url = "https://api.instagram.com/v1"
 	query=word
-	url = '{0}/tags/{1}/media/recent?client_id={2}&count=5'.format(base_url, query, client_id)
+	url = '{0}/tags/{1}/media/recent?client_id={2}&count=30'.format(base_url, query, client_id)
 	
 	df = json_normalize(requests.get(url).json()['data'])
 	
