@@ -1,3 +1,7 @@
+#is it possible to save 'url' 
+
+from query import url
+
 def get_urls(query_url, n):
 
       #return a next_url
