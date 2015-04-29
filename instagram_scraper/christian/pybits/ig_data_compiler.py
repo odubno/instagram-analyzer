@@ -1,6 +1,6 @@
 #is it possible to save 'url' 
 
-from query import url
+from glasses import *
 
 def get_urls(query_url, n):
 
