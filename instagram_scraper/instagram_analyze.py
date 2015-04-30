@@ -5,7 +5,6 @@ from pandas.io.json import json_normalize
 from glasses import *
 import matplotlib
 from modded_ig_data_compiler import *
-from modded_ig_data_compiler import df
 
 def instagram_scraper(word):
 	
