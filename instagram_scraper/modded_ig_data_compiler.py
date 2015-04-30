@@ -2,6 +2,7 @@
 from forms import InstagramScraper
 import requests
 import json
+import pandas as pd
 from pandas.io.json import json_normalize
 from glasses import *
 
