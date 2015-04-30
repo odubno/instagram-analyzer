@@ -31,4 +31,5 @@ def get_pages(url, n):
         results.append(json_normalize(requests.get(url).json()['data']))
 
 		#initiate df
-    global df = pd.DataFrame().append(results).reset_index().drop('index',axis=1)
+    global df
+	df = pd.DataFrame().append(results).reset_index().drop('index',axis=1)
