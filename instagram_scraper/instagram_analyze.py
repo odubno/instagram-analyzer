@@ -12,7 +12,7 @@ def instagram_scraper(word):
     query=word
     errors = []
     urls = list()
-	results = list()
+    results = list()
 	
 	def get(url):
 		return str(requests.get(url).json()['pagination']['next_url'])
