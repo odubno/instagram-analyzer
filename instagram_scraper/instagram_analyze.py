@@ -20,23 +20,20 @@ def instagram_scraper(word):
 	  
     try:
         url = '{0}/tags/{1}/media/recent?client_id={2}&count=20'.format(base_url, query, client_id)
-		#handling initial url
-        urls.append(str(url)) #add initial url to list
-		#handling further urls    
-        for _ in range(2): #2 will later on be replaced by n, which ideally should be defined by the user the way query is
-            x = get(url) #get next_url
-            urls.append(str(x)) #add next_url to list
-            url = get(x) #replaces initial url with next_url for next turn in loop
-		#populating df
+        urls.append(str(url))
+        for _ in range(10): #range should ideally be determined by the user; 2 replaced by n, n defined in the same place word is defined.
+            x = get(url) 
+            urls.append(str(x)) 
+            url = get(x) 
         for url in urls:
             results.append(json_normalize(requests.get(url).json()['data']))
         df = pd.DataFrame().append(results).reset_index().drop('index',axis=1)
     except err:
         errors.append(
-            "Error: Make sure that the search is just the word string, without spaces or hashtag signs."
+            "Error: Make sure that the search is just the word string, without spaces or hashtag signs." # <<< was getting error earlier, turned out to be an import error, not a string error.
             )
-        #return errors
-        print sys.exc_info()[0]
+        return errors
+        print sys.exc_info()[0] #<<< handling exceptions will need to be expanded later on
 	
     # Cleaning up the Data Frame
     df = df[['user.username','caption.text','tags','comments.count','likes.count',
