@@ -1,6 +1,7 @@
 from forms import InstagramScraper
 import requests
 import json
+import pandas as pd
 from pandas.io.json import json_normalize
 from glasses import *
 import matplotlib
@@ -11,8 +12,10 @@ def instagram_scraper(word):
 	base_url = "https://api.instagram.com/v1"
 	query=word
 	url = '{0}/tags/{1}/media/recent?client_id={2}&count=30'.format(base_url, query, client_id)
+	df = pd.DataFrame()
 	
-	get_urls(url, 2)
+	
+	get_pages(url, 2)
 	
 	#df = json_normalize(requests.get(url).json()['data'])
 	
