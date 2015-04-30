@@ -3,7 +3,8 @@ import requests
 import json
 from pandas.io.json import json_normalize
 from glasses import *
-
+import sys
+import pandas as pd
 
 
 def instagram_scraper(word):
@@ -30,11 +31,12 @@ def instagram_scraper(word):
         for url in urls:
             results.append(json_normalize(requests.get(url).json()['data']))
         df = pd.DataFrame().append(results).reset_index().drop('index',axis=1)
-    except:
+    except err:
         errors.append(
             "Error: Make sure that the search is just the word string, without spaces or hashtag signs."
             )
-        return errors
+        #return errors
+        print sys.exc_info()[0]
 	
     # Cleaning up the Data Frame
     df = df[['user.username','caption.text','tags','comments.count','likes.count',
