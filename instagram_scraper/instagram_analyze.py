@@ -3,17 +3,23 @@ import requests
 import json
 from pandas.io.json import json_normalize
 from glasses import *
-import matplotlib
+
 
 
 def instagram_scraper(word):
 
     base_url = "https://api.instagram.com/v1"
     query=word
-
-    url = '{0}/tags/{1}/media/recent?client_id={2}&count=5'.format(base_url, query, client_id)
-
-    df = json_normalize(requests.get(url).json()['data'])
+    errors = []
+    
+    try:
+        url = '{0}/tags/{1}/media/recent?client_id={2}&count=5'.format(base_url, query, client_id)
+        df = json_normalize(requests.get(url).json()['data'])
+    except:
+        errors.append(
+            "Error: Make sure that the search is just the word string, without spaces or hashtag signs."
+            )
+        return errors
     
     df = df[['user.username','caption.text','tags','comments.count','likes.count',
              'filter','type','created_time','user.full_name','user.id','link','location.latitude',
