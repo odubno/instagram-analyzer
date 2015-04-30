@@ -4,7 +4,7 @@ import json
 from pandas.io.json import json_normalize
 from glasses import *
 import matplotlib
-from igDataCompiler import *
+from igDataCompiler import GetUrl
 
 def instagram_scraper(word):
 	
@@ -12,7 +12,7 @@ def instagram_scraper(word):
 	query=word
 	url = '{0}/tags/{1}/media/recent?client_id={2}&count=30'.format(base_url, query, client_id)
 	
-	GetUrls(url, 2)
+	get_urls(url, 2)
 	
 	#df = json_normalize(requests.get(url).json()['data'])
 	
