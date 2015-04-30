@@ -13,6 +13,7 @@ def instagram_scraper(word):
 	url = '{0}/tags/{1}/media/recent?client_id={2}&count=30'.format(base_url, query, client_id)
 	
 	get_urls(url, 2)
+	df = get_urls(url, 2).df
 	#df = json_normalize(requests.get(url).json()['data'])
 	
 	total_posts = len(df)
