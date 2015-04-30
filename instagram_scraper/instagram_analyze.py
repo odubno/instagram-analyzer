@@ -21,7 +21,7 @@ def instagram_scraper(word):
     try:
         url = '{0}/tags/{1}/media/recent?client_id={2}&count=20'.format(base_url, query, client_id)
         urls.append(str(url))
-        for _ in range(10): #range should ideally be determined by the user; 2 replaced by n, n defined in the same place word is defined.
+        for _ in range(5): #range should ideally be determined by the user; 2 replaced by n, n defined in the same place word is defined.
             x = get(url) 
             urls.append(str(x)) 
             url = get(x) 
