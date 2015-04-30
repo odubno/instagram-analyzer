@@ -1,8 +1,12 @@
 #is it possible to save 'url' 
-
+from forms import InstagramScraper
+import requests
+import json
+import pandas as pd
+from pandas.io.json import json_normalize
 from glasses import *
 
-def get_urls(query_url, n):
+def get_urls(url, n):
 
       #return a next_url
     def get(url):
@@ -12,11 +16,10 @@ def get_urls(query_url, n):
     urls = list() 
     
       #handling initial url
-    url = query_url #call passed url
     urls.append(str(url)) #add initial url to list
 
       #handling further urls    
-    for n in range(n):
+    for _ in range(n):
         x = get(url) 
         urls.append(str(x)) #add next_url
         url = get(x) #replaces initial url with next_url for next turn in loop
@@ -30,5 +33,3 @@ def get_urls(query_url, n):
 
       #initiate df
     df = pd.DataFrame().append(results).reset_index().drop('index',axis=1)
-    
-    return df
