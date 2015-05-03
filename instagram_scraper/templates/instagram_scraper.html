@@ -1,15 +1,19 @@
 {% extends "_base.html" %}
 
 {% block content %}
+    
+    <h2>Hashtag:</h2>
+    <div class="well">{{ input }}</div>
 
-  <h2>Hashtag:</h2>
-  <div class="well">{{ input }}</div>
+    <!--
+    <h2>Analysis:</h2>
+    <div class="well">{{ output.to_html(classes="table table-striped") | safe }}</div>
+    -->
 
-  <h2>Analysis:</h2>
-  <div class="well">{{ output }}</div>
+    <h2>Analysis:</h2>
+    {{ output.to_html(classes="table table-striped") | safe }}
+    <br>
 
-  <br>
-
-  <h3><a href="/">Again?</a></h3>
+    <h3><a href="/">Again?</a></h3>
 
 {% endblock %}
