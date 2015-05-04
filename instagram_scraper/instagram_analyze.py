@@ -41,6 +41,7 @@ def instagram_scraper(query): # break this apart. function should handle a singl
     #     print sys.exc_info()[0] #<<< handling exceptions will need to be expanded later on
 	
     # Cleaning up the Data Frame
+    
     df = df[['user.username','caption.text','tags','comments.count','likes.count',
              'filter','type','created_time','user.full_name','user.id','link','location.latitude',
              'location.longitude']]
