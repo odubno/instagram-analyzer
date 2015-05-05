@@ -5,14 +5,11 @@
     <h2>Hashtag:</h2>
     <div class="well">{{ input }}</div>
 
-    <!--
-    <h2>Analysis:</h2>
-    <div class="well">{{ output.to_html(classes="table table-striped") | safe }}</div>
-    -->
+    <title>{{ title }} - image</title>
+    
+    <img src="{{ url_for('fig', user_input = title) }}" alt="Image Placeholder" height="100">
 
-    <h2>Analysis:</h2>
-    {{ output.to_html(classes="table table-striped") | safe }}
-    <br>
+
 
     <h3><a href="/">Again?</a></h3>
 

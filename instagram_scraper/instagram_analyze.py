@@ -66,7 +66,7 @@ def instagram_scraper(query): # break this apart. function should handle a singl
     comments_count = df['comments_count'].sum()
     likes_count = df['likes_count'].sum()
 
-    return df['likes_count'].hist()
+    return df.head()
 
 
 

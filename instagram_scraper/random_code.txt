@@ -1,0 +1,10 @@
+
+    <!--
+    <h2>Analysis:</h2>
+    <div class="well">{{ output.to_html(classes="table table-striped") | safe }}</div>
+    -->
+
+<!--     <h2>Analysis:</h2>
+    {{ output.to_html(classes="table table-striped") | safe }}
+    <br>
+ -->
