@@ -5,10 +5,11 @@
     <h2>Hashtag:</h2>
     <div class="well">{{ input }}</div>
 
-    <title>{{ title }} - image</title>
-    
-    <img src="{{ url_for('fig', user_input = title) }}" alt="Image Placeholder" height="100">
+	<h2>Analysis:</h2>
+    {{ output_analyze }}
+    <br>
 
+    <img src="data.png" />
 
 
     <h3><a href="/">Again?</a></h3>

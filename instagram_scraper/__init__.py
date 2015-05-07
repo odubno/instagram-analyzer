@@ -1,13 +1,16 @@
 from flask import Flask, render_template, request, flash, \
-  flash, url_for, redirect, make_response
+  flash, url_for, redirect, make_response, send_file
 
 from instagram_analyze import * 
 
+import StringIO
 from cStringIO import StringIO
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import matplotlib.pyplot as plt
 from pandas import read_csv
 import pandas as pd
+
+from matplotlib.figure import Figure
 
 app = Flask(__name__)
 app.config.from_object('instagram_scraper.config')
@@ -27,28 +30,67 @@ def main():
 # @app.route('/instagram_search/<user_input>')
 # def instagram_scrape(user_input):
 #   instagram_scraped = instagram_scraper(user_input)
+
 #   return render_template(
 #     'instagram_scraper.html',
 #     input=user_input,
 #     output=instagram_scraped
 #     )
 
+# @app.route("/instagram_scrape/<user_input>")
+# def instagram_scrape(user_input):
+#   instagram_scraped = instagram_scraper(user_input)
 
-@app.route('/instagram_scrape/<user_input>')
+#   # defining the graph
+#   plt.hist(instagram_scraped['likes_count'])
+
+#   # rendering matplotlib image to Flask view
+#   canvas = FigureCanvas(plt.gcf())
+#   output = StringIO()
+#   canvas.print_png(output)
+#   response = make_response(output.getvalue())
+#   response.mimetype = 'image/png'
+
+#   return response 
+
+@app.route("/instagram_scrape/<user_input>")
 def instagram_scrape(user_input):
   instagram_scraped = instagram_scraper(user_input)
 
   # defining the graph
   plt.hist(instagram_scraped['likes_count'])
 
+
   # rendering matplotlib image to Flask view
   canvas = FigureCanvas(plt.gcf())
   output = StringIO()
   canvas.print_png(output)
+  # make_response converts the return value from a view 
+  # function to a real response object that is an instance 
+  # of response_class.
   response = make_response(output.getvalue())
   response.mimetype = 'image/png'
+  response.headers["Content-Type"] = ("image/png; filename=data.png")
+  
 
-  return response
+  return render_template('instagram_scraper.html', input=user_input)
+
+# @app.route('/instagram_scrape/<user_input>')
+# def instagram_scrape(user_input):
+#   instagram_scraped = instagram_scraper(user_input)
+
+#   # defining the graph
+#   plt.hist(instagram_scraped['likes_count'])
+
+#   # rendering matplotlib image to Flask view
+#   canvas = FigureCanvas(plt.gcf())
+#   output = StringIO()
+#   canvas.print_png(output)
+#   response = make_response(output.getvalue())
+#   response.mimetype = 'image/png'
+
+#   return response  
+
 
 
 # @app.route('/images/<user_input>')
