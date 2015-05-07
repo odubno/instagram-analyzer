@@ -1,35 +1,57 @@
+from config import *
 from forms import InstagramScraper
 import requests
 import json
 from pandas.io.json import json_normalize
-from glasses import *
-import sys
+from keys import *
 import pandas as pd
 
-import matplotlib
-
-
-# split this code up into several function. each individual function should do one thing and one thing only
-
-base_url = "https://api.instagram.com/v1"
-errors = []
-urls = list()
-results = list()
-
-
+#returns str(requests.get(url).json()['pagination']['next_url'] for a specified url
 def get(url):
-    return str(requests.get(url).json()['pagination']['next_url']) #refactor this code
+    r = requests.get(url)
+    j = r.json()
+    if 'pagination' in j:
+        try:
+            pagination = j['pagination']
+            if 'next_url' in pagination:
+                try:
+                    next_url = pagination['next_url']
+                    return str(next_url)
+                except Exception, e:
+                    return str(e)                    
+        except Exception, e:
+            return str(e)
 
+#replaces '.' with spaces in selected column titles of a specified dataframe
+#cols contained in config
+def df_slice(df, cols):
+    new_cols = list()
+    new_df = pd.DataFrame()
+    for col in cols:
+        if col in df:
+            new_cols.append(col)
+    new_df = df[cols]
+    return new_df.rename(columns=lambda x: x.replace('.', ' ').title())
 
-def instagram_scraper(query): # break this apart. function should handle a single thing
-	  
+#returns dataframe; iterates through and compiles a dataframe of n pages of instagram data from a specified url
+def instagram_scraper(query, n):
     url = '{0}/tags/{1}/media/recent?client_id={2}&count=30'.format(base_url, query, client_id)
+    urls = list()
+    results = list()
+
     urls.append(str(url))
+<<<<<<< HEAD
     for _ in range(1): #range should ideally be determined by the user; 2 replaced by n, n defined in the same place word is defined.
+=======
+    
+    for _ in range(n):
+>>>>>>> 4526052d8135d50b699eae32ad76bdd57651f0bf
         x = get(url) 
         urls.append(str(x)) 
         url = get(x) 
+            
     for url in urls:
+<<<<<<< HEAD
         results.append(json_normalize(requests.get(url).json()['data']))
     df = pd.DataFrame().append(results).reset_index().drop('index',axis=1)
 
@@ -74,3 +96,20 @@ def instagram_scraper(query): # break this apart. function should handle a singl
      #   )[:5]+'% of Instagram users who have liked posts containing #'+word,'have commented on a post.'
 
 
+=======
+        r = requests.get(url)
+        j = r.json()
+        if 'data in j':
+            try:
+                data = j['data']
+                df_instance = json_normalize(data)
+                results.append(df_instance)
+            except Exception, e:
+                return 'Error: Could not find data.', str(e)
+        
+    df = pd.DataFrame().append(results)
+    df = df.reset_index()
+    df = df.drop('index',axis=1)
+    df = df_slice(df, cols) #applies df_slice to slice dataframe
+    return df.head()
+>>>>>>> 4526052d8135d50b699eae32ad76bdd57651f0bf
