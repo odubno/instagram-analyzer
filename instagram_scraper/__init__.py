@@ -36,7 +36,7 @@ def main():
 
 @app.route('/instagram_scrape/<user_input>')
 def instagram_scrape(user_input):
-  instagram_scraped = instagram_scraper(user_input, 3)
+  instagram_scraped = instagram_scraper(user_input, 0)
 
   # defining the graph
   fig = plt.figure()
