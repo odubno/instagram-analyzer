@@ -83,10 +83,10 @@ def instagram_scrape(user_input):
   # of response_class.
   response = make_response(output.getvalue())
   response.mimetype = 'image/png'
-  response.headers["Content-Type"] = ("image/png; filename=data.png")
+  # response.headers["Content-Type"] = ("image/png; filename=data.png")
   
 
-  return render_template('instagram_scraper.html', input=user_input)
+  return response
 
 # @app.route('/instagram_scrape/<user_input>')
 # def instagram_scrape(user_input):
