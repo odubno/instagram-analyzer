@@ -1,5 +1,3 @@
-#print Where does your hashtag stand on Instagram?
-
 from instagram.client import InstagramAPI
 import requests
 import urllib2
@@ -10,16 +8,11 @@ import matplotlib as mpl
 from matplotlib import pyplot as plt
 from glasses import *
 
-#later on, import token separately so token can be updated as necessary in a separate file
-
-query = raw_input('Enter a hashtag you would like to search: ')
-df = json_normalize(requests.get('https://api.instagram.com/v1/tags/search?q='+query+'&access_token='+token).json()['data']).head()
-
-df.head(5).plot(kind='barh',
+def hashtag_summary(word):
+    query = word
+    hashtag_df = json_normalize(requests.get('https://api.instagram.com/v1/tags/search?q='+query+'&access_token='+acces_token).json()['data']).head()
+    hashtag_df.head(5).plot(kind='barh',
 		title='str 5 Tags Containing: '+query,
         y='media_count',
         x='name',
         figsize=(10,10))
-		
-#currently, plots will not show.
-#save for later

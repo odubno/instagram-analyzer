@@ -24,14 +24,15 @@ def get(url):
 
 #replaces '.' with spaces in selected column titles of a specified dataframe
 #cols contained in config
-def df_slice(df, cols):
+def df_slice(df):
     new_cols = list()
     new_df = pd.DataFrame()
     for col in cols:
         if col in df:
             new_cols.append(col)
-    new_df = df[cols]
-    return new_df.rename(columns=lambda x: x.replace('.', ' ').title())
+    clean_df = df[cols]
+    df = clean_df.rename(columns=lambda x: x.replace('.', ' ').title())
+    return df
 
 #returns dataframe; iterates through and compiles a dataframe of n pages of instagram data from a specified url
 def instagram_scraper(query, n):
@@ -57,7 +58,7 @@ def instagram_scraper(query, n):
             except Exception, e:
                 return 'Error: Could not find data.', str(e)
         
-    df = pd.DataFrame().append(results)
+    df = pd.DataFrame(results)
     df = df.reset_index()
     df = df.drop('index',axis=1)
     df = df_slice(df, cols) #applies df_slice to slice dataframe

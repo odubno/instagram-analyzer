@@ -36,10 +36,23 @@ def main():
 
 @app.route('/instagram_scrape/<user_input>')
 def instagram_scrape(user_input):
-  instagram_scraped = instagram_scraper(user_input)
+  instagram_scraped = instagram_scraper(user_input, 3)
 
   # defining the graph
-  plt.hist(instagram_scraped['likes_count'])
+  fig = plt.figure()
+  data = instagram_scraped
+  #x = data['Created_Time']
+  #y = data['Likes Count']
+  plt.hist(data['Likes Count'])
+  fig.suptitle('Distribution of Likes on Instagram Posts', fontsize=20)
+  plt.xlabel('Amount of Posts', fontsize=18)
+  plt.ylabel('Likes', fontsize=16)
+  fig_size = plt.rcParams["figure.figsize"]
+  #fig_size[0] = 40
+  #fig_size[1] = 20
+  #plt.rcParams["figure.figsize"] = fig_size
+  #note: figure size is currently restricted to some configuration in html/flash end
+  
 
   # rendering matplotlib image to Flask view
   canvas = FigureCanvas(plt.gcf())
@@ -61,7 +74,7 @@ def instagram_scrape(user_input):
 #   fig = instagram_scraper(user_input)
 
 #   # defining the graph
-#   plt.hist(instagram_scrape['likes_count'])
+#   plt.hist(instagram_scrape['Likes Count'])
 
 #   # rendering matplotlib image to Flask view
 #   img = StringIO()
