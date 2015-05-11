@@ -1,5 +1,8 @@
 
-    <!--
+  
+instagram_scraper.html
+
+   <!--
     <h2>Analysis:</h2>
     <div class="well">{{ output.to_html(classes="table table-striped") | safe }}</div>
     -->
@@ -8,3 +11,80 @@
     {{ output.to_html(classes="table table-striped") | safe }}
     <br>
  -->
+
+
+
+
+
+
+
+
+
+__init__.py
+
+ # @app.route('/instagram_search/<user_input>')
+# def instagram_scrape(user_input):
+#   instagram_scraped = instagram_scraper(user_input)
+
+#   return render_template(
+#     'instagram_scraper.html',
+#     input=user_input,
+#     output=instagram_scraped
+#     )
+
+# @app.route("/instagram_scrape/<user_input>")
+# def instagram_scrape(user_input):
+#   instagram_scraped = instagram_scraper(user_input)
+
+#   # defining the graph
+#   plt.hist(instagram_scraped['likes_count'])
+
+#   # rendering matplotlib image to Flask view
+#   canvas = FigureCanvas(plt.gcf())
+#   output = StringIO()
+#   canvas.print_png(output)
+#   response = make_response(output.getvalue())
+#   response.mimetype = 'image/png'
+
+#   return response 
+
+
+# @app.route('/instagram_scrape/<user_input>')
+# def instagram_scrape(user_input):
+#   instagram_scraped = instagram_scraper(user_input)
+
+#   # defining the graph
+#   plt.hist(instagram_scraped['likes_count'])
+
+#   # rendering matplotlib image to Flask view
+#   canvas = FigureCanvas(plt.gcf())
+#   output = StringIO()
+#   canvas.print_png(output)
+#   response = make_response(output.getvalue())
+#   response.mimetype = 'image/png'
+
+#   return response  
+
+
+
+# @app.route('/images/<user_input>')
+# def images(user_input):
+#   return render_template("instagram_scraper.html") 
+
+
+# @app.route('/fig/<user_input>')
+# def fig(user_input):
+#   fig = instagram_scraper(user_input)
+
+#   # defining the graph
+#   plt.hist(instagram_scrape['Likes Count'])
+
+#   # rendering matplotlib image to Flask view
+#   img = StringIO()
+#   fig.savefig(img)
+#   img.seek(0)
+
+#   return send_file(img, mimetype='image/png')
+  
+
+
