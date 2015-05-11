@@ -18,6 +18,7 @@ app.config.from_object('instagram_scraper.config')
 
 #routes 
 
+
 @app.route('/', methods=['GET','POST'])
 def main():
   form = InstagramScraper(request.form)
@@ -55,7 +56,18 @@ def main():
 
 @app.route("/instagram_scrape/<user_input>")
 def instagram_scrape(user_input):
-  instagram_scraped = instagram_scraper(user_input, 0)
+
+  return render_template(
+    'instagram_scraper.html',
+    input=user_input,
+    filename=user_input+".png"
+    )
+
+
+@app.route("/instagram_scrape/<image_name>.png")
+def image(image_name):
+
+  instagram_scraped = instagram_scraper(image_name, 0)
 
   # defining the graph
   fig = plt.figure()
@@ -82,11 +94,19 @@ def instagram_scrape(user_input):
   # function to a real response object that is an instance 
   # of response_class.
   response = make_response(output.getvalue())
+
   response.mimetype = 'image/png'
-  # response.headers["Content-Type"] = ("image/png; filename=data.png")
-  
+  response.headers["Content-Type"] = ("image/png; filename=data.png")
 
   return response
+
+  # return render_template(
+  #   'instagram_scraper.html',
+  #   input=user_input,
+  #   filename=response
+  #   )
+
+
 
 # @app.route('/instagram_scrape/<user_input>')
 # def instagram_scrape(user_input):

@@ -66,3 +66,9 @@ def instagram_scraper(query, n):
     df['created_time'] = [x.replace(x, datetime.datetime.fromtimestamp(int(str(x))).strftime('%Y-%m-%d %H:%M:%S')) for x in df['created_time']]
     df = df_slice(df, cols) #applies df_slice to slice dataframe; selects columns specified in config, cleans column titles
     return df
+
+
+
+
+
+
