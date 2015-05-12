@@ -9,7 +9,7 @@ from cStringIO import StringIO
 
 
 app = Flask(__name__)
-app.config.from_object('instagram_scraper.config')
+app.config.from_object('instagram_scraper_app.config')
 
 
 #routes 
