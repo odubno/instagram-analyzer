@@ -24,17 +24,29 @@ def main():
   return render_template('index.html', form=form)
 
 
-@app.route("/instagram_scrape/<user_input>")
+@app.route("/instagram_scrape/<user_input>") # 1
 def instagram_scrape(user_input):
 
   return render_template(
     'instagram_scraper.html',
     input=user_input,
-    filename=user_input+".png"
+    filename=user_input+".png" # 2
     )
 
+"""
+The beginning of the route @app.route("/instagram_scrape/<user_input>") picks 
+up what the user had passed as a hashtag. The user_input is then passed in for 
+filename with a ".png" ending.
 
+The route ending is the user_input. 
+Both routes have "/instagram_scrape/..." this causes the response route to render 
+the user_input with the ".png" ending 
 @app.route("/instagram_scrape/<image_name>.png")
+
+
+"""
+
+@app.route("/instagram_scrape/<image_name>.png") # 3
 def image(image_name):
   # pulls in the scraper and creates the DataFrame
   instagram_scraped = instagram_scraper(image_name, 0)
@@ -53,9 +65,9 @@ def image(image_name):
   response = make_response(output.getvalue())
 
   response.mimetype = 'image/png'
-  response.headers["Content-Type"] = ("image/png; filename=data.png")
 
-  return response
+
+  return response 
 
 
 @app.route('/about')
