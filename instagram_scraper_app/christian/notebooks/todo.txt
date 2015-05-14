@@ -1,0 +1,2 @@
+* derive sentiment
+* filter spam posts
