@@ -1,2 +1,3 @@
 * derive sentiment
 * filter spam posts
+* convert lat and lon to np.array and display in a heat map
