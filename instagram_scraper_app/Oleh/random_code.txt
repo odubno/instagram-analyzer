@@ -1,5 +1,10 @@
 
   
+
+
+
+
+
 instagram_scraper.html
 
    <!--
@@ -11,6 +16,8 @@ instagram_scraper.html
     {{ output.to_html(classes="table table-striped") | safe }}
     <br>
  -->
+
+ <img src={{ filename }} width="370" height="500"></img>
 
 
 
