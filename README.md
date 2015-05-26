@@ -180,9 +180,8 @@ instagram_scraper
 |	├── instagram_analyze.py
 |	├── instagram_graphs.py
 |	├── keys.py
-|	├── run.py
-|	├── Procfile
-|	|
+|	└── run.py
+|	
 ├── README.md
 ├── run.py
 ├── Procfile
