@@ -111,6 +111,13 @@ Add this code to the Procfile:
 
 > Basically, you name one process perline you want to run on heroku, currently we just want to run our app.
 
+Make sure to add gunicorn to requirements.txt:
+
+```
+$ pip install gunicorn
+$ pip freeze > requirements.txt
+```
+
 Lets create our app and initialize it:
 
 ```
