@@ -166,19 +166,23 @@ $ cd ..
 Structure of the app:
 ```
 instagram_scraper
+|
 ├── instagram_scraper_app
-	├── templates
-		├── _base.html
-		├── index.html
-		└── instagram_scraper.html
-	├── __init__.py
-	├── config.py
-	├── forms.py
-	├── instagram_analyze.py
-	├── instagram_graphs.py
-	├── keys.py
-	├── run.py
-	├── Procfile
+|	|
+|	├── templates
+|	|	├── _base.html
+|	|	├── index.html
+|	|	└── instagram_scraper.html
+|	|
+|	├── __init__.py
+|	├── config.py
+|	├── forms.py
+|	├── instagram_analyze.py
+|	├── instagram_graphs.py
+|	├── keys.py
+|	├── run.py
+|	├── Procfile
+|	|
 ├── README.md
 ├── run.py
 ├── Procfile
