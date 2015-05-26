@@ -60,6 +60,9 @@ git remote add origin https://github.com/<username>/instagram_scraper.git
 git push -u origin master
 ```
 
+> You just initialized your repo within your directory with a README.md file and pushed your changes up to github. 
+
+
 So far so good. Now lets create our app. Here's structure for our app:
 ```
 ├── run.py
