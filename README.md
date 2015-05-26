@@ -74,8 +74,20 @@ Create "run.py":
 $ touch run.py
 ```
 
+Open up run.py in your favorite editor and add the following code:
+
+```
+from flask import Flask
+app = Flask(__name__)
 
 
+@app.route('/')
+def main():
+    return "Python Instagram Scraper"
+
+if __name__ == '__main__':
+    app.run()
+```
 
 
 
