@@ -101,20 +101,36 @@ Let's get Heroku up and running.
 
 Given you have the Heroku [Toolbelt](https://toolbelt.heroku.com/) installed, follow the steps below to get the app up and running. See [link](https://devcenter.heroku.com/articles/getting-started-with-python#introduction) for more info on using Python with Heroku.
 
-Create a Procfile and add the following code:
+Lets create a Procfile and add the following code:
 
-```$ heroku create instagram-scraper```
+```$ touch Procfile```
 
-```$ git init```
+Add this code to the Procfile:
+
+```$ web: gunicorn run:app```
+
+> Basically, you name one process perline you want to run on heroku, currently we just want to run our app.
+
+Lets create our app and initialize it:
+
+```
+$ heroku create instagram-scraper
+$ git init
+```
 
 Let's add heroku servers as a remote for heroku git repositories, so we're able to call "git push heroku" and push our code to heroku: 
 
 ```$ heroku git:remote -a instagram-scraper```
 
-```$ git push heroku master```
+Commiting and pushing our code up to Heroku:
+
+```
+$ git add .
+$ git commit -m "first commit
+$ git push heroku master
+```
 
 
-Basically you name one process perline you want to run on heroku, currently we just want to run our app
 
 
 
