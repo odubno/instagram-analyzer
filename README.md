@@ -97,7 +97,7 @@ You should see the displayed text of "Python Instagram Scraper" in action on htt
 
 Let's get Heroku up and running. 
 
-### Setup Heroku
+## Part Two: Setup Heroku
 
 Given you have the Heroku [Toolbelt](https://toolbelt.heroku.com/) installed, follow the steps below to get the app up and running. See [link](https://devcenter.heroku.com/articles/getting-started-with-python#introduction) for more info on using Python with Heroku.
 
