@@ -189,7 +189,15 @@ instagram_scraper
 
 ```
 
-We'll work on creating our instagram scraper. Create our code for instagram_analyze.py:
+We'll work on creating our instagram scraper. Our code will iterate through instagram using for loops and instagram pagination to pull in more data. Instagram is capped at 33 posts per hit and 5,000 posts that you could pull within 24 hours. 
+
+There's some code cleaning and imports from config.py and forms.py
+
+config.py simply holds variables for our url and data features we're interested in pulling. 
+
+forms.py is our form validator for when the user searches their specific hashtag. 
+
+Lets create our code for instagram_analyze.py:
 
 ```
 from config import *
@@ -263,5 +271,38 @@ def instagram_scraper(query, n):
 
 ```
 
+Code for config.py:
 
+```
+WTF_CSRF_ENABLED = True
+SECRET_KEY = "pass"
+base_url = "https://api.instagram.com/v1"
+cols = [
+'user.username',
+'caption.text',
+'tags',
+'comments.count',
+'likes.count',
+'filter',
+'type',
+'created_time',
+'user.full_name',
+'user.id',
+'link',
+'location.latitude',
+'location.longitude'
+]
+```
+
+Code for forms.py:
+
+```
+from flask_wtf import Form
+from wtforms import TextField
+from wtforms.validators import DataRequired, length 
+
+class InstagramScraper(Form):
+  instagram_scrape = TextField(
+    'Scrape', validators=[DataRequired(), length(min=2)])
+```
 
