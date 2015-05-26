@@ -63,8 +63,24 @@ git push -u origin master
 > You just initialized your repo within your directory with a README.md file and pushed your changes up to github. 
 
 
-So far so good. Now lets create our app. Here's structure for our app:
+So far so good. Now lets create our app. Here's the current structure of our app (for now):
 ```
+├── README.md
 ├── run.py
 └── requirements.txt
 ```
+Create "run.py":
+```sh
+$ touch run.py
+```
+
+
+
+
+
+
+
+
+
+
+
