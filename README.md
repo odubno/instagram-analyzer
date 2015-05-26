@@ -130,7 +130,7 @@ $ git commit -m "first commit
 $ git push heroku master
 ```
 
-
+Here's a [video](https://www.youtube.com/watch?v=pmRT8QQLIqk) that I found super helpful in deploying my app to Heroku.
 
 
 
