@@ -61,6 +61,7 @@ git push -u origin master
 ```
 
 So far so good. Now lets create our app. Here's structure for our app:
-
+```
 ├── run.py
 └── requirements.txt
+```
