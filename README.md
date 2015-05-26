@@ -89,6 +89,33 @@ if __name__ == '__main__':
     app.run()
 ```
 
+Run the app locally:
+
+```$ python run.py```
+
+You should see the displayed text of "Python Instagram Scraper" in action on http://localhost:5000/. Kill the server.
+
+Let's get Heroku up and running. 
+
+### Setup Heroku
+
+Given you have the Heroku [Toolbelt](https://toolbelt.heroku.com/) installed, follow the steps below to get the app up and running. See [link](https://devcenter.heroku.com/articles/getting-started-with-python#introduction) for more info on using Python with Heroku.
+
+Create a Procfile and add the following code:
+
+```$ heroku create instagram-scraper```
+
+```$ git init```
+
+Let's add heroku servers as a remote for heroku git repositories, so we're able to call "git push heroku" and push our code to heroku: 
+
+```$ heroku git:remote -a instagram-scraper```
+
+```$ git push heroku master```
+
+
+Basically you name one process perline you want to run on heroku, currently we just want to run our app
+
 
 
 
