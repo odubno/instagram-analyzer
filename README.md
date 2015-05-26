@@ -132,6 +132,13 @@ $ git push heroku master
 
 Here's a [video](https://www.youtube.com/watch?v=pmRT8QQLIqk) that I found super helpful in deploying my app to Heroku.
 
+Current structure of our app:
+```
+├── README.md
+├── run.py
+├── Procfile
+└── requirements.txt
+```
 
 
 
