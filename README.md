@@ -133,7 +133,7 @@ Commiting and pushing our code up to Heroku:
 
 ```
 $ git add .
-$ git commit -m "first commit
+$ git commit -m "first commit"
 $ git push heroku master
 ```
 
@@ -148,7 +148,43 @@ Current structure of our app:
 ├── Procfile
 └── requirements.txt
 ```
+## Part Three: Back-End Logic 
 
+Lets create a new folder and python files inside our directory. Follow the structure of our app below:
+
+```
+sh
+$ mkdir instagram_scraper_app
+$ cd instagram_scraper_app
+$ touch __init__.py instagram_analyze.py instagram_graphs.py key.py forms.py config.py
+$ mkdir templates
+$ cd templates 
+$ touch instagram_scraper.html index.html
+$ cd ..
+```
+
+Structure of the app:
+```
+instagram_scraper
+├── instagram_scraper_app
+	├── templates
+		├── _base.html
+		├── index.html
+		└── instagram_scraper.html
+	├── __init__.py
+	├── config.py
+	├── forms.py
+	├── instagram_analyze.py
+	├── instagram_graphs.py
+	├── keys.py
+	├── run.py
+	├── Procfile
+├── README.md
+├── run.py
+├── Procfile
+└── requirements.txt
+
+```
 
 
 
