@@ -12,7 +12,7 @@ body {
 
 
 
-/* Text Align */
+/* Placeholder Align */
 
 ::-webkit-input-placeholder {
    text-align: center;
@@ -29,3 +29,9 @@ body {
 :-ms-input-placeholder {  
    text-align: center; 
 }
+
+/* Centering Text */
+textarea { text-align: center; 
+}
+input { text-align: center; 
+} 
