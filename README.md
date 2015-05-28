@@ -185,13 +185,9 @@ instagram_scraper
 |   |
 |   ├── static
 |   |   |
-|   |   ├── css
-|   |   |    ├── bootstrap.min.css
-|   |   |    └── main.css
-|   |   |
-|   |   └── js
-|   |        ├── bootstrap.min.js
-|   |        └── jsquery-2.1.1.min.js
+|   |   └── css
+|   |       ├── bootstrap.min.css
+|   |       └── main.css
 |	|
 |	├── templates
 |	|	├── _base.html
@@ -224,12 +220,83 @@ forms.py is our form validator for when the user searches their specific hashtag
 
 ## Part Three-A: Setting Up .gitignore
 
-The file ".gitignore" gets picked up by github and hides folders and files that you don't want others to see. Add these files to .gitignore:
+The file ".gitignore" gets picked up by GitHub and hides folders/files that you don't want others to see. Add these files to .gitignore:
 
 ```
+venv
+*.pyc
+*.db
+keys.py
+```
+## Part Three-B: Templates, HTML and CSS
+
+Click [here](https://raw.githubusercontent.com/odubno/instagram_scraper/master/instagram_scraper_app/static/css/bootstrap.min.css) and copy/paste this css code into bootstrap.min.css
+
+Click [here](https://raw.githubusercontent.com/odubno/instagram_scraper/master/instagram_scraper_app/static/css/main.css) and copy paste this code into main.css
+
+Our css will format the contents of the page and we'll gain control of its display. 
+
+Our _base.html will be the standard layout for all of our HTML pages. As opposed to typing out our css for each HTML page we could simply pull it in from our base:
 
 ```
+_base.html
 
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <title>Instagram Scraper</title>
+    
+    <!-- meta -->
+    <meta name='description' content=" ">
+    <meta name='author' conten=" ">
+    <meta name='viewport' content="width=device-width,initial-scale=1">
+
+    <!-- styles -->
+    <link href="{{url_for('static', filename='./css/bootstrap.min.css')}}" rel="stylesheet" media="screen">
+   
+    <link href="{{url_for('static', filename='./css/main.css')}}" rel="stylesheet" media="screen">
+
+
+    {% block css %}{% endblock %}
+  </head>
+  <body>
+
+    <div class="container">
+
+      <br>
+
+      <!-- messages -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      <div class="row">
+        <div class="col-md-12">
+          {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">
+            <a class="close" title="Close" href="#" data-dismiss="alert">&times;</a>
+            {{message}}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+      {% endwith %}
+
+      <!-- child template -->
+      {% block content %}{% endblock %}
+
+      <br>
+
+      <!-- errors -->
+      {% if error %}
+        <p class="error"><strong>Error:</strong> {{ error }}</p>
+      {% endif %}
+
+    </div>
+
+  </body>
+</html>
+```
 
 
 
