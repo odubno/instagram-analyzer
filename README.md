@@ -539,7 +539,7 @@ That DataFrame is pulled into instagram_graphs() and it outputs a matplotlib gra
 
 The output, using matplotlib, is a png file. Here we use StringIO to render the graph and have it displayed as a png file in the app.
 
-__init__.py
+###### __init__.py
 ```
 from flask import Flask, render_template, request, flash, \
   flash, url_for, redirect, make_response, send_file
@@ -610,4 +610,21 @@ def image(image_name):
   response.mimetype = 'image/png'
 
   return response 
+```
+Our final step is to simply change the run.py to:
+
+```
+import os 
+from instagram_scraper_app import app
+
+if __name__ == '__main__':
+  app.run(debug=True)
+```
+>This script imports our app and excecutes it in the browser.
+
+Before running our app we'll have to pip install a few dependencies to run it.
+
+```
+sh
+$ pip install flask_wtf requests pandas matplotlib
 ```
