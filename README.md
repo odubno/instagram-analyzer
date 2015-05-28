@@ -2,11 +2,11 @@
 
 Welcome! 
 
-**Today we’ll take an IPython Notebook, detailing how to run analysis using instagram data, and convert it into a Flask app that pulls data from the Instagram API, analyzes the data via Pandas, and then displays charts and graphs using matplotlib.**
+**Today we’ll take an IPython Notebook, detailing how to run analysis using Instagram data, and convert it into a Flask app that pulls data from the Instagram API, analyze the data via Pandas, and then display charts and graphs using matplotlib.**
 
->IPython Notebook is my personal favorite for constucting scripts and getting quick analysis on data. But how do you get your script onto the web?
+>IPython Notebook is my personal favorite for constucting scripts and getting quick analysis on data. But how do you get your graphs and findings onto the web for others to use?
 
-In the first two parts, we'll begin by first structuring our working environment and in the 3rd part we'll work on pulling in our back end logic that I personally always run in IPython Notebook.
+In the first two parts, we'll begin by first structuring our working environment and in the 3rd part we'll work on pulling in our back-end logic that I personally always run in IPython Notebook.
 
 1. *Part One*: Setup the local development environment along with the basic Flask app.
 1. *Part Two*: Setup the production environment on Heroku and push the current application to the cloud.
@@ -154,10 +154,11 @@ Current structure of our app:
 ```
 ## Part Three: Back-End Logic 
 
-Lets create a new folder and python files inside our directory. Follow the structure of our app below:
+Lets create new folders and python files inside our directory. Follow the structure of our app below:
 
 ```
 sh
+$ touch .gitignore
 $ mkdir instagram_scraper_app
 $ cd instagram_scraper_app
 $ touch __init__.py instagram_analyze.py instagram_graphs.py key.py forms.py config.py
@@ -165,6 +166,15 @@ $ mkdir templates
 $ cd templates 
 $ touch instagram_scraper.html index.html
 $ cd ..
+$ mkdir static
+$ cd static
+$ mkdir css js
+$ cd css
+$ touch bootstrap.min.css main.css
+$ cd ..
+$ cd js
+$ touch bootstrap.min.js
+$ touch jsquery-2.1.1.min.js
 ```
 
 Structure of the app:
@@ -172,6 +182,16 @@ Structure of the app:
 instagram_scraper
 |
 ├── instagram_scraper_app
+|   |
+|   ├── static
+|   |   |
+|   |   ├── css
+|   |   |    ├── bootstrap.min.css
+|   |   |    └── main.css
+|   |   |
+|   |   └── js
+|   |        ├── bootstrap.min.js
+|   |        └── jsquery-2.1.1.min.js
 |	|
 |	├── templates
 |	|	├── _base.html
@@ -187,10 +207,10 @@ instagram_scraper
 |	└── run.py
 |	
 ├── README.md
+├── .gitignore
 ├── run.py
 ├── Procfile
 └── requirements.txt
-
 ```
 
 We'll work on creating our instagram scraper. Our code will iterate through instagram using for loops and instagram pagination to pull in more data. Instagram is capped at 33 posts per hit and 5,000 posts that you could pull within 24 hours. 
