@@ -624,7 +624,83 @@ if __name__ == '__main__':
 
 Before running our app we'll have to pip install a few dependencies to run it.
 
+> Make sure that you're inside your virtual environment.
+
+```
+sh
+$ source venv/bin/activate
+```
+
+Let's pip install the dependencies:
+
 ```
 sh
 $ pip install flask_wtf requests pandas matplotlib
+```
+
+Let's run it locally:
+
+```
+sh
+$ python run.py
+```
+
+Cool. Hopefully that works.
+
+Lets push up our final changes to GitHub and Heroku.
+
+Before we do that we have to upload our dependencies to our requirements.txt:
+
+```
+sh
+$ pip freeze > requirements.txt
+```
+Followed by the add/commit and push structure:
+
+```
+sh
+$ git add .
+$ git commit -m "final push"
+$ git push heroku master
+```
+Type:
+```
+sh
+$ heroku open
+```
+to open the app in the browser
+
+> Pushing up dependencies to Heroku will take some time. Be patient. 
+
+In case the dependencies fail to be pushed up or you hit a timeout:
+
+```
+sh
+$ pip uninstall matplotlib
+$ pip uninstall pandas
+$ pip freeze > requirements.txt
+```
+Push to heroku again. 
+
+Once it works:
+
+```
+sh
+$ pip install matplotlib
+$ pip freeze > requirements.txt
+```
+Push to Heroku again.
+
+Then:
+
+```
+sh
+$ pip install pandas
+$ pip freeze > requirements.txt
+```
+Push to Heroku one more time and run:
+
+```
+sh
+$ heroku open
 ```
