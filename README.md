@@ -2,7 +2,11 @@
 
 Welcome! 
 
-**Today we’ll take an IPython Notebook, detailing how to run analysis on images, and convert it into a Flask app that pulls images from the Instagram API, analyzes them via Pandas, and then displays charts and graphs using matplotlib.**
+**Today we’ll take an IPython Notebook, detailing how to run analysis using instagram data, and convert it into a Flask app that pulls data from the Instagram API, analyzes the data via Pandas, and then displays charts and graphs using matplotlib.**
+
+>IPython Notebook is my personal favorite for constucting scripts and getting quick analysis on data. But how do you get your script onto the web?
+
+In the first two parts, we'll begin by first structuring our working environment and in the 3rd part we'll work on pulling in our back end logic that I personally always run in IPython Notebook.
 
 1. *Part One*: Setup the local development environment along with the basic Flask app.
 1. *Part Two*: Setup the production environment on Heroku and push the current application to the cloud.
