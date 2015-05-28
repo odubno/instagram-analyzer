@@ -164,7 +164,7 @@ $ cd instagram_scraper_app
 $ touch __init__.py instagram_analyze.py instagram_graphs.py key.py forms.py config.py
 $ mkdir templates
 $ cd templates 
-$ touch instagram_scraper.html index.html
+$ touch instagram_scraper.html index.html _base.html
 $ cd ..
 $ mkdir static
 $ cd static
@@ -172,9 +172,6 @@ $ mkdir css js
 $ cd css
 $ touch bootstrap.min.css main.css
 $ cd ..
-$ cd js
-$ touch bootstrap.min.js
-$ touch jsquery-2.1.1.min.js
 ```
 
 Structure of the app:
@@ -238,9 +235,8 @@ Our css will format the contents of the page and we'll gain control of its displ
 
 Our _base.html will be the standard layout for all of our HTML pages. As opposed to typing out our css for each HTML page we could simply pull it in from our base:
 
-```
 _base.html
-
+```
 <!DOCTYPE html>
 <html>
   <head>
@@ -297,7 +293,60 @@ _base.html
   </body>
 </html>
 ```
+Now that we have the _base.html figured out lets pull the base into our other HTML files.
+
+Configure the index.html. This form will display a form field for entry and a placeholder to indicate what should be entered. In our case a hashtag.
+
+index.html
+```
+{% extends "_base.html" %}
+{% block content %}
+
+<h1>Python Instagram Scraper</h1>
+<br>
+
+<form class="" role="form" method="post" action="">
+  {{ form.csrf_token }}
+  <p>
+    {{ form.instagram_scrape(class="form-control input-lg", placeholder="Enter Hashtag")}}
+    <span class="error">
+      {% if form.instagram_scrape.errors %}
+        {% for error in form.instagram_scrape.errors %}
+          {{ error }}
+        {% endfor %}
+      {% endif %}
+    </span>
+  </p>
+  <button class="btn btn-default btn-lg" type="submit">Analyze!</button>
+</form>
+
+<br>
+
+{% endblock %}
+```
+
+instagram_scraper.html will render the display of our analysis. The input will be what the user had entered and the filename will be our graphs
+
+instagram_scraper.html
+```
+{% extends "_base.html" %}
+
+{% block content %}
+    
+    <h2>Hashtag:</h2>
+    <div class="well">{{ input }}</div>
 
 
+    <h2>Analysis:</h2>
+    
+    <iframe src={{ filename }} frameborder="0" align="middle" height="600" width="650"</iframe>
+
+
+    <h3><a href="/">Again?</a></h3>
+
+
+
+{% endblock %}
+```
 
 
