@@ -219,6 +219,7 @@ forms.py is our form validator for when the user searches their specific hashtag
 
 The file ".gitignore" gets picked up by GitHub and hides folders/files that you don't want others to see. Add these files to .gitignore:
 
+###### .gitignore
 ```
 venv
 *.pyc
@@ -235,7 +236,7 @@ Our css will format the contents of the page and we'll gain control of its displ
 
 Our _base.html will be the standard layout for all of our HTML pages. As opposed to typing out our css for each HTML page we could simply pull it in from our base:
 
-_base.html
+###### _base.html
 ```
 <!DOCTYPE html>
 <html>
@@ -297,7 +298,7 @@ Now that we have the _base.html figured out lets pull the base into our other HT
 
 Configure the index.html. This form will display the form field for entry and a placeholder to indicate what should be entered. In our case a hashtag. The userinput will then be pulled into the python script and scrape the Instagram API.
 
-index.html
+###### index.html
 ```
 {% extends "_base.html" %}
 {% block content %}
@@ -327,7 +328,7 @@ index.html
 
 instagram_scraper.html will render the display of our analysis. The input will be what the user had passed in the form and the filename will be our graphs.
 
-instagram_scraper.html
+###### instagram_scraper.html
 ```
 {% extends "_base.html" %}
 
@@ -368,6 +369,7 @@ access_token = '44521798.768fcf1.f05c803b0a9c4c6dbac20060e0c2bc8d'
 
 config.py will establish the url and the features we will be pulling from Instagram. 
 
+###### config.py
 ```
 WTF_CSRF_ENABLED = True
 SECRET_KEY = "pass" 
@@ -391,6 +393,7 @@ cols = [
 
 forms.py validates user input and makes sure that data is entered and the length of the input is no less than 2 characters. 
 
+###### forms.py
 ```
 from flask_wtf import Form
 from wtforms import TextField
@@ -415,7 +418,7 @@ Below, you'll find that we're using "pagination" and "next_url" to iterate throu
 We do some cleaning of the data and return it in a DataFrame.
 
 
-instagram_analyze.py
+###### instagram_analyze.py
 ```
 from config import *
 from forms import InstagramScraper
