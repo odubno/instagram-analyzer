@@ -635,7 +635,7 @@ Let's pip install the dependencies:
 
 ```
 sh
-$ pip install flask_wtf requests pandas matplotlib
+$ pip install flask_wtf requests pandas matplotlib simplejson python-instagram
 ```
 
 Let's run it locally:
@@ -704,3 +704,4 @@ Push to Heroku one more time and run:
 sh
 $ heroku open
 ```
+> Something about pushing up all your dependencies at once causes Heroku to crash or timeout. Do it piece by piece.
