@@ -358,7 +358,7 @@ Before any work in Python, you’ll need to first register a new client with Ins
 
 Store your credential in keys.py:
 
-##### keys.py 
+###### keys.py 
 ```
 client_id = '768fcf3f36c94eb08506bae0a9caffa3'
 secret = '14efcbaed7f64673bc93b4e28ca9e8b2'
