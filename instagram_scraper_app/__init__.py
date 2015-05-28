@@ -7,7 +7,6 @@ from instagram_graphs import *
 import StringIO
 from cStringIO import StringIO
 
-import gmaps
 
 app = Flask(__name__)
 app.config.from_object('instagram_scraper_app.config')
@@ -67,28 +66,7 @@ def image(image_name):
 
   response.mimetype = 'image/png'
 
-
   return response 
-
-# @app.route("/instagram_scraper/<user_input>") # 3
-# def image(user_input):
-#   # pulls in the scraper and creates the DataFrame
-#   df = instagram_scraper(user_input, 0)
-
-#   df = df.dropna()
-#   df = df[['Location Latitude', 'Location Longitude']]
-#   df = np.array(df.as_matrix(columns = None)).astype(np.float)
-
-#   map = gmaps.heatmap(df_array)
-
-#   map_x = gmaps.display(map)
-
-#   return render_template(
-#     'instagram_scraper.html',
-#     input=user_input,
-#     filename=map_x # 2
-#     )
-
 
 
 @app.route('/about')

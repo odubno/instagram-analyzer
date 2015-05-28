@@ -295,7 +295,7 @@ _base.html
 ```
 Now that we have the _base.html figured out lets pull the base into our other HTML files.
 
-Configure the index.html. This form will display a form field for entry and a placeholder to indicate what should be entered. In our case a hashtag.
+Configure the index.html. This form will display the form field for entry and a placeholder to indicate what should be entered. In our case a hashtag. The userinput will then be pulled into the python script and scrape the Instagram API.
 
 index.html
 ```
@@ -325,7 +325,7 @@ index.html
 {% endblock %}
 ```
 
-instagram_scraper.html will render the display of our analysis. The input will be what the user had entered and the filename will be our graphs
+instagram_scraper.html will render the display of our analysis. The input will be what the user had passed in the form and the filename will be our graphs.
 
 instagram_scraper.html
 ```
@@ -348,5 +348,147 @@ instagram_scraper.html
 
 {% endblock %}
 ```
+## Part Three-C: Instagram API
+
+Now that we have the HTML and CSS figured out lets take a look at the Instagram API.
+
+Before any work in Python, you’ll need to first register a new client with Instagram.  Once you’re logged into Instagram, you can do that [here](https://instagram.com/developer/clients/register/).An arbitrary URL and URI can be used for the sake of this exercise. 
+
+>Once you’ve registered a client, you should have your own Client ID and Secret. These will be used to get connected to the API. With that, we can now get to Python.
+
+Store your credential in key.py:
+
+```
+client_id = '768fcf3f36c94eb08506bae0a9caffa3'
+secret = '14efcbaed7f64673bc93b4e28ca9e8b2'
+access_token = '44521798.768fcf1.f05c803b0a9c4c6dbac20060e0c2bc8d'
+```
+>The above keys are made up and will not work, but these should reflect what you have.
+
+config.py will establish the url and the features we will be pulling from Instagram. 
+
+```
+WTF_CSRF_ENABLED = True
+SECRET_KEY = "pass" 
+base_url = "https://api.instagram.com/v1"
+cols = [
+'user.username',
+'caption.text',
+'tags',
+'comments.count',
+'likes.count',
+'filter',
+'type',
+'created_time',
+'user.full_name',
+'user.id',
+'link',
+'location.latitude',
+'location.longitude'
+]
+```
+
+forms.py validates user input and makes sure that data is entered and the length of the input is no less than 2 characters. 
+
+```
+from flask_wtf import Form
+from wtforms import TextField
+from wtforms.validators import DataRequired, length 
+
+class InstagramScraper(Form):
+  instagram_scrape = TextField(
+    'Scrape', validators=[DataRequired(), length(min=2)])
+```
+
+The fun begins. Here, we'll be pulling in our keys.py, config.py, forms.py and pre-packaged Python modules to help us with scraping Instagram, cleaning of the data using json, Pandas and displaying the results in a pandas DataFrame.
+
+>Make sure that keys.py, config.py and forms.py are A-OK.
+
+Our first function of the script grabs the url
+
+
+Below, you'll find that we're using "pagination" and "next_url" to iterate through Instagram data and pull in more than 33 posts.
+
+>Instagram limits us to only 33 of its most recent posts per search. 
+
+We do some cleaning of the data and return it in a DataFrame.
+
+
+instagram_analyze.py
+```
+from config import *
+from forms import InstagramScraper
+import requests
+import json
+from pandas.io.json import json_normalize
+from keys import *
+import pandas as pd
+import datetime
+
+#returns str(requests.get(url).json()['pagination']['next_url'] for a specified url
+def get(url):
+    r = requests.get(url)
+    j = r.json()
+    if 'pagination' in j:
+        try:
+            pagination = j['pagination']
+            if 'next_url' in pagination:
+                try:
+                    next_url = pagination['next_url']
+                    return str(next_url)
+                except Exception, e:
+                    return str(e)                    
+        except Exception, e:
+            return str(e)
+
+#replaces '.' with spaces in selected column titles of a specified dataframe
+#cols contained in config
+def df_slice(df, cols):
+    new_cols = list()
+    new_df = pd.DataFrame()
+    for col in cols:
+        if col in df:
+            new_cols.append(col)
+    new_df = df[cols]
+    return new_df.rename(columns=lambda x: x.replace('.', ' ').title())
+
+#returns dataframe; iterates through and compiles a dataframe of n pages of instagram data from a specified url
+def instagram_scraper(query, n):
+    url = '{0}/tags/{1}/media/recent?client_id={2}&count=30'.format(base_url, query, client_id)
+    urls = list()
+    results = list()
+
+    urls.append(str(url))
+    
+    for _ in range(n):
+        x = get(url) 
+        urls.append(str(x)) 
+        url = get(x) 
+            
+    for url in urls:
+        r = requests.get(url)
+        j = r.json()
+        if 'data in j':
+            try:
+                data = j['data']
+                df_instance = json_normalize(data)
+                results.append(df_instance)
+            except Exception, e:
+                return 'Error: Could not find data.', str(e)
+        
+    df = pd.DataFrame().append(results)
+    df = df.reset_index()
+    df = df.drop('index',axis=1)
+    
+#further df cleans
+    df['created_time'] = [x.replace(x, datetime.datetime.fromtimestamp(int(str(x))).strftime('%Y-%m-%d %H:%M:%S')) for x in df['created_time']]
+    df = df_slice(df, cols) #applies df_slice to slice dataframe; selects columns specified in config, cleans column titles
+
+    return df
+```
+
+
+
+
 
 
