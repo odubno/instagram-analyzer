@@ -161,7 +161,7 @@ sh
 $ touch .gitignore
 $ mkdir instagram_scraper_app
 $ cd instagram_scraper_app
-$ touch __init__.py instagram_analyze.py instagram_graphs.py key.py forms.py config.py
+$ touch __init__.py instagram_analyze.py instagram_graphs.py keys.py forms.py config.py
 $ mkdir templates
 $ cd templates 
 $ touch instagram_scraper.html index.html _base.html
@@ -356,8 +356,9 @@ Before any work in Python, you’ll need to first register a new client with Ins
 
 >Once you’ve registered a client, you should have your own Client ID and Secret. These will be used to get connected to the API. With that, we can now get to Python.
 
-Store your credential in key.py:
+Store your credential in keys.py:
 
+##### keys.py 
 ```
 client_id = '768fcf3f36c94eb08506bae0a9caffa3'
 secret = '14efcbaed7f64673bc93b4e28ca9e8b2'
