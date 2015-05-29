@@ -5,7 +5,7 @@ import pandas as pd
 
 from matplotlib.figure import Figure
 
-    # defining the graph
+#     defining the graph
 # def instagram_likes(instagram_scraped):
 #     fig = plt.figure()
 #     #x = instagram_scraped['Created_Time']
@@ -30,20 +30,24 @@ def instagram_graph(instagram_scraped):
 
     ax1 = plt.subplot2grid((3,3), (0,0), colspan=3, rowspan=1)
     instagram_scraped['Comments Count'].plot(kind='bar', alpha=.55)
-    plt.title("Total Comments Count")
+    plt.title("Total Comment Count Per Post",fontsize=20)
+    plt.ylabel('Total Comments')
+    plt.xlabel('Most Recent to Least Recent')
 
 
     ax2 = plt.subplot2grid((3,3), (1,0), colspan=3, rowspan=1)
     instagram_scraped['Likes Count'].plot(kind='bar', alpha=.55)
-    plt.title("Total Likes Count")
-
-
+    plt.title("Total Like Count Per Post",fontsize=20)
+    plt.xlabel('Most Recent to Least Recent')
+    plt.ylabel('Total Likes')
+    
+    
     ax3 = plt.subplot2grid((3,3), (2,0), colspan=3, rowspan=1)
     plt.hist(instagram_scraped['Likes Count'])
-    plt.title('Distribution of Likes on Instagram Posts', fontsize=20)
-    plt.xlabel('Amount of Posts', fontsize=18)
-    plt.ylabel('Likes', fontsize=16)
+    plt.title('Test Graph (Please Ignore)', fontsize=20)
+    plt.xlabel('Amount of Posts')
+    plt.ylabel('Likes')
     fig_size = plt.rcParams["figure.figsize"]
+    
 
     fig.tight_layout()
-
