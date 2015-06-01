@@ -404,9 +404,9 @@ Just reiterating. Running:
 sh
 $ source venv/bin/activate
 ```
-activates our working evnvironment with all of our dependencies to run our app.
+activates our working environment along with all of our dependencies to run our app.
 
-Now that are keys and tokens are hidden, additional to running the above command, we will also have to run the command below everytime we open our app:
+Now that our keys and tokens are hidden, to activate our keys to be used inside out envirnment we have to run: 
 
 ```
 sh
@@ -414,6 +414,7 @@ $ source env.sh
 ```
 >This command will execute and run our Instagram credentials.
 
+Additional instructions will be given below, in order to kep keys hidden when exporting the app to Heroku. 
 
 config.py will establish the url and the features we will be pulling from Instagram. 
 
