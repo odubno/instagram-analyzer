@@ -12,6 +12,12 @@ body {
 
 
 
+.input {
+	max-width: 200px;
+	
+}
+
+
 /* Placeholder Align */
 
 ::-webkit-input-placeholder {

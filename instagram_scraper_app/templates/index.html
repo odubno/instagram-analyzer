@@ -4,7 +4,8 @@
 <h1>Python Instagram Scraper</h1>
 <br>
 
-<form class="" role="form" method="post" action="">
+<center>
+<form class="input" role="form" method="post" action="">
   {{ form.csrf_token }}
   <p>
     {{ form.instagram_scrape(class="form-control input-lg", placeholder="Enter Hashtag")}}
@@ -22,5 +23,7 @@
 <br>
 
 <p>Click <a href="/about">here</a> to read about the app.</p>
+
+</center>
 
 {% endblock %}
