@@ -36,7 +36,9 @@ def df_slice(df, cols):
 
 #returns dataframe; iterates through and compiles a dataframe of n pages of instagram data from a specified url
 def instagram_scraper(query, n):
-    url = '{0}/tags/{1}/media/recent?client_id={2}&count=30'.format(base_url, query, client_id)
+
+
+    url = '{0}/tags/{1}/media/recent?client_id={2}&count=30'.format(base_url, query, CLIENT_ID)
     urls = list()
     results = list()
 
@@ -48,8 +50,10 @@ def instagram_scraper(query, n):
         url = get(x) 
             
     for url in urls:
+
         r = requests.get(url)
         j = r.json()
+
         if 'data in j':
             try:
                 data = j['data']

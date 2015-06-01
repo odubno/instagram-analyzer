@@ -1,5 +1,4 @@
 import os
-basedir = os.path.abspath(os.path.dirname(__file__))
 
 CLIENT_ID = os.environ['client_id']
 SECRET = os.environ['secret']

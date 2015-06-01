@@ -24,6 +24,7 @@ from matplotlib.figure import Figure
 
 # Displays all the graphs 
 
+
 def instagram_graph(instagram_scraped):
 
     fig = plt.figure(figsize=(8,6))
