@@ -217,15 +217,28 @@ forms.py is our form validator for when the user searches their specific hashtag
 
 ## Part Three-A: Setting Up .gitignore
 
-The file ".gitignore" gets picked up by GitHub and hides folders/files that you don't want others to see. Add these files to .gitignore:
+The file ".gitignore" gets picked up by GitHub when pushing changes up. The folders/files mentioned in .gitignore get hidden from the public.
+
+Typically, it's a good idea to mention all the files that you want hidden, especially keys or tokens inside .gitignore. 
+
+keys.py will be treated a little differently from other files when hiding it using .gitigonre because otherwise heroku will not see the keys.py and our instagram data will not be generated. Right now, lets add these files to .gitignore:
 
 ###### .gitignore
 ```
 venv
 *.pyc
 *.db
-keys.py
+env.sh 
 ```
+
+Create an env.sh file inside our root directory:
+
+```
+$ touch env.sh
+```
+>Leave env.sh empty for now. That's where we will keep our keys and tokens hidden from everyone. This info will be exported into the keys.py. You'll see how we do this later.
+
+
 ## Part Three-B: Templates, HTML and CSS
 
 Click [here](https://raw.githubusercontent.com/odubno/instagram_scraper/master/instagram_scraper_app/static/css/bootstrap.min.css) and copy/paste this css code into bootstrap.min.css
@@ -357,15 +370,50 @@ Before any work in Python, you’ll need to first register a new client with Ins
 
 >Once you’ve registered a client, you should have your own Client ID and Secret. These will be used to get connected to the API. With that, we can now get to Python.
 
-Store your credential in keys.py:
+Store your credentials in env.sh:
+
+###### env.sh
+```
+#!/bin/bash 
+
+export "client_id=768fcff36c95eb08506bae8a9caffa3" 
+export "secret=54efcdaed8f64673bc96b4e28c39e8b2" 
+export "access_token=13521778.765fdf1.f05c803b0a9d4c7dbac20060e0c2bc8d"
+
+```
+>The above keys are made up and will not work, but these should reflect what you have.
+
+Let's modify the keys.py to pull in our instagram API credentials:
 
 ###### keys.py 
 ```
-client_id = '768fcf3f36c94eb08506bae0a9caffa3'
-secret = '14efcbaed7f64673bc93b4e28ca9e8b2'
-access_token = '44521798.768fcf1.f05c803b0a9c4c6dbac20060e0c2bc8d'
+import os
+
+CLIENT_ID = os.environ['client_id']
+# SECRET = os.environ['secret']
+# ACCESS_TOKEN = os.environ['access_token']
 ```
->The above keys are made up and will not work, but these should reflect what you have.
+
+>SECRET and ACCESS is commented out as it is not necessary for the work we're doing. 
+
+Our env.sh file is hidden within .gitignore.
+
+Just reiterating. Running:
+
+```
+sh
+$ source venv/bin/activate
+```
+activates our working evnvironment with all of our dependencies to run our app.
+
+Now that are keys and tokens are hidden, additional to running the above command, we will also have to run the command below everytime we open our app:
+
+```
+sh
+$ source env.sh
+```
+>This command will execute and run our Instagram credentials.
+
 
 config.py will establish the url and the features we will be pulling from Instagram. 
 
