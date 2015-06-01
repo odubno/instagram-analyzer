@@ -414,7 +414,7 @@ $ source env.sh
 ```
 >This command will execute and run our Instagram credentials.
 
-Additional instructions will be given below, in order to kep keys hidden when exporting the app to Heroku. 
+Additional instructions will be given below, in order to keep keys hidden when exporting the app to Heroku. 
 
 config.py will establish the url and the features we will be pulling from Instagram. 
 
@@ -712,6 +712,14 @@ $ git add .
 $ git commit -m "final push"
 $ git push heroku master
 ```
+And one final thing to take care of our hidden keys is to run the code below in our terminal: 
+
+```
+sh
+heroku config:set client_id=768fcff36c95eb08506bae8a9caffa3
+```
+>Running the above command will configure Heroku to use the necessary key to run our app. The above client id is made up.
+
 Type:
 ```
 sh
