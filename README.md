@@ -711,6 +711,9 @@ sh
 $ git add .
 $ git commit -m "final push"
 $ git push heroku master
+
+> Pushing up dependencies to Heroku will take some time. Be patient. 
+
 ```
 And one final thing to take care of our hidden keys is to run the code below in our terminal: 
 
@@ -718,7 +721,7 @@ And one final thing to take care of our hidden keys is to run the code below in 
 sh
 heroku config:set client_id=768fcff36c95eb08506bae8a9caffa3
 ```
->Running the above command will configure Heroku to use the necessary key to run our app. The above client id is made up.
+>Running the above command will configure Heroku to use the necessary key to run our app. Read more about it [here](https://devcenter.heroku.com/articles/config-vars). The above client id is made up.
 
 Type:
 ```
@@ -727,7 +730,6 @@ $ heroku open
 ```
 to open the app in the browser
 
-> Pushing up dependencies to Heroku will take some time. Be patient. 
 
 In case the dependencies fail to be pushed up or you hit a timeout:
 
@@ -762,3 +764,7 @@ sh
 $ heroku open
 ```
 > Something about pushing up all your dependencies at once causes Heroku to crash or timeout. Do it piece by piece.
+
+Please add you questions/comments below. Thank you!!!
+
+
