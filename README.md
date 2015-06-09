@@ -1,4 +1,5 @@
 # Instagram Scraper - from IPython to Flask
+Heroku [link](http://instagram-scrape.herokuapp.com/) to the web app.
 
 Welcome!
 
@@ -746,5 +747,7 @@ $ heroku open
 > Something about pushing up all your dependencies at once causes Heroku to crash or timeout. Do it piece by piece.
 
 Please add you questions/comments below. Thank you!!!
+
+
 
 
