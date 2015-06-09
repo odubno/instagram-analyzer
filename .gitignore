@@ -1,4 +1,6 @@
 venv
+env
+.DS_Store
 *.pyc
 *.db
 env.sh
