@@ -4,3 +4,4 @@ env
 *.pyc
 *.db
 env.sh
+instagram_scraper_blog

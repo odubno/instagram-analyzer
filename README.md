@@ -50,8 +50,15 @@ $ git init
 $ echo "# instagram_scraper" >> README.md
 ```
 
-Then add a remote Git repo on Githu and commit your changes locally before pushing your current code up to Github. It's a good practice to frequently add/commit your code locally and push your changes to GitHub.
+Now add a *.gitignore* file:
 
+```
+.DS_Store
+*.pyc
+venv
+```
+
+Then add a remote Git repo on Github and commit your changes locally before pushing your current code up to Github. It's a good practice to frequently commit your code locally and push your changes to GitHub so that you can easily pull up a previous version of you code in case of a mistake.
 
 So far so good. Now lets create our basic project structure.
 
@@ -66,11 +73,11 @@ Your project directory should now look like this:
 ├── README.md
 ├── run.py
 └── requirements.txt
-
-
-Open up run.py in your favorite editor and add the following code:
-
 ```
+
+Open up *run.py* in your favorite editor (like [Sublime Text 3](https://realpython.com/blog/python/setting-up-sublime-text-3-for-full-stack-python-development/)) and add the following code:
+
+```python
 from flask import Flask
 app = Flask(__name__)
 
@@ -99,15 +106,15 @@ Given you have the Heroku [Toolbelt](https://toolbelt.heroku.com/) installed, fo
 
 Create a Procfile and add the following code:
 
-```
-web: gunicorn run:app
+```sh
+$ echo "web: gunicorn run:app" >> Procfile
 ```
 
 Basically, you name one process/service per line that you want to run on Heroku; currently we just want to run our app.
 
 Make sure install gunicorn and add it to *requirements.txt*:
 
-```
+```sh
 $ pip install gunicorn==19.3.0
 $ pip freeze > requirements.txt
 ```
@@ -140,62 +147,44 @@ Lets create new folders and python files inside our directory. Follow the struct
 
 ```
 sh
-$ touch .gitignore
-$ mkdir instagram_scraper_app
-$ cd instagram_scraper_app
+$ mkdir instagram_scraper_app && cd instagram_scraper_app
 $ touch __init__.py instagram_analyze.py instagram_graphs.py keys.py forms.py config.py
-$ mkdir templates
-$ cd templates
+$ mkdir templates && cd templates
 $ touch instagram_scraper.html index.html _base.html
 $ cd ..
-$ mkdir static
-$ cd static
-$ mkdir css js
-$ cd css
-$ touch bootstrap.min.css main.css
-$ cd ..
+$ mkdir static && cd static
+$ mkdir css js && cd css
+$ touch main.css
+$ cd ../../..
 ```
 
-Structure of the app:
-```
-instagram_scraper
-|
-├── instagram_scraper_app
-|   |
-|   ├── static
-|   |   |
-|   |   └── css
-|   |       ├── bootstrap.min.css
-|   |       └── main.css
-|	|
-|	├── templates
-|	|	├── _base.html
-|	|	├── index.html
-|	|	└── instagram_scraper.html
-|	|
-|	├── __init__.py
-|	├── config.py
-|	├── forms.py
-|	├── instagram_analyze.py
-|	├── instagram_graphs.py
-|	├── keys.py
-|	└── run.py
-|
-├── README.md
-├── .gitignore
-├── run.py
+Your app's structure should now look like:
+
+```sh
 ├── Procfile
-└── requirements.txt
+├── README.md
+├── instagram_scraper_app
+│   ├── __init__.py
+│   ├── config.py
+│   ├── forms.py
+│   ├── instagram_analyze.py
+│   ├── instagram_graphs.py
+│   ├── keys.py
+│   ├── static
+│   │   ├── css
+│   │   │   └── main.css
+│   │   └── js
+│   └── templates
+│       ├── _base.html
+│       ├── index.html
+│       └── instagram_scraper.html
+├── requirements.txt
+└── run.py
 ```
 
-We'll work on creating our instagram scraper. Our code will iterate through instagram using for loops and instagram pagination to pull in more data. Instagram is capped at 33 posts per hit and 5,000 posts that you could pull within 24 hours.
+Next, we'll work on creating our Instagram scraper within *instagram_analyze.py*. Our code will crawl/iterate through each Instagram page via the pagination links. We could use the API to grab data, but it's capped at 5,000 post [limit](https://instagram.com/developer/limits/) per 24-hour period.
 
-There's some code cleaning and imports from config.py and forms.py
-
-config.py simply holds variables for our url and data features we're interested in pulling.
-
-forms.py is our form validator for when the user searches their specific hashtag.
-
+EDITED UP TO HERE - michael
 
 ## Part Three-A: Setting Up .gitignore
 
