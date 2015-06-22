@@ -20,6 +20,8 @@ We're excited to present how to take an IPython Notebook, containing all of our 
 
 Enjoy!
 
+ADD ALL DEPENDECIES AND VERSIONS HERE
+
 ## Structure
 
 Let's quickly setup a basic environment for local development utilizing the following tools - [virtualenv](http://www.virtualenv.org/en/latest/), [Flask](http://flask.pocoo.org/), and [Heroku](https://heroku.com)
@@ -436,38 +438,31 @@ class InstagramAnalyzerForm(Form):
     )
 ```
 
-EDITED UP TO HERE - michael
-
 ### Analyzer Script
 
-The fun begins. Here, we'll be pulling in our keys.py, config.py, forms.py and pre-packaged Python modules to help us with scraping Instagram, cleaning of the data using json, Pandas and displaying the results in a pandas DataFrame.
+The fun begins. Here, we'll be pulling utilizing *keys.py*, *config.py*, *forms.py* and all the pre-packaged Python modules to help us with-
 
->Make sure that keys.py, config.py and forms.py are A-OK.
+- Pulling data from the Instagram API,
+- Cleaning the data, and
+- Using Pandas to display the results in a Pandas' [DataFrame](http://pandas.pydata.org/pandas-docs/version/0.16.1/generated/pandas.DataFrame.html#pandas-dataframe).
 
-Our first function of the script grabs the url
+Add the following code to *instagram_analyze.py*:
 
-
-Below, you'll find that we're using "pagination" and "next_url" to iterate through Instagram data and pull in more than 33 posts.
-
->Instagram limits us to only 33 of its most recent posts per search.
-
-We do some cleaning of the data and return it in a DataFrame.
-
-
-
-###### instagram_analyze.py
-```
-from config import *
-from forms import InstagramScraper
+```python
 import requests
-import json
-from pandas.io.json import json_normalize
-from keys import *
-import pandas as pd
 import datetime
+import pandas as pd
+from pandas.io.json import json_normalize
 
-#returns str(requests.get(url).json()['pagination']['next_url'] for a specified url
+from keys import CLIENT_ID
+from config import base_url, cols
+
+
 def get(url):
+    '''
+    returns str(requests.get(url).json()['pagination']['next_url']
+    for a specified url
+    '''
     r = requests.get(url)
     j = r.json()
     if 'pagination' in j:
@@ -482,9 +477,12 @@ def get(url):
         except Exception, e:
             return str(e)
 
-#replaces '.' with spaces in selected column titles of a specified dataframe
-#cols contained in config
+
 def df_slice(df, cols):
+    '''
+    replaces '.' with spaces in selected column titles of a specified dataframe
+    cols contained in config
+    '''
     new_cols = list()
     new_df = pd.DataFrame()
     for col in cols:
@@ -493,9 +491,15 @@ def df_slice(df, cols):
     new_df = df[cols]
     return new_df.rename(columns=lambda x: x.replace('.', ' ').title())
 
-#returns dataframe; iterates through and compiles a dataframe of n pages of instagram data from a specified url
+
 def instagram_scraper(query, n):
-    url = '{0}/tags/{1}/media/recent?client_id={2}&count=30'.format(base_url, query, client_id)
+    '''
+    returns dataframe
+    iterates through and compiles a dataframe
+    of n pages of instagram data from a specified url
+    '''
+    url = '{0}/tags/{1}/media/recent?client_id={2}&count=30'.format(
+        base_url, query, CLIENT_ID)
     urls = list()
     results = list()
 
@@ -519,14 +523,29 @@ def instagram_scraper(query, n):
 
     df = pd.DataFrame().append(results)
     df = df.reset_index()
-    df = df.drop('index',axis=1)
+    df = df.drop('index', axis=1)
 
-#further df cleans
-    df['created_time'] = [x.replace(x, datetime.datetime.fromtimestamp(int(str(x))).strftime('%Y-%m-%d %H:%M:%S')) for x in df['created_time']]
-    df = df_slice(df, cols) #applies df_slice to slice dataframe; selects columns specified in config, cleans column titles
+    # further df cleans
+    df['created_time'] = [y.replace(y, datetime.datetime.fromtimestamp(
+        int(str(y))).strftime('%Y-%m-%d %H:%M:%S')) for y in df['created_time']]
+    # applies df_slice to slice dataframe;
+    # selects columns specified in config, cleans column titles
+    df = df_slice(df, cols)
 
     return df
 ```
+
+EDITED UP TO HERE - michael
+
+
+Our first function of the script grabs the url
+
+
+Below, you'll find that we're using "pagination" and "next_url" to iterate through Instagram data and pull in more than 33 posts.
+
+>Instagram limits us to only 33 of its most recent posts per search.
+
+We do some cleaning of the data and return it in a DataFrame.
 
 >I'm not explicitly mentioning IPython Notebook, but know that I tested all this code in IPython Notebook before moving it over to development.
 
