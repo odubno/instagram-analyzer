@@ -409,24 +409,36 @@ cols = [
     'location.longitude'
 ]
 ```
-EDITED UP TO HERE - michael
-
-### Forms
-
-forms.py validates user input and makes sure that data is entered and the length of the input is no less than 2 characters.
 
 With that, we can now get to the code.
 
-forms.py
+### Forms
+
+The *forms.py* file validates the user input and ensures that data is entered and the length of the input is no less than 2 characters. To simplify things, we use the [Flask-WTF](https://flask-wtf.readthedocs.org/en/v0.9.5/) package:
+
+```sh
+$ pip install flask-wtf==0.9.5
+$ flask freeze > requirements.txt
 ```
+
+Now update *forms.py*:
+
+```python
 from flask_wtf import Form
 from wtforms import TextField
 from wtforms.validators import DataRequired, length
 
-class InstagramScraper(Form):
-  instagram_scrape = TextField(
-    'Scrape', validators=[DataRequired(), length(min=2)])
+
+class InstagramAnalyzerForm(Form):
+    keyword = TextField(
+        'Keyword',
+        validators=[DataRequired(), length(min=2)]
+    )
 ```
+
+EDITED UP TO HERE - michael
+
+### Analyzer Script
 
 The fun begins. Here, we'll be pulling in our keys.py, config.py, forms.py and pre-packaged Python modules to help us with scraping Instagram, cleaning of the data using json, Pandas and displaying the results in a pandas DataFrame.
 
@@ -440,6 +452,7 @@ Below, you'll find that we're using "pagination" and "next_url" to iterate throu
 >Instagram limits us to only 33 of its most recent posts per search.
 
 We do some cleaning of the data and return it in a DataFrame.
+
 
 
 ###### instagram_analyze.py
