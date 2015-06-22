@@ -21,6 +21,7 @@ We're excited to present how to take an IPython Notebook, containing all of our 
 Enjoy!
 
 ADD ALL DEPENDECIES AND VERSIONS HERE
+DO BETTER JOB OF EXPLAINING HOW TO GO FROM IPYTHON TO FLASK. START WITH BETTER INTRO OF WHAT'S HAPPENING IN THE IPYTHON NOTEBOOK.
 
 ## Structure
 
@@ -541,6 +542,8 @@ THIS NEEDS TO BE CLEANED UP AND BETTER EXPLAINED:
 1. Instagram limits us to only 33 of its most recent posts per search.
 1. We do some cleaning of the data and return it in a DataFrame.
 1. I'm not explicitly mentioning IPython Notebook, but know that I tested all this code in IPython Notebook before moving it over to development.
+
+TIE THIS BACK TO THE IPYTHON NOTEBOOK. THAT'S THE POINT OF THIS POST. IPYTHON -> FLASK
 
 ### Graph Script
 
