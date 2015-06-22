@@ -20,7 +20,7 @@ We're excited to present how to take an IPython Notebook, containing all of our 
 
 Enjoy!
 
-## Part One: Local Development
+## Structure
 
 Let's quickly setup a basic environment for local development utilizing the following tools - [virtualenv](http://www.virtualenv.org/en/latest/), [Flask](http://flask.pocoo.org/), and [Heroku](https://heroku.com)
 
@@ -100,7 +100,7 @@ You should see the displayed text of "Python Instagram Analyzer" in action at [h
 
 Now let's get Heroku up and running!
 
-## Part Two: Setup Heroku
+## Heroku Setup
 
 Given you have the Heroku [Toolbelt](https://toolbelt.heroku.com/) installed, follow the steps below to get the app up and running. *For more info on using Python with Heroku, check out the official [Heroku documenation](https://devcenter.heroku.com/articles/getting-started-with-python#introduction).
 
@@ -141,9 +141,9 @@ $ heroku open
 
 Now to the fun part!
 
-## Part Three: Back-End Logic
+## More Structure
 
-Lets create new folders and python files inside our directory.
+Lets create new folders and Python files inside our directory.
 
 ### Setup
 
@@ -196,37 +196,29 @@ $ touch env.sh
 
 Add this file to your *.gitignore* file since it will contain sensitive info.
 
-EDITED UP TO HERE - michael
+## Static Files
 
-### Static Files
+Let's add some HTML and CSS to update the structure and style, respectively.
 
-Click [here](https://raw.githubusercontent.com/odubno/instagram_scraper/master/instagram_scraper_app/static/css/bootstrap.min.css) and copy/paste this css code into bootstrap.min.css
+### HTML
 
-Click [here](https://raw.githubusercontent.com/odubno/instagram_scraper/master/instagram_scraper_app/static/css/main.css) and copy paste this code into main.css
+Our *_base.html* will be server as the standard layout for all of our HTML pages:
 
-Our css will format the contents of the page and we'll gain control of its display.
+***_base.html**
 
-Our _base.html will be the standard layout for all of our HTML pages. As opposed to typing out our css for each HTML page we could simply pull it in from our base:
-
-###### _base.html
-```
+```html
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset='utf-8'>
-    <title>Instagram Scraper</title>
-
+    <title>Instagram Analyzer</title>
     <!-- meta -->
     <meta name='description' content=" ">
     <meta name='author' conten=" ">
     <meta name='viewport' content="width=device-width,initial-scale=1">
-
     <!-- styles -->
-    <link href="{{url_for('static', filename='./css/bootstrap.min.css')}}" rel="stylesheet" media="screen">
-
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="{{url_for('static', filename='./css/main.css')}}" rel="stylesheet" media="screen">
-
-
     {% block css %}{% endblock %}
   </head>
   <body>
@@ -266,16 +258,16 @@ Our _base.html will be the standard layout for all of our HTML pages. As opposed
   </body>
 </html>
 ```
-Now that we have the _base.html figured out lets pull the base into our other HTML files.
 
-Configure the index.html. This form will display the form field for entry and a placeholder to indicate what should be entered. In our case a hashtag. The userinput will then be pulled into the python script and scrape the Instagram API.
+Now that we have the *_base.html* added, let's pull the base into our other HTML files.
 
-###### index.html
-```
+***index.html***
+
+```html
 {% extends "_base.html" %}
 {% block content %}
 
-<h1>Python Instagram Scraper</h1>
+<h1>Python Instagram Analyzer</h1>
 <br>
 
 <form class="" role="form" method="post" action="">
@@ -298,30 +290,78 @@ Configure the index.html. This form will display the form field for entry and a 
 {% endblock %}
 ```
 
-instagram_scraper.html will render the display of our analysis. The input will be what the user had passed in the form and the filename will be our graphs.
+The form will display the form field for entry and a placeholder to indicate to the end user what should be entered - a hashtag, in our case. The user input will then be pulled into the Python script and used when we hit the API.
 
-###### instagram_scraper.html
-```
+***instagram_analyzer.html***
+
+```html
 {% extends "_base.html" %}
-
 {% block content %}
 
-    <h2>Hashtag:</h2>
-    <div class="well">{{ input }}</div>
+<h2>Hashtag:</h2>
+<div class="well">{{ input }}</div>
 
+<h2>Analysis:</h2>
+<iframe src={{ filename }} frameborder="0" align="middle" height="600" width="650"</iframe>
 
-    <h2>Analysis:</h2>
-
-    <iframe src={{ filename }} frameborder="0" align="middle" height="600" width="650"</iframe>
-
-
-    <h3><a href="/">Again?</a></h3>
-
-
+<h3><a href="/">Search Again?</a></h3>
 
 {% endblock %}
 ```
-## Part Three-C: Instagram API
+
+Here we will render the display of our analysis. The input will display the user input and the filename will display graphs that show the results of the analysis.
+
+### CSS
+
+Our CSS will format the contents of the page and we'll gain control of its display. Update *main.css* with:
+
+```css
+/* custom styles */
+
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+
+.container {
+  max-width: 700px;
+  text-align: center;
+}
+
+.input {
+  max-width: 200px;
+}
+
+/* Placeholder Align */
+
+::-webkit-input-placeholder {
+  text-align: center;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+  text-align: center;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+  text-align: center;
+}
+
+:-ms-input-placeholder {
+  text-align: center;
+}
+
+/* Centering Text */
+textarea {
+  text-align: center;
+}
+input {
+  text-align: center;
+}
+```
+
+EDITED UP TO HERE - michael
+
+## Instagram API
 
 Now that we have the HTML and CSS figured out lets take a look at the Instagram API.
 
@@ -725,7 +765,3 @@ $ heroku open
 > Something about pushing up all your dependencies at once causes Heroku to crash or timeout. Do it piece by piece.
 
 Please add you questions/comments below. Thank you!!!
-
-
-
-
