@@ -385,38 +385,39 @@ CLIENT_ID = os.environ['client_id']
 
 Now, when you start up your app, you can run `source env.sh` in the terminal to add the `client_id` variable to the environment.
 
-EDITED UP TO HERE - michael
-
 ### Configurations
 
-config.py will establish the url and the features we will be pulling from Instagram.
+*config.py* holds the app's main constants:
 
-```
+```python
 WTF_CSRF_ENABLED = True
-SECRET_KEY = "pass"
+SECRET_KEY = "makesureyouupdateinpr0duction"
 base_url = "https://api.instagram.com/v1"
 cols = [
-'user.username',
-'caption.text',
-'tags',
-'comments.count',
-'likes.count',
-'filter',
-'type',
-'created_time',
-'user.full_name',
-'user.id',
-'link',
-'location.latitude',
-'location.longitude'
+    'user.username',
+    'caption.text',
+    'tags',
+    'comments.count',
+    'likes.count',
+    'filter',
+    'type',
+    'created_time',
+    'user.full_name',
+    'user.id',
+    'link',
+    'location.latitude',
+    'location.longitude'
 ]
 ```
+EDITED UP TO HERE - michael
+
+### Forms
 
 forms.py validates user input and makes sure that data is entered and the length of the input is no less than 2 characters.
 
 With that, we can now get to the code.
 
-###### forms.py
+forms.py
 ```
 from flask_wtf import Form
 from wtforms import TextField
