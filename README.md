@@ -535,21 +535,17 @@ def instagram_scraper(query, n):
     return df
 ```
 
+THIS NEEDS TO BE CLEANED UP AND BETTER EXPLAINED:
+1. Our first function of the script grabs the url
+1. You'll find that we're using "pagination" and "next_url" to iterate through Instagram data and pull in more than 33 posts.
+1. Instagram limits us to only 33 of its most recent posts per search.
+1. We do some cleaning of the data and return it in a DataFrame.
+1. I'm not explicitly mentioning IPython Notebook, but know that I tested all this code in IPython Notebook before moving it over to development.
+
+### Graph Script
+
 EDITED UP TO HERE - michael
 
-
-Our first function of the script grabs the url
-
-
-Below, you'll find that we're using "pagination" and "next_url" to iterate through Instagram data and pull in more than 33 posts.
-
->Instagram limits us to only 33 of its most recent posts per search.
-
-We do some cleaning of the data and return it in a DataFrame.
-
->I'm not explicitly mentioning IPython Notebook, but know that I tested all this code in IPython Notebook before moving it over to development.
-
-instagram_graphs.py is formated to work with the DataFrame we have in instagram_analyze.py and create graphs. We will pull both functions together in our __init__.py
 
 
 ###### instagram_graphs.py
@@ -586,6 +582,8 @@ def instagram_graph(instagram_scraped):
 
     fig.tight_layout()
 ```
+
+instagram_graphs.py is formated to work with the DataFrame we have in instagram_analyze.py and create graphs. We will pull both functions together in our __init__.py
 
 Here we create our routes and all of our files get pulled together and rendered to display in the app.
 
