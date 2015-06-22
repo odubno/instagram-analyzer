@@ -186,9 +186,9 @@ Your app's structure should now look like:
 └── run.py
 ```
 
-Next, we'll work on creating our Instagram analyzer within *instagram_analyze.py*. Our code will access the [Instagram API](https://instagram.com/developer/) to pull data. We will only use a client id for this, so we are [limited](https://instagram.com/developer/limits/) to 5,000 requests per hour per application since we are unauthenticated.
+Next, we'll work on creating our Instagram analyzer within *instagram_analyze.py*. Our code will access the [Instagram API](https://instagram.com/developer/) to pull data. We will only use a Client ID (which will be created later) for this, so we are [limited](https://instagram.com/developer/limits/) to 5,000 requests per hour per application since we are unauthenticated.
 
-Create an *env.sh* file inside our root directory to house the client id:
+Create an *env.sh* file inside our root directory to house the Client ID:
 
 ```sh
 $ touch env.sh
@@ -359,65 +359,38 @@ input {
 }
 ```
 
-EDITED UP TO HERE - michael
-
 ## Instagram API
 
 Now that we have the HTML and CSS figured out lets take a look at the Instagram API.
 
-Before any work in Python, you’ll need to first register a new client with Instagram.  Once you’re logged into Instagram, you can do that [here](https://instagram.com/developer/clients/register/).An arbitrary URL and URI can be used for the sake of this exercise.
+### Credentials
 
->Once you’ve registered a client, you should have your own Client ID and Secret. These will be used to get connected to the API. With that, we can now get to Python.
+Before any work in Python, you’ll need to first register a new client with Instagram. Once you’re logged into Instagram, you can do that [here](https://instagram.com/developer/clients/register/). An arbitrary URL and URI can be used for the sake of this exercise.
 
-Store your credentials in env.sh:
+Once you’ve registered a client, you should have your own Client ID, which will be used to connect to the API. Add this to the *env.sh* file:
 
-###### env.sh
-```
+```sh
 #!/bin/bash
 
-export "client_id=768fcff36c95eb08506bae8a9caffa3"
-export "secret=54efcdaed8f64673bc96b4e28c39e8b2"
-export "access_token=13521778.765fdf1.f05c803b0a9d4c7dbac20060e0c2bc8d"
-
+export "client_id=ADD-YOUR-CLIENT-ID-HERE"
 ```
->The above keys are made up and will not work, but these should reflect what you have.
 
-Let's modify the keys.py to pull in our instagram API credentials:
+Let's modify the *keys.py* file to pull in our instagram API credentials:
 
-###### keys.py
-```
+```python
 import os
 
 CLIENT_ID = os.environ['client_id']
-# SECRET = os.environ['secret']
-# ACCESS_TOKEN = os.environ['access_token']
 ```
 
->SECRET and ACCESS is commented out as it is not necessary for the work we're doing.
+Now, when you start up your app, you can run `source env.sh` in the terminal to add the `client_id` variable to the environment.
 
-Our env.sh file is hidden within .gitignore.
+EDITED UP TO HERE - michael
 
-Just reiterating. Running:
-
-```
-sh
-$ source venv/bin/activate
-```
-activates our working environment along with all of our dependencies to run our app.
-
-Now that our keys and tokens are hidden, to activate our keys to be used inside out envirnment we have to run:
-
-```
-sh
-$ source env.sh
-```
->This command will execute and run our Instagram credentials.
-
-Additional instructions will be given below, in order to keep keys hidden when exporting the app to Heroku.
+### Configurations
 
 config.py will establish the url and the features we will be pulling from Instagram.
 
-###### config.py
 ```
 WTF_CSRF_ENABLED = True
 SECRET_KEY = "pass"
@@ -440,6 +413,8 @@ cols = [
 ```
 
 forms.py validates user input and makes sure that data is entered and the length of the input is no less than 2 characters.
+
+With that, we can now get to the code.
 
 ###### forms.py
 ```
@@ -720,7 +695,7 @@ And one final thing to take care of our hidden keys is to run the code below in 
 sh
 heroku config:set client_id=768fcff36c95eb08506bae8a9caffa3
 ```
->Running the above command will configure Heroku to use the necessary key to run our app. Read more about it [here](https://devcenter.heroku.com/articles/config-vars). The above client id is made up.
+>Running the above command will configure Heroku to use the necessary key to run our app. Read more about it [here](https://devcenter.heroku.com/articles/config-vars). The above Client ID is made up.
 
 Type:
 ```
