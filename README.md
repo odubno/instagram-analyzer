@@ -1,6 +1,4 @@
-# Instagram Scraper - from IPython to Flask
-
-Heroku [link](http://instagram-scrape.herokuapp.com/) to the web app.
+# Instagram Analyzer - from IPython to Flask
 
 Welcome!
 
@@ -29,7 +27,7 @@ Let's quickly setup a basic environment for local development utilizing the foll
 Make a project directory and create/activate a virtualenv:
 
 ```sh
-$ mkdir instagram_scraper && cd instagram_scraper
+$ mkdir instagram_analyzer && cd instagram_analyzer
 $ virtualenv venv
 $ source venv/bin/activate
 ```
@@ -47,16 +45,18 @@ Add a local Git repo along with a basic *README.md* file:
 
 ```sh
 $ git init
-$ echo "# instagram_scraper" >> README.md
+$ echo "# Instagram Analyzer" >> README.md
 ```
 
-Now add a *.gitignore* file:
+Now add a *.gitignore* file to hide certain files and folders from the public:
 
 ```
 .DS_Store
 *.pyc
 venv
 ```
+
+> It's good practice to add system files (like *.DS_Store), dependency folers (like "venv"), and any sensitive information (more on this later) to the *.gitignore* file.
 
 Then add a remote Git repo on Github and commit your changes locally before pushing your current code up to Github. It's a good practice to frequently commit your code locally and push your changes to GitHub so that you can easily pull up a previous version of you code in case of a mistake.
 
@@ -84,7 +84,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def main():
-    return "Python Instagram Scraper"
+    return "Python Instagram Analyzer"
 
 if __name__ == '__main__':
     app.run()
@@ -96,7 +96,7 @@ Run the app locally:
 $ python run.py
 ```
 
-You should see the displayed text of "Python Instagram Scraper" in action at [http://localhost:5000/](http://localhost:5000/). Once done, kill the server.
+You should see the displayed text of "Python Instagram Analyzer" in action at [http://localhost:5000/](http://localhost:5000/). Once done, kill the server.
 
 Now let's get Heroku up and running!
 
@@ -143,14 +143,18 @@ Now to the fun part!
 
 ## Part Three: Back-End Logic
 
-Lets create new folders and python files inside our directory. Follow the structure of our app below:
+Lets create new folders and python files inside our directory.
+
+### Setup
+
+Follow the structure of our app below:
 
 ```
 sh
-$ mkdir instagram_scraper_app && cd instagram_scraper_app
+$ mkdir instagram_analyzer_app && cd instagram_analyzer_app
 $ touch __init__.py instagram_analyze.py instagram_graphs.py keys.py forms.py config.py
 $ mkdir templates && cd templates
-$ touch instagram_scraper.html index.html _base.html
+$ touch instagram_analyzer.html index.html _base.html
 $ cd ..
 $ mkdir static && cd static
 $ mkdir css js && cd css
@@ -163,7 +167,7 @@ Your app's structure should now look like:
 ```sh
 ├── Procfile
 ├── README.md
-├── instagram_scraper_app
+├── instagram_analyzer_app
 │   ├── __init__.py
 │   ├── config.py
 │   ├── forms.py
@@ -177,40 +181,24 @@ Your app's structure should now look like:
 │   └── templates
 │       ├── _base.html
 │       ├── index.html
-│       └── instagram_scraper.html
+│       └── instagram_analyzer.html
 ├── requirements.txt
 └── run.py
 ```
 
-Next, we'll work on creating our Instagram scraper within *instagram_analyze.py*. Our code will crawl/iterate through each Instagram page via the pagination links. We could use the API to grab data, but it's capped at 5,000 post [limit](https://instagram.com/developer/limits/) per 24-hour period.
+Next, we'll work on creating our Instagram analyzer within *instagram_analyze.py*. Our code will access the [Instagram API](https://instagram.com/developer/) to pull data. We will only use a client id for this, so we are [limited](https://instagram.com/developer/limits/) to 5,000 requests per hour per application since we are unauthenticated.
+
+Create an *env.sh* file inside our root directory to house the client id:
+
+```sh
+$ touch env.sh
+```
+
+Add this file to your *.gitignore* file since it will contain sensitive info.
 
 EDITED UP TO HERE - michael
 
-## Part Three-A: Setting Up .gitignore
-
-The file ".gitignore" gets picked up by GitHub when pushing changes up. The folders/files mentioned in .gitignore get hidden from the public.
-
-Typically, it's a good idea to mention all the files that you want hidden, especially keys or tokens inside .gitignore.
-
-keys.py will be treated a little differently from other files when hiding it using .gitigonre because otherwise heroku will not see the keys.py and our instagram data will not be generated. Right now, lets add these files to .gitignore:
-
-###### .gitignore
-```
-venv
-*.pyc
-*.db
-env.sh
-```
-
-Create an env.sh file inside our root directory:
-
-```
-$ touch env.sh
-```
->Leave env.sh empty for now. That's where we will keep our keys and tokens hidden from everyone. This info will be exported into the keys.py. You'll see how we do this later.
-
-
-## Part Three-B: Templates, HTML and CSS
+### Static Files
 
 Click [here](https://raw.githubusercontent.com/odubno/instagram_scraper/master/instagram_scraper_app/static/css/bootstrap.min.css) and copy/paste this css code into bootstrap.min.css
 
