@@ -439,6 +439,8 @@ class InstagramAnalyzerForm(Form):
     )
 ```
 
+Commit and push your code to Github and Heroku.
+
 ### Analyzer Script
 
 The fun begins. Here, we'll be pulling utilizing *keys.py*, *config.py*, *forms.py* and all the pre-packaged Python modules to help us with-
@@ -552,6 +554,8 @@ $ pip install requests==2.6.2 pandas==0.16.1
 $ pip freeze > requirements.txt
 ```
 
+Commit and push your code to Github and Heroku.
+
 ### Graph Script
 
 To generate the graphs, add the following code to instagram_graphs.py*:
@@ -599,6 +603,8 @@ Don't forget to install Matplotlib:
 $ pip install matplotlib==1.4.3
 $ pip freeze > requirements.txt
 ```
+
+Commit and push your code to Github and Heroku.
 
 ### Routes
 
@@ -687,7 +693,9 @@ Run it locally:
 $ python run.py
 ```
 
-TEST IT OUT! SHOW WHAT HAPPENS
+Test it out. See what happens!
+
+ADD IMAGE
 
 ## Update Heroku
 
@@ -695,57 +703,24 @@ Commit your changes and then push to GitHub and Heroku.
 
 > Keep in mind that we've added a number of dependencies since our last push, and each time you add or update dependnecies on the *requirements.txt* file, Heroku must download them. This will take some time. Be patient.
 
-EDITED UP TO HERE - michael
+Wait! We're not done just yet. We still need to add the Instagram Client ID as an [environment/config](https://devcenter.heroku.com/articles/config-vars) variable:
 
+```sh
+$ heroku config:set client_id=ADD-YOUR-CLIENT-ID-HERE
 ```
-And one final thing to take care of our hidden keys is to run the code below in our terminal:
 
-```
-sh
-heroku config:set client_id=768fcff36c95eb08506bae8a9caffa3
-```
->Running the above command will configure Heroku to use the necessary key to run our app. Read more about it [here](https://devcenter.heroku.com/articles/config-vars). The above Client ID is made up.
+This command sets the variable in the environment so that it gets picked up by the *keys.py* file.
 
-Type:
-```
-sh
+Now check out your app in the browser:
+
+```sh
 $ heroku open
 ```
-to open the app in the browser
 
+ADD IMAGE
 
-In case the dependencies fail to be pushed up or you hit a timeout:
+## Conclusion
 
-```
-sh
-$ pip uninstall matplotlib
-$ pip uninstall pandas
-$ pip freeze > requirements.txt
-```
-Push to heroku again.
-
-Once it works:
-
-```
-sh
-$ pip install matplotlib
-$ pip freeze > requirements.txt
-```
-Push to Heroku again.
-
-Then:
-
-```
-sh
-$ pip install pandas
-$ pip freeze > requirements.txt
-```
-Push to Heroku one more time and run:
-
-```
-sh
-$ heroku open
-```
-> Something about pushing up all your dependencies at once causes Heroku to crash or timeout. Do it piece by piece.
+ADD SUMMARY!
 
 Please add you questions/comments below. Thank you!!!
