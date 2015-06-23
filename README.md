@@ -49,7 +49,7 @@ six==1.9.0
 wsgiref==0.1.2
 ```
 
-Follow this [link](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/instagram_analyze_json%26DataFrame.ipynb) to see our first IPython Notebook, where we use our CLIENT_ID to pull data from Instagram, convert it into json and pull it into a pandas DataFrame. Super easy code to follow.
+Follow this [link](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/instagram_analyze_json_DataFrame.ipynb) to see our first IPython Notebook, where we use our CLIENT_ID to pull data from Instagram, convert it into json and pull it into a pandas DataFrame. Super easy code to follow.
 
 Follow this [link](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/instagram_analyze_Data_Cleaning.ipynb) to see the cleaning that we did to our data. Here we clean the date field, select the columns we want to work with and output it back into a pandas Data Frame.
 
