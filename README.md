@@ -547,56 +547,51 @@ TIE THIS BACK TO THE IPYTHON NOTEBOOK. THAT'S THE POINT OF THIS POST. IPYTHON ->
 
 ### Graph Script
 
-EDITED UP TO HERE - michael
+To generate the graphs, add the following code to instagram_graphs.py*:
 
-
-
-###### instagram_graphs.py
-```
-from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+```python
 import matplotlib.pyplot as plt
-from pandas import read_csv
-import pandas as pd
 
-from matplotlib.figure import Figure
-
-# Displays all the graphs
 
 def instagram_graph(instagram_scraped):
+    '''
+    Displays all the graphs
+    '''
 
-    fig = plt.figure(figsize=(8,6))
+    fig = plt.figure(figsize=(8, 6))
 
-    ax1 = plt.subplot2grid((3,3), (0,0), colspan=3, rowspan=1)
+    # axis 1
+    plt.subplot2grid((3, 3), (0, 0), colspan=3, rowspan=1)
     instagram_scraped['Comments Count'].plot(kind='bar', alpha=.55)
     plt.title("Total Comments Count")
 
-
-    ax2 = plt.subplot2grid((3,3), (1,0), colspan=3, rowspan=1)
+    # axis 2
+    plt.subplot2grid((3, 3), (1, 0), colspan=3, rowspan=1)
     instagram_scraped['Likes Count'].plot(kind='bar', alpha=.55)
     plt.title("Total Likes Count")
 
-
-    ax3 = plt.subplot2grid((3,3), (2,0), colspan=3, rowspan=1)
+    # axis 3
+    plt.subplot2grid((3, 3), (2, 0), colspan=3, rowspan=1)
     plt.hist(instagram_scraped['Likes Count'])
     plt.title('Distribution of Likes on Instagram Posts', fontsize=20)
     plt.xlabel('Amount of Posts', fontsize=18)
     plt.ylabel('Likes', fontsize=16)
-    fig_size = plt.rcParams["figure.figsize"]
+    plt.rcParams["figure.figsize"]
 
     fig.tight_layout()
 ```
 
-instagram_graphs.py is formated to work with the DataFrame we have in instagram_analyze.py and create graphs. We will pull both functions together in our __init__.py
+This code is designed to work with the DataFrame that gets created in *instagram_analyze.py* in order to create charts based on the analysis of data pulled from Instagram.
 
-Here we create our routes and all of our files get pulled together and rendered to display in the app.
+THIS NEEDS TO BE CLEANED UP AND BETTER EXPLAINED
+TIE THIS BACK TO THE IPYTHON NOTEBOOK. THAT'S THE POINT OF THIS POST. IPYTHON -> FLASK
 
-instagram_analyze() scrapes Instagram, cleans the data and outputs it in a DataFrame.
+Now, let's pull everything togther un the *\_\_init\_\_.py* file:
 
-That DataFrame is pulled into instagram_graphs() and it outputs a matplotlib graph.
+EDITED UP TO HERE - michael
 
-The output, using matplotlib, is a png file. Here we use StringIO to render the graph and have it displayed as a png file in the app.
+### Routes
 
-###### __init__.py
 ```
 from flask import Flask, render_template, request, flash, \
   flash, url_for, redirect, make_response, send_file
@@ -668,6 +663,14 @@ def image(image_name):
 
   return response
 ```
+Here we create our routes and all of our files get pulled together and rendered to display in the app.
+
+instagram_analyze() scrapes Instagram, cleans the data and outputs it in a DataFrame.
+
+That DataFrame is pulled into instagram_graphs() and it outputs a matplotlib graph.
+
+The output, using matplotlib, is a png file. Here we use StringIO to render the graph and have it displayed as a png file in the app.
+
 Our final step is to simply change the run.py to:
 
 ```
