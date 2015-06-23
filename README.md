@@ -21,7 +21,7 @@ We're excited to present how to take an IPython Notebook, containing all of our 
 Enjoy!
 
 ADD ALL DEPENDECIES AND VERSIONS HERE
-DO BETTER JOB OF EXPLAINING HOW TO GO FROM IPYTHON TO FLASK. START WITH BETTER INTRO OF WHAT'S HAPPENING IN THE IPYTHON NOTEBOOK.
+DO BETTER JOB OF EXPLAINING HOW TO GO FROM IPYTHON TO FLASK. START WITH BETTER INTRO OF WHAT'S HAPPENING IN THE IPYTHON NOTEBOOK. START WITH IPYTHON, DESCRIBING WHAT IT DOES AND THEN EXPLAIN WHAT YOU'RE GOING TO CREATE. THIS IS THE "WHAT" and "WHY" THE BLOG POST IS THE "HOW".
 
 ## Structure
 
@@ -669,7 +669,7 @@ From there, the `image()` function is fired where we grab the data and clean it 
 
 YOU MAY NEED TO CLEAN UP THE ROUTES
 
-### Test!
+## Run it Locally
 
 Our final step is to simply change the *run.py* to:
 
@@ -683,32 +683,19 @@ if __name__ == '__main__':
 
 Run it locally:
 
-```
-sh
+```sh
 $ python run.py
 ```
 
-TEST IT OUT!
+TEST IT OUT! SHOW WHAT HAPPENS
+
+## Update Heroku
+
+Commit your changes and then push to GitHub and Heroku.
+
+> Keep in mind that we've added a number of dependencies since our last push, and each time you add or update dependnecies on the *requirements.txt* file, Heroku must download them. This will take some time. Be patient.
 
 EDITED UP TO HERE - michael
-
-Lets push up our final changes to GitHub and Heroku.
-
-Before we do that we have to upload our dependencies to our requirements.txt:
-
-```
-sh
-$ pip freeze > requirements.txt
-```
-Followed by the add/commit and push structure:
-
-```
-sh
-$ git add .
-$ git commit -m "final push"
-$ git push heroku master
-
-> Pushing up dependencies to Heroku will take some time. Be patient.
 
 ```
 And one final thing to take care of our hidden keys is to run the code below in our terminal:
