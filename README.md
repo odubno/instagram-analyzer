@@ -23,6 +23,41 @@ Enjoy!
 ADD ALL DEPENDECIES AND VERSIONS HERE
 DO BETTER JOB OF EXPLAINING HOW TO GO FROM IPYTHON TO FLASK. START WITH BETTER INTRO OF WHAT'S HAPPENING IN THE IPYTHON NOTEBOOK. START WITH IPYTHON, DESCRIBING WHAT IT DOES AND THEN EXPLAIN WHAT YOU'RE GOING TO CREATE. THIS IS THE "WHAT" and "WHY" THE BLOG POST IS THE "HOW".
 
+Dependencies for the app:
+```
+Flask==0.10.1
+Flask-WTF==0.11
+Jinja2==2.7.3
+MarkupSafe==0.23
+WTForms==2.0.2
+Werkzeug==0.10.4
+gunicorn==19.3.0
+httplib2==0.9.1
+itsdangerous==0.24
+matplotlib==1.4.3
+mock==1.0.1
+nose==1.3.6
+numpy==1.9.2
+pandas==0.16.1
+pyparsing==2.0.3
+python-dateutil==2.4.2
+python-instagram==1.3.1
+pytz==2015.2
+requests==2.6.2
+simplejson==3.6.5
+six==1.9.0
+wsgiref==0.1.2
+```
+
+Follow this [link](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/instagram_analyze_json%26DataFrame.ipynb) to see our first IPython Notebook, where we use our CLIENT_ID to pull data from Instagram, convert it into json and pull it into a pandas DataFrame. Super easy code to follow.
+
+Follow this [link](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/instagram_analyze_Data_Cleaning.ipynb) to see the cleaning that we did to our data. Here we clean the date field, select the columns we want to work with and output it back into a pandas Data Frame.
+
+
+
+
+
+
 ## Structure
 
 Let's quickly setup a basic environment for local development utilizing the following tools - [virtualenv](http://www.virtualenv.org/en/latest/), [Flask](http://flask.pocoo.org/), and [Heroku](https://heroku.com)

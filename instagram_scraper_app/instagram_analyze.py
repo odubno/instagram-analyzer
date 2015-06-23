@@ -58,7 +58,7 @@ def instagram_scraper(query, n):
         r = requests.get(url)
         j = r.json()
 
-        if 'data in j':
+        if 'data' in j:
             try:
                 data = j['data']
                 df_instance = json_normalize(data)
