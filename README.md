@@ -1,6 +1,4 @@
-# Instagram Scraper - from IPython to Flask
-
-Heroku [link](http://instagram-scrape.herokuapp.com/) to the web app.
+# Instagram Analyzer - from IPython to Flask
 
 Welcome!
 
@@ -22,14 +20,17 @@ We're excited to present how to take an IPython Notebook, containing all of our 
 
 Enjoy!
 
-## Part One: Local Development
+ADD ALL DEPENDECIES AND VERSIONS HERE
+DO BETTER JOB OF EXPLAINING HOW TO GO FROM IPYTHON TO FLASK. START WITH BETTER INTRO OF WHAT'S HAPPENING IN THE IPYTHON NOTEBOOK. START WITH IPYTHON, DESCRIBING WHAT IT DOES AND THEN EXPLAIN WHAT YOU'RE GOING TO CREATE. THIS IS THE "WHAT" and "WHY" THE BLOG POST IS THE "HOW".
+
+## Structure
 
 Let's quickly setup a basic environment for local development utilizing the following tools - [virtualenv](http://www.virtualenv.org/en/latest/), [Flask](http://flask.pocoo.org/), and [Heroku](https://heroku.com)
 
 Make a project directory and create/activate a virtualenv:
 
 ```sh
-$ mkdir instagram_scraper && cd instagram_scraper
+$ mkdir instagram_analyzer && cd instagram_analyzer
 $ virtualenv venv
 $ source venv/bin/activate
 ```
@@ -47,11 +48,20 @@ Add a local Git repo along with a basic *README.md* file:
 
 ```sh
 $ git init
-$ echo "# instagram_scraper" >> README.md
+$ echo "# Instagram Analyzer" >> README.md
 ```
 
-Then add a remote Git repo on Githu and commit your changes locally before pushing your current code up to Github. It's a good practice to frequently add/commit your code locally and push your changes to GitHub.
+Now add a *.gitignore* file to hide certain files and folders from the public:
 
+```
+.DS_Store
+*.pyc
+venv
+```
+
+> It's good practice to add system files (like *.DS_Store), dependency folers (like "venv"), and any sensitive information (more on this later) to the *.gitignore* file.
+
+Then add a remote Git repo on Github and commit your changes locally before pushing your current code up to Github. It's a good practice to frequently commit your code locally and push your changes to GitHub so that you can easily pull up a previous version of you code in case of a mistake.
 
 So far so good. Now lets create our basic project structure.
 
@@ -66,18 +76,18 @@ Your project directory should now look like this:
 ├── README.md
 ├── run.py
 └── requirements.txt
-
-
-Open up run.py in your favorite editor and add the following code:
-
 ```
+
+Open up *run.py* in your favorite editor (like [Sublime Text 3](https://realpython.com/blog/python/setting-up-sublime-text-3-for-full-stack-python-development/)) and add the following code:
+
+```python
 from flask import Flask
 app = Flask(__name__)
 
 
 @app.route('/')
 def main():
-    return "Python Instagram Scraper"
+    return "Python Instagram Analyzer"
 
 if __name__ == '__main__':
     app.run()
@@ -89,25 +99,25 @@ Run the app locally:
 $ python run.py
 ```
 
-You should see the displayed text of "Python Instagram Scraper" in action at [http://localhost:5000/](http://localhost:5000/). Once done, kill the server.
+You should see the displayed text of "Python Instagram Analyzer" in action at [http://localhost:5000/](http://localhost:5000/). Once done, kill the server.
 
 Now let's get Heroku up and running!
 
-## Part Two: Setup Heroku
+## Heroku Setup
 
 Given you have the Heroku [Toolbelt](https://toolbelt.heroku.com/) installed, follow the steps below to get the app up and running. *For more info on using Python with Heroku, check out the official [Heroku documenation](https://devcenter.heroku.com/articles/getting-started-with-python#introduction).
 
 Create a Procfile and add the following code:
 
-```
-web: gunicorn run:app
+```sh
+$ echo "web: gunicorn run:app" >> Procfile
 ```
 
 Basically, you name one process/service per line that you want to run on Heroku; currently we just want to run our app.
 
 Make sure install gunicorn and add it to *requirements.txt*:
 
-```
+```sh
 $ pip install gunicorn==19.3.0
 $ pip freeze > requirements.txt
 ```
@@ -134,122 +144,84 @@ $ heroku open
 
 Now to the fun part!
 
-## Part Three: Back-End Logic
+## More Structure
 
-Lets create new folders and python files inside our directory. Follow the structure of our app below:
+Lets create new folders and Python files inside our directory.
+
+### Setup
+
+Follow the structure of our app below:
 
 ```
 sh
-$ touch .gitignore
-$ mkdir instagram_scraper_app
-$ cd instagram_scraper_app
+$ mkdir instagram_analyzer_app && cd instagram_analyzer_app
 $ touch __init__.py instagram_analyze.py instagram_graphs.py keys.py forms.py config.py
-$ mkdir templates
-$ cd templates
-$ touch instagram_scraper.html index.html _base.html
+$ mkdir templates && cd templates
+$ touch instagram_analyzer.html index.html _base.html
 $ cd ..
-$ mkdir static
-$ cd static
-$ mkdir css js
-$ cd css
-$ touch bootstrap.min.css main.css
-$ cd ..
+$ mkdir static && cd static
+$ mkdir css js && cd css
+$ touch main.css
+$ cd ../../..
 ```
 
-Structure of the app:
-```
-instagram_scraper
-|
-├── instagram_scraper_app
-|   |
-|   ├── static
-|   |   |
-|   |   └── css
-|   |       ├── bootstrap.min.css
-|   |       └── main.css
-|	|
-|	├── templates
-|	|	├── _base.html
-|	|	├── index.html
-|	|	└── instagram_scraper.html
-|	|
-|	├── __init__.py
-|	├── config.py
-|	├── forms.py
-|	├── instagram_analyze.py
-|	├── instagram_graphs.py
-|	├── keys.py
-|	└── run.py
-|
-├── README.md
-├── .gitignore
-├── run.py
+Your app's structure should now look like:
+
+```sh
 ├── Procfile
-└── requirements.txt
+├── README.md
+├── instagram_analyzer_app
+│   ├── __init__.py
+│   ├── config.py
+│   ├── forms.py
+│   ├── instagram_analyze.py
+│   ├── instagram_graphs.py
+│   ├── keys.py
+│   ├── static
+│   │   ├── css
+│   │   │   └── main.css
+│   │   └── js
+│   └── templates
+│       ├── _base.html
+│       ├── index.html
+│       └── instagram_analyzer.html
+├── requirements.txt
+└── run.py
 ```
 
-We'll work on creating our instagram scraper. Our code will iterate through instagram using for loops and instagram pagination to pull in more data. Instagram is capped at 33 posts per hit and 5,000 posts that you could pull within 24 hours.
+Next, we'll work on creating our Instagram analyzer within *instagram_analyze.py*. Our code will access the [Instagram API](https://instagram.com/developer/) to pull data. We will only use a Client ID (which will be created later) for this, so we are [limited](https://instagram.com/developer/limits/) to 5,000 requests per hour per application since we are unauthenticated.
 
-There's some code cleaning and imports from config.py and forms.py
+Create an *env.sh* file inside our root directory to house the Client ID:
 
-config.py simply holds variables for our url and data features we're interested in pulling.
-
-forms.py is our form validator for when the user searches their specific hashtag.
-
-
-## Part Three-A: Setting Up .gitignore
-
-The file ".gitignore" gets picked up by GitHub when pushing changes up. The folders/files mentioned in .gitignore get hidden from the public.
-
-Typically, it's a good idea to mention all the files that you want hidden, especially keys or tokens inside .gitignore.
-
-keys.py will be treated a little differently from other files when hiding it using .gitigonre because otherwise heroku will not see the keys.py and our instagram data will not be generated. Right now, lets add these files to .gitignore:
-
-###### .gitignore
-```
-venv
-*.pyc
-*.db
-env.sh
-```
-
-Create an env.sh file inside our root directory:
-
-```
+```sh
 $ touch env.sh
 ```
->Leave env.sh empty for now. That's where we will keep our keys and tokens hidden from everyone. This info will be exported into the keys.py. You'll see how we do this later.
 
+Add this file to your *.gitignore* file since it will contain sensitive info.
 
-## Part Three-B: Templates, HTML and CSS
+## Static Files
 
-Click [here](https://raw.githubusercontent.com/odubno/instagram_scraper/master/instagram_scraper_app/static/css/bootstrap.min.css) and copy/paste this css code into bootstrap.min.css
+Let's add some HTML and CSS to update the structure and style, respectively.
 
-Click [here](https://raw.githubusercontent.com/odubno/instagram_scraper/master/instagram_scraper_app/static/css/main.css) and copy paste this code into main.css
+### HTML
 
-Our css will format the contents of the page and we'll gain control of its display.
+Our *_base.html* will be server as the standard layout for all of our HTML pages:
 
-Our _base.html will be the standard layout for all of our HTML pages. As opposed to typing out our css for each HTML page we could simply pull it in from our base:
+***_base.html**
 
-###### _base.html
-```
+```html
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset='utf-8'>
-    <title>Instagram Scraper</title>
-
+    <title>Instagram Analyzer</title>
     <!-- meta -->
     <meta name='description' content=" ">
     <meta name='author' conten=" ">
     <meta name='viewport' content="width=device-width,initial-scale=1">
-
     <!-- styles -->
-    <link href="{{url_for('static', filename='./css/bootstrap.min.css')}}" rel="stylesheet" media="screen">
-
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="{{url_for('static', filename='./css/main.css')}}" rel="stylesheet" media="screen">
-
-
     {% block css %}{% endblock %}
   </head>
   <body>
@@ -289,16 +261,16 @@ Our _base.html will be the standard layout for all of our HTML pages. As opposed
   </body>
 </html>
 ```
-Now that we have the _base.html figured out lets pull the base into our other HTML files.
 
-Configure the index.html. This form will display the form field for entry and a placeholder to indicate what should be entered. In our case a hashtag. The userinput will then be pulled into the python script and scrape the Instagram API.
+Now that we have the *_base.html* added, let's pull the base into our other HTML files.
 
-###### index.html
-```
+***index.html***
+
+```html
 {% extends "_base.html" %}
 {% block content %}
 
-<h1>Python Instagram Scraper</h1>
+<h1>Python Instagram Analyzer</h1>
 <br>
 
 <form class="" role="form" method="post" action="">
@@ -321,147 +293,179 @@ Configure the index.html. This form will display the form field for entry and a 
 {% endblock %}
 ```
 
-instagram_scraper.html will render the display of our analysis. The input will be what the user had passed in the form and the filename will be our graphs.
+The form will display the form field for entry and a placeholder to indicate to the end user what should be entered - a hashtag, in our case. The user input will then be pulled into the Python script and used when we hit the API.
 
-###### instagram_scraper.html
-```
+***instagram_analyzer.html***
+
+```html
 {% extends "_base.html" %}
-
 {% block content %}
 
-    <h2>Hashtag:</h2>
-    <div class="well">{{ input }}</div>
+<h2>Hashtag:</h2>
+<div class="well">{{ input }}</div>
 
+<h2>Analysis:</h2>
+<iframe src={{ filename }} frameborder="0" align="middle" height="600" width="650"</iframe>
 
-    <h2>Analysis:</h2>
-
-    <iframe src={{ filename }} frameborder="0" align="middle" height="600" width="650"</iframe>
-
-
-    <h3><a href="/">Again?</a></h3>
-
-
+<h3><a href="/">Search Again?</a></h3>
 
 {% endblock %}
 ```
-## Part Three-C: Instagram API
+
+Here we will render the display of our analysis. The input will display the user input and the filename will display graphs that show the results of the analysis.
+
+### CSS
+
+Our CSS will format the contents of the page and we'll gain control of its display. Update *main.css* with:
+
+```css
+/* custom styles */
+
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+
+.container {
+  max-width: 700px;
+  text-align: center;
+}
+
+.input {
+  max-width: 200px;
+}
+
+/* Placeholder Align */
+
+::-webkit-input-placeholder {
+  text-align: center;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+  text-align: center;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+  text-align: center;
+}
+
+:-ms-input-placeholder {
+  text-align: center;
+}
+
+/* Centering Text */
+textarea {
+  text-align: center;
+}
+input {
+  text-align: center;
+}
+```
+
+## Instagram API
 
 Now that we have the HTML and CSS figured out lets take a look at the Instagram API.
 
-Before any work in Python, you’ll need to first register a new client with Instagram.  Once you’re logged into Instagram, you can do that [here](https://instagram.com/developer/clients/register/).An arbitrary URL and URI can be used for the sake of this exercise.
+### Credentials
 
->Once you’ve registered a client, you should have your own Client ID and Secret. These will be used to get connected to the API. With that, we can now get to Python.
+Before any work in Python, you’ll need to first register a new client with Instagram. Once you’re logged into Instagram, you can do that [here](https://instagram.com/developer/clients/register/). An arbitrary URL and URI can be used for the sake of this exercise.
 
-Store your credentials in env.sh:
+Once you’ve registered a client, you should have your own Client ID, which will be used to connect to the API. Add this to the *env.sh* file:
 
-###### env.sh
-```
+```sh
 #!/bin/bash
 
-export "client_id=768fcff36c95eb08506bae8a9caffa3"
-export "secret=54efcdaed8f64673bc96b4e28c39e8b2"
-export "access_token=13521778.765fdf1.f05c803b0a9d4c7dbac20060e0c2bc8d"
-
+export "client_id=ADD-YOUR-CLIENT-ID-HERE"
 ```
->The above keys are made up and will not work, but these should reflect what you have.
 
-Let's modify the keys.py to pull in our instagram API credentials:
+Let's modify the *keys.py* file to pull in our instagram API credentials:
 
-###### keys.py
-```
+```python
 import os
 
 CLIENT_ID = os.environ['client_id']
-# SECRET = os.environ['secret']
-# ACCESS_TOKEN = os.environ['access_token']
 ```
 
->SECRET and ACCESS is commented out as it is not necessary for the work we're doing.
+Now, when you start up your app, you can run `source env.sh` in the terminal to add the `client_id` variable to the environment.
 
-Our env.sh file is hidden within .gitignore.
+### Configurations
 
-Just reiterating. Running:
+*config.py* holds the app's main constants:
 
-```
-sh
-$ source venv/bin/activate
-```
-activates our working environment along with all of our dependencies to run our app.
-
-Now that our keys and tokens are hidden, to activate our keys to be used inside out envirnment we have to run:
-
-```
-sh
-$ source env.sh
-```
->This command will execute and run our Instagram credentials.
-
-Additional instructions will be given below, in order to keep keys hidden when exporting the app to Heroku.
-
-config.py will establish the url and the features we will be pulling from Instagram.
-
-###### config.py
-```
+```python
 WTF_CSRF_ENABLED = True
-SECRET_KEY = "pass"
+SECRET_KEY = "makesureyouupdateinpr0duction"
 base_url = "https://api.instagram.com/v1"
 cols = [
-'user.username',
-'caption.text',
-'tags',
-'comments.count',
-'likes.count',
-'filter',
-'type',
-'created_time',
-'user.full_name',
-'user.id',
-'link',
-'location.latitude',
-'location.longitude'
+    'user.username',
+    'caption.text',
+    'tags',
+    'comments.count',
+    'likes.count',
+    'filter',
+    'type',
+    'created_time',
+    'user.full_name',
+    'user.id',
+    'link',
+    'location.latitude',
+    'location.longitude'
 ]
 ```
 
-forms.py validates user input and makes sure that data is entered and the length of the input is no less than 2 characters.
+With that, we can now get to the code.
 
-###### forms.py
+### Forms
+
+The *forms.py* file validates the user input and ensures that data is entered and the length of the input is no less than 2 characters. To simplify things, we use the [Flask-WTF](https://flask-wtf.readthedocs.org/en/v0.9.5/) package:
+
+```sh
+$ pip install flask-wtf==0.9.5
+$ flask freeze > requirements.txt
 ```
+
+Now update *forms.py*:
+
+```python
 from flask_wtf import Form
 from wtforms import TextField
 from wtforms.validators import DataRequired, length
 
-class InstagramScraper(Form):
-  instagram_scrape = TextField(
-    'Scrape', validators=[DataRequired(), length(min=2)])
+
+class InstagramAnalyzerForm(Form):
+    keyword = TextField(
+        'Keyword',
+        validators=[DataRequired(), length(min=2)]
+    )
 ```
 
-The fun begins. Here, we'll be pulling in our keys.py, config.py, forms.py and pre-packaged Python modules to help us with scraping Instagram, cleaning of the data using json, Pandas and displaying the results in a pandas DataFrame.
+Commit and push your code to Github and Heroku.
 
->Make sure that keys.py, config.py and forms.py are A-OK.
+### Analyzer Script
 
-Our first function of the script grabs the url
+The fun begins. Here, we'll be pulling utilizing *keys.py*, *config.py*, *forms.py* and all the pre-packaged Python modules to help us with-
 
+- Pulling data from the Instagram API,
+- Cleaning the data, and
+- Using Pandas to display the results in a Pandas' [DataFrame](http://pandas.pydata.org/pandas-docs/version/0.16.1/generated/pandas.DataFrame.html#pandas-dataframe).
 
-Below, you'll find that we're using "pagination" and "next_url" to iterate through Instagram data and pull in more than 33 posts.
+Add the following code to *instagram_analyze.py*:
 
->Instagram limits us to only 33 of its most recent posts per search.
-
-We do some cleaning of the data and return it in a DataFrame.
-
-
-###### instagram_analyze.py
-```
-from config import *
-from forms import InstagramScraper
+```python
 import requests
-import json
-from pandas.io.json import json_normalize
-from keys import *
-import pandas as pd
 import datetime
+import pandas as pd
+from pandas.io.json import json_normalize
 
-#returns str(requests.get(url).json()['pagination']['next_url'] for a specified url
+from keys import CLIENT_ID
+from config import base_url, cols
+
+
 def get(url):
+    '''
+    returns str(requests.get(url).json()['pagination']['next_url']
+    for a specified url
+    '''
     r = requests.get(url)
     j = r.json()
     if 'pagination' in j:
@@ -476,9 +480,12 @@ def get(url):
         except Exception, e:
             return str(e)
 
-#replaces '.' with spaces in selected column titles of a specified dataframe
-#cols contained in config
+
 def df_slice(df, cols):
+    '''
+    replaces '.' with spaces in selected column titles of a specified dataframe
+    cols contained in config
+    '''
     new_cols = list()
     new_df = pd.DataFrame()
     for col in cols:
@@ -487,9 +494,15 @@ def df_slice(df, cols):
     new_df = df[cols]
     return new_df.rename(columns=lambda x: x.replace('.', ' ').title())
 
-#returns dataframe; iterates through and compiles a dataframe of n pages of instagram data from a specified url
-def instagram_scraper(query, n):
-    url = '{0}/tags/{1}/media/recent?client_id={2}&count=30'.format(base_url, query, client_id)
+
+def instagram_analyzer(query, n):
+    '''
+    returns dataframe
+    iterates through and compiles a dataframe
+    of n pages of instagram data from a specified url
+    '''
+    url = '{0}/tags/{1}/media/recent?client_id={2}&count=30'.format(
+        base_url, query, CLIENT_ID)
     urls = list()
     results = list()
 
@@ -513,242 +526,201 @@ def instagram_scraper(query, n):
 
     df = pd.DataFrame().append(results)
     df = df.reset_index()
-    df = df.drop('index',axis=1)
+    df = df.drop('index', axis=1)
 
-#further df cleans
-    df['created_time'] = [x.replace(x, datetime.datetime.fromtimestamp(int(str(x))).strftime('%Y-%m-%d %H:%M:%S')) for x in df['created_time']]
-    df = df_slice(df, cols) #applies df_slice to slice dataframe; selects columns specified in config, cleans column titles
+    # further df cleans
+    df['created_time'] = [y.replace(y, datetime.datetime.fromtimestamp(
+        int(str(y))).strftime('%Y-%m-%d %H:%M:%S')) for y in df['created_time']]
+    # applies df_slice to slice dataframe;
+    # selects columns specified in config, cleans column titles
+    df = df_slice(df, cols)
 
     return df
 ```
 
->I'm not explicitly mentioning IPython Notebook, but know that I tested all this code in IPython Notebook before moving it over to development.
+THIS NEEDS TO BE CLEANED UP AND BETTER EXPLAINED:
+1. Our first function of the script grabs the url
+1. You'll find that we're using "pagination" and "next_url" to iterate through Instagram data and pull in more than 33 posts.
+1. Instagram limits us to only 33 of its most recent posts per search.
+1. We do some cleaning of the data and return it in a DataFrame.
+1. I'm not explicitly mentioning IPython Notebook, but know that I tested all this code in IPython Notebook before moving it over to development.
 
-instagram_graphs.py is formated to work with the DataFrame we have in instagram_analyze.py and create graphs. We will pull both functions together in our __init__.py
+TIE THIS BACK TO THE IPYTHON NOTEBOOK. THAT'S THE POINT OF THIS POST. IPYTHON -> FLASK
 
+Install the dependencies:
 
-###### instagram_graphs.py
+```sh
+$ pip install requests==2.6.2 pandas==0.16.1
+$ pip freeze > requirements.txt
 ```
-from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+
+Commit and push your code to Github and Heroku.
+
+### Graph Script
+
+To generate the graphs, add the following code to instagram_graphs.py*:
+
+```python
 import matplotlib.pyplot as plt
-from pandas import read_csv
-import pandas as pd
 
-from matplotlib.figure import Figure
-
-# Displays all the graphs
 
 def instagram_graph(instagram_scraped):
+    '''
+    Displays all the graphs
+    '''
 
-    fig = plt.figure(figsize=(8,6))
+    fig = plt.figure(figsize=(8, 6))
 
-    ax1 = plt.subplot2grid((3,3), (0,0), colspan=3, rowspan=1)
+    # axis 1
+    plt.subplot2grid((3, 3), (0, 0), colspan=3, rowspan=1)
     instagram_scraped['Comments Count'].plot(kind='bar', alpha=.55)
     plt.title("Total Comments Count")
 
-
-    ax2 = plt.subplot2grid((3,3), (1,0), colspan=3, rowspan=1)
+    # axis 2
+    plt.subplot2grid((3, 3), (1, 0), colspan=3, rowspan=1)
     instagram_scraped['Likes Count'].plot(kind='bar', alpha=.55)
     plt.title("Total Likes Count")
 
-
-    ax3 = plt.subplot2grid((3,3), (2,0), colspan=3, rowspan=1)
+    # axis 3
+    plt.subplot2grid((3, 3), (2, 0), colspan=3, rowspan=1)
     plt.hist(instagram_scraped['Likes Count'])
     plt.title('Distribution of Likes on Instagram Posts', fontsize=20)
     plt.xlabel('Amount of Posts', fontsize=18)
     plt.ylabel('Likes', fontsize=16)
-    fig_size = plt.rcParams["figure.figsize"]
+    plt.rcParams["figure.figsize"]
 
     fig.tight_layout()
 ```
 
-Here we create our routes and all of our files get pulled together and rendered to display in the app.
+This code is designed to work with the DataFrame that gets created in *instagram_analyze.py* in order to create charts based on the analysis of data pulled from Instagram.
 
-instagram_analyze() scrapes Instagram, cleans the data and outputs it in a DataFrame.
+THIS NEEDS TO BE CLEANED UP AND BETTER EXPLAINED
+TIE THIS BACK TO THE IPYTHON NOTEBOOK. THAT'S THE POINT OF THIS POST. IPYTHON -> FLASK
 
-That DataFrame is pulled into instagram_graphs() and it outputs a matplotlib graph.
+Don't forget to install Matplotlib:
 
-The output, using matplotlib, is a png file. Here we use StringIO to render the graph and have it displayed as a png file in the app.
-
-###### __init__.py
+```sh
+$ pip install matplotlib==1.4.3
+$ pip freeze > requirements.txt
 ```
-from flask import Flask, render_template, request, flash, \
-  flash, url_for, redirect, make_response, send_file
 
-from instagram_analyze import *
-from instagram_graphs import *
+Commit and push your code to Github and Heroku.
 
-import StringIO
+### Routes
+
+Now, let's pull everything togther un the *\_\_init\_\_.py* file:
+
+```python
 from cStringIO import StringIO
+
+from flask import Flask, render_template, request, \
+    url_for, redirect, make_response
+
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+
+from forms import InstagramAnalyzerForm
+from instagram_analyze import instagram_analyzer
+from instagram_graphs import instagram_graph
 
 
 app = Flask(__name__)
-app.config.from_object('instagram_scraper_app.config')
+app.config.from_object('instagram_analyzer_app.config')
+
+# routes
 
 
-#routes
-
-
-@app.route('/', methods=['GET','POST'])
+@app.route('/', methods=['GET', 'POST'])
 def main():
-  form = InstagramScraper(request.form)
-  if form.validate_on_submit():
-    text = form.instagram_scrape.data
-    return redirect(url_for('instagram_scrape', user_input=text))
-  return render_template('index.html', form=form)
+    form = InstagramAnalyzerForm(request.form)
+    if form.validate_on_submit():
+        text = form.keyword.data
+        return redirect(url_for('instagram_analyze', user_input=text))
+    return render_template('index.html', form=form)
 
 
-@app.route("/instagram_scrape/<user_input>") # 1
-def instagram_scrape(user_input):
+@app.route("/instagram_analyze/<user_input>")
+def instagram_analyze(user_input):
 
-  return render_template(
-    'instagram_scraper.html',
-    input=user_input,
-    filename=user_input+".png" # 2
+    return render_template(
+        'instagram_analyzer.html',
+        input=user_input,
+        filename=user_input+".png"
     )
 
-"""
-The beginning of the route @app.route("/instagram_scrape/<user_input>") picks
-up what the user had passed as a hashtag. The user_input is then passed in for
-filename with a ".png" ending.
 
-The route ending is the user_input.
-Both routes have "/instagram_scrape/..." this causes the response route to render
-the user_input with the ".png" ending
-@app.route("/instagram_scrape/<image_name>.png")
-
-
-"""
-
-@app.route("/instagram_scrape/<image_name>.png") # 3
+@app.route("/instagram_analyze/<image_name>.png")
 def image(image_name):
-  # pulls in the scraper and creates the DataFrame
-  instagram_scraped = instagram_scraper(image_name, 0)
 
-  # formats the DataFrame to display plots
-  instagram_graph(instagram_scraped)
+    # Pulls in the analyzer and creates the DataFrame
+    data = instagram_analyzer(image_name, 0)
 
+    # formats the DataFrame to display plots
+    instagram_graph(data)
 
-  # rendering matplotlib image to Flask view
-  canvas = FigureCanvas(plt.gcf())
-  output = StringIO()
-  canvas.print_png(output)
-  # make_response converts the return value from a view
-  # function to a real response object that is an instance
-  # of response_class.
-  response = make_response(output.getvalue())
+    # renders matplotlib image to Flask view
+    canvas = FigureCanvas(plt.gcf())
+    output = StringIO()
+    canvas.print_png(output)
 
-  response.mimetype = 'image/png'
+    response = make_response(output.getvalue())
+    response.mimetype = 'image/png'
 
-  return response
+    return response
 ```
-Our final step is to simply change the run.py to:
 
-```
-import os
-from instagram_scraper_app import app
+The `main()` function grabs the user input from the form and then redirects the user to the `instagram_analyze/<user_input>` route where the image is formated with a ".png" extension, passed to the template, and rendered for the end user.
+
+From there, the `image()` function is fired where we grab the data and clean it from Instagram (`data = instagram_analyzer(image_name, 0)`) and then eventually a Matplotlib graph is created.  `StringIO` us used to render the graph and display it as a png file in the template.
+
+YOU MAY NEED TO CLEAN UP THE ROUTES
+
+## Run it Locally
+
+Our final step is to simply change the *run.py* to:
+
+```python
+from instagram_analyzer_app import app
+
 
 if __name__ == '__main__':
-  app.run(debug=True)
-```
->This script imports our app and excecutes it in the browser.
-
-Before running our app we'll have to pip install a few dependencies to run it.
-
-> Make sure that you're inside your virtual environment.
-
-```
-sh
-$ source venv/bin/activate
+    app.run(debug=True)
 ```
 
-Let's pip install the dependencies:
+Run it locally:
 
-```
-sh
-$ pip install flask_wtf requests pandas matplotlib simplejson python-instagram
-```
-
-Let's run it locally:
-
-```
-sh
+```sh
 $ python run.py
 ```
 
-Cool. Hopefully that works.
+Test it out. See what happens!
 
-Lets push up our final changes to GitHub and Heroku.
+ADD IMAGE
 
-Before we do that we have to upload our dependencies to our requirements.txt:
+## Update Heroku
 
+Commit your changes and then push to GitHub and Heroku.
+
+> Keep in mind that we've added a number of dependencies since our last push, and each time you add or update dependnecies on the *requirements.txt* file, Heroku must download them. This will take some time. Be patient.
+
+Wait! We're not done just yet. We still need to add the Instagram Client ID as an [environment/config](https://devcenter.heroku.com/articles/config-vars) variable:
+
+```sh
+$ heroku config:set client_id=ADD-YOUR-CLIENT-ID-HERE
 ```
-sh
-$ pip freeze > requirements.txt
-```
-Followed by the add/commit and push structure:
 
-```
-sh
-$ git add .
-$ git commit -m "final push"
-$ git push heroku master
+This command sets the variable in the environment so that it gets picked up by the *keys.py* file.
 
-> Pushing up dependencies to Heroku will take some time. Be patient.
+Now check out your app in the browser:
 
-```
-And one final thing to take care of our hidden keys is to run the code below in our terminal:
-
-```
-sh
-heroku config:set client_id=768fcff36c95eb08506bae8a9caffa3
-```
->Running the above command will configure Heroku to use the necessary key to run our app. Read more about it [here](https://devcenter.heroku.com/articles/config-vars). The above client id is made up.
-
-Type:
-```
-sh
+```sh
 $ heroku open
 ```
-to open the app in the browser
 
+ADD IMAGE
 
-In case the dependencies fail to be pushed up or you hit a timeout:
+## Conclusion
 
-```
-sh
-$ pip uninstall matplotlib
-$ pip uninstall pandas
-$ pip freeze > requirements.txt
-```
-Push to heroku again.
-
-Once it works:
-
-```
-sh
-$ pip install matplotlib
-$ pip freeze > requirements.txt
-```
-Push to Heroku again.
-
-Then:
-
-```
-sh
-$ pip install pandas
-$ pip freeze > requirements.txt
-```
-Push to Heroku one more time and run:
-
-```
-sh
-$ heroku open
-```
-> Something about pushing up all your dependencies at once causes Heroku to crash or timeout. Do it piece by piece.
+ADD SUMMARY!
 
 Please add you questions/comments below. Thank you!!!
-
-
-
-

@@ -10,34 +10,32 @@ body {
   text-align: center;
 }
 
-
-
 .input {
-	max-width: 200px;
-	
+  max-width: 200px;
 }
-
 
 /* Placeholder Align */
 
 ::-webkit-input-placeholder {
-   text-align: center;
+  text-align: center;
 }
 
 :-moz-placeholder { /* Firefox 18- */
-   text-align: center;  
+  text-align: center;
 }
 
 ::-moz-placeholder {  /* Firefox 19+ */
-   text-align: center;  
+  text-align: center;
 }
 
-:-ms-input-placeholder {  
-   text-align: center; 
+:-ms-input-placeholder {
+  text-align: center;
 }
 
 /* Centering Text */
-textarea { text-align: center; 
+textarea {
+  text-align: center;
 }
-input { text-align: center; 
-} 
+input {
+  text-align: center;
+}
