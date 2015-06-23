@@ -545,6 +545,13 @@ THIS NEEDS TO BE CLEANED UP AND BETTER EXPLAINED:
 
 TIE THIS BACK TO THE IPYTHON NOTEBOOK. THAT'S THE POINT OF THIS POST. IPYTHON -> FLASK
 
+Install the dependencies:
+
+```sh
+$ pip install requests==2.6.2 pandas==0.16.1
+$ pip freeze > requirements.txt
+```
+
 ### Graph Script
 
 To generate the graphs, add the following code to instagram_graphs.py*:
@@ -585,6 +592,13 @@ This code is designed to work with the DataFrame that gets created in *instagram
 
 THIS NEEDS TO BE CLEANED UP AND BETTER EXPLAINED
 TIE THIS BACK TO THE IPYTHON NOTEBOOK. THAT'S THE POINT OF THIS POST. IPYTHON -> FLASK
+
+Don't forget to install Matplotlib:
+
+```sh
+$ pip install matplotlib==1.4.3
+$ pip freeze > requirements.txt
+```
 
 ### Routes
 
@@ -655,45 +669,28 @@ From there, the `image()` function is fired where we grab the data and clean it 
 
 YOU MAY NEED TO CLEAN UP THE ROUTES
 
-EDITED UP TO HERE - michael
+### Test!
 
-### Fire the APP
+Our final step is to simply change the *run.py* to:
 
-Our final step is to simply change the run.py to:
+```python
+from instagram_analyzer_app import app
 
-```
-import os
-from instagram_scraper_app import app
 
 if __name__ == '__main__':
-  app.run(debug=True)
-```
->This script imports our app and excecutes it in the browser.
-
-Before running our app we'll have to pip install a few dependencies to run it.
-
-> Make sure that you're inside your virtual environment.
-
-```
-sh
-$ source venv/bin/activate
+    app.run(debug=True)
 ```
 
-Let's pip install the dependencies:
-
-```
-sh
-$ pip install flask_wtf requests pandas matplotlib simplejson python-instagram
-```
-
-Let's run it locally:
+Run it locally:
 
 ```
 sh
 $ python run.py
 ```
 
-Cool. Hopefully that works.
+TEST IT OUT!
+
+EDITED UP TO HERE - michael
 
 Lets push up our final changes to GitHub and Heroku.
 
