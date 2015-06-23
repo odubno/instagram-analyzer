@@ -493,7 +493,7 @@ def df_slice(df, cols):
     return new_df.rename(columns=lambda x: x.replace('.', ' ').title())
 
 
-def instagram_scraper(query, n):
+def instagram_analyzer(query, n):
     '''
     returns dataframe
     iterates through and compiles a dataframe
@@ -586,90 +586,78 @@ This code is designed to work with the DataFrame that gets created in *instagram
 THIS NEEDS TO BE CLEANED UP AND BETTER EXPLAINED
 TIE THIS BACK TO THE IPYTHON NOTEBOOK. THAT'S THE POINT OF THIS POST. IPYTHON -> FLASK
 
-Now, let's pull everything togther un the *\_\_init\_\_.py* file:
-
-EDITED UP TO HERE - michael
-
 ### Routes
 
-```
-from flask import Flask, render_template, request, flash, \
-  flash, url_for, redirect, make_response, send_file
+Now, let's pull everything togther un the *\_\_init\_\_.py* file:
 
-from instagram_analyze import *
-from instagram_graphs import *
-
-import StringIO
+```python
 from cStringIO import StringIO
+
+from flask import Flask, render_template, request, \
+    url_for, redirect, make_response
+
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+
+from forms import InstagramAnalyzerForm
+from instagram_analyze import instagram_analyzer
+from instagram_graphs import instagram_graph
 
 
 app = Flask(__name__)
-app.config.from_object('instagram_scraper_app.config')
+app.config.from_object('instagram_analyzer_app.config')
+
+# routes
 
 
-#routes
-
-
-@app.route('/', methods=['GET','POST'])
+@app.route('/', methods=['GET', 'POST'])
 def main():
-  form = InstagramScraper(request.form)
-  if form.validate_on_submit():
-    text = form.instagram_scrape.data
-    return redirect(url_for('instagram_scrape', user_input=text))
-  return render_template('index.html', form=form)
+    form = InstagramAnalyzerForm(request.form)
+    if form.validate_on_submit():
+        text = form.keyword.data
+        return redirect(url_for('instagram_analyze', user_input=text))
+    return render_template('index.html', form=form)
 
 
-@app.route("/instagram_scrape/<user_input>") # 1
-def instagram_scrape(user_input):
+@app.route("/instagram_analyze/<user_input>")
+def instagram_analyze(user_input):
 
-  return render_template(
-    'instagram_scraper.html',
-    input=user_input,
-    filename=user_input+".png" # 2
+    return render_template(
+        'instagram_analyzer.html',
+        input=user_input,
+        filename=user_input+".png"
     )
 
-"""
-The beginning of the route @app.route("/instagram_scrape/<user_input>") picks
-up what the user had passed as a hashtag. The user_input is then passed in for
-filename with a ".png" ending.
 
-The route ending is the user_input.
-Both routes have "/instagram_scrape/..." this causes the response route to render
-the user_input with the ".png" ending
-@app.route("/instagram_scrape/<image_name>.png")
-
-
-"""
-
-@app.route("/instagram_scrape/<image_name>.png") # 3
+@app.route("/instagram_analyze/<image_name>.png")
 def image(image_name):
-  # pulls in the scraper and creates the DataFrame
-  instagram_scraped = instagram_scraper(image_name, 0)
 
-  # formats the DataFrame to display plots
-  instagram_graph(instagram_scraped)
+    # Pulls in the analyzer and creates the DataFrame
+    data = instagram_analyzer(image_name, 0)
 
+    # formats the DataFrame to display plots
+    instagram_graph(data)
 
-  # rendering matplotlib image to Flask view
-  canvas = FigureCanvas(plt.gcf())
-  output = StringIO()
-  canvas.print_png(output)
-  # make_response converts the return value from a view
-  # function to a real response object that is an instance
-  # of response_class.
-  response = make_response(output.getvalue())
+    # renders matplotlib image to Flask view
+    canvas = FigureCanvas(plt.gcf())
+    output = StringIO()
+    canvas.print_png(output)
 
-  response.mimetype = 'image/png'
+    response = make_response(output.getvalue())
+    response.mimetype = 'image/png'
 
-  return response
+    return response
 ```
-Here we create our routes and all of our files get pulled together and rendered to display in the app.
 
-instagram_analyze() scrapes Instagram, cleans the data and outputs it in a DataFrame.
+The `main()` function grabs the user input from the form and then redirects the user to the `instagram_analyze/<user_input>` route where the image is formated with a ".png" extension, passed to the template, and rendered for the end user.
 
-That DataFrame is pulled into instagram_graphs() and it outputs a matplotlib graph.
+From there, the `image()` function is fired where we grab the data and clean it from Instagram (`data = instagram_analyzer(image_name, 0)`) and then eventually a Matplotlib graph is created.  `StringIO` us used to render the graph and display it as a png file in the template.
 
-The output, using matplotlib, is a png file. Here we use StringIO to render the graph and have it displayed as a png file in the app.
+YOU MAY NEED TO CLEAN UP THE ROUTES
+
+EDITED UP TO HERE - michael
+
+### Fire the APP
 
 Our final step is to simply change the run.py to:
 
