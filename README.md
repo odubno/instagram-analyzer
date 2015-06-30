@@ -11,7 +11,9 @@ Welcome!
 In the first part you'll see the gradual progression of getting the data from Instagram, cleaning the data and visulizing the data using IPython Notebook:
 
 • [Using the Instagram Client ID to get the data and pull it into a pandas DataFram](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/01_instagram_analyze_json_DataFrame.ipynb)
+
 • [Creating a function and cleaning Instagram Data](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/02_instagram_analyze_Data_Cleaning.ipynb)
+
 • [Visualizing Instagram data using Matplotlib](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/03_instagram_analyze_Matplotlib.ipynb)
 
 
