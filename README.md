@@ -2,13 +2,17 @@
 
 Welcome!
 
-**Today we’ll take an IPython Notebook that pulls data from the Instagram, analyze the data via Pandas and convert it into a Flask app that will display charts and graphs using matplotlib.**
+**Today we’ll take an IPython Notebook that pulls data from the Instagram, analyzes the data via Pandas and converts it into a Flask app that will display charts and graphs using matplotlib.**
 
 ![Alt text](/instagram_scraper_app/static/img/03_app_images.png "Landing Page")
 
 *This is a guest post by ____, a Python developer...*
 
-In the first part, before development, you'll see the gradual progression of getting the data from Instagram, cleaning the data and visulizing the data using Matplotlib:
+## Instagram Analyzer Using IPython Notebook
+
+In the first part, before development, you'll see the gradual progression of using IPython Notebook to get the data from Instagram, clean the data and visulize the data using Matplotlib:
+
+IPython Notebook Files:
 
 • [Using the Instagram Client ID to get the data and pull it into a pandas DataFram](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/01_instagram_analyze_json_DataFrame.ipynb)
 
@@ -17,9 +21,11 @@ In the first part, before development, you'll see the gradual progression of get
 • [Visualizing Instagram data using Matplotlib](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/03_instagram_analyze_Matplotlib.ipynb)
 
 
-> The code used in the IPython Notebook links above will be copied into a text editor during the tutorial to be used in deploying our app. Viewing the above links is recommended only if you'd like to see the code and how it evolves to be used in development. 
+> The code from the IPython Notebook links above will be copied into a text editor during the tutorial and will be used in deploying our app. Viewing the above links is recommended only if you'd like to see the code and how it evolves to be used in development. 
 
-In the first two parts, we'll begin by structuring our working environment and in the third part we'll work on porting the back-end logic from the IPython Notebook to the Flask application:
+## Deploying the Instagram Analyzer
+
+In the first two parts of deploying our app, we'll begin by structuring the working environment and in the third part we'll work on porting the back-end logic from the [IPython Notebook files](https://github.com/odubno/instagram_scraper/tree/master/IPython_Notebook_Files) to the Flask application:
 
 1. *Part One*: Setup the local development environment along with the basic Flask app.
 1. *Part Two*: Setup the production environment on Heroku and push the current application to the cloud.
@@ -27,14 +33,12 @@ In the first two parts, we'll begin by structuring our working environment and i
 
 We're excited to present how to take an IPython Notebook, containing all of our data work, and strip out the relevant parts to build out the Flask back-end and then add a nice front-end so that our work can be displayed in a browser for the world to see.
 
-> Keep in mind that this is a low-level tutorial for those looking to get familiar with Flask, understand the development workflow, convert code from IPython to Flask, and deploy a basic app to Heroku.
+> Keep in mind that this is a low-level tutorial for those looking to get familiar with Flask, understand the development workflow, convert code from IPython Notebook to development, and deploy a basic app to Heroku.
 
 Enjoy!
 
-ADD ALL DEPENDECIES AND VERSIONS HERE
-DO BETTER JOB OF EXPLAINING HOW TO GO FROM IPYTHON TO FLASK. START WITH BETTER INTRO OF WHAT'S HAPPENING IN THE IPYTHON NOTEBOOK. START WITH IPYTHON, DESCRIBING WHAT IT DOES AND THEN EXPLAIN WHAT YOU'RE GOING TO CREATE. THIS IS THE "WHAT" and "WHY" THE BLOG POST IS THE "HOW".
+## Dependencies for the app:
 
-Dependencies for the app:
 ```
 Flask==0.10.1
 Flask-WTF==0.11
@@ -59,8 +63,6 @@ simplejson==3.6.5
 six==1.9.0
 wsgiref==0.1.2
 ```
-
-
 
 ## Structure
 
