@@ -2,11 +2,18 @@
 
 Welcome!
 
-**Today we’ll take an IPython Notebook that pulls data from the Instagram API and then analyzes the data via Pandas and convert it into a Flask app that also displays charts and graphs using matplotlib based on the data analysis.**
+**Today we’ll take an IPython Notebook that pulls data from the Instagram, analyze the data via Pandas and convert it into a Flask app that will display charts and graphs using matplotlib.**
 
 ![Alt text](/instagram_scraper_app/static/img/03_app_images.png "Landing Page")
 
 *This is a guest post by ____, a Python developer...*
+
+In the first part you'll see the gradual progression of getting the data from Instagram, cleaning the data and visulizing the data using IPython Notebook:
+
+• [Using the Instagram Client ID to get the data and pull it into a pandas DataFram](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/01_instagram_analyze_json_DataFrame.ipynb)
+• [Creating a function and cleaning Instagram Data](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/02_instagram_analyze_Data_Cleaning.ipynb)
+• [Visualizing Instagram data using Matplotlib](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/03_instagram_analyze_Matplotlib.ipynb)
+
 
 In the first two parts, we'll begin by structuring our working environment and in the third part we'll work on porting the back-end logic from the IPython Notebook to the Flask application:
 
@@ -48,13 +55,6 @@ simplejson==3.6.5
 six==1.9.0
 wsgiref==0.1.2
 ```
-
-Follow this [link](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/instagram_analyze_json_DataFrame.ipynb) to see our first IPython Notebook, where we use our CLIENT_ID to pull data from Instagram, convert it into json and pull it into a pandas DataFrame. Super easy code to follow.
-
-Follow this [link](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/instagram_analyze_Data_Cleaning.ipynb) to see the cleaning that we did to our data. Here we clean the date field, select the columns we want to work with and output it back into a pandas Data Frame.
-
-
-
 
 
 
