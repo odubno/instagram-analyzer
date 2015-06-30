@@ -16,7 +16,7 @@ In the first part, before development, you'll see the gradual progression of get
 
 • [Visualizing Instagram data using Matplotlib](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/03_instagram_analyze_Matplotlib.ipynb)
 
->The code used in the IPython Notebook links above will be copied into a text editor during the tutorial to be used in deploying our app. Viewing the above links is recommended only if you'd like to see the code and how it evolves to be used in development. 
+> The code used in the IPython Notebook links above will be copied into a text editor during the tutorial to be used in deploying our app. Viewing the above links is recommended only if you'd like to see the code and how it evolves to be used in development. 
 
 In the first two parts, we'll begin by structuring our working environment and in the third part we'll work on porting the back-end logic from the IPython Notebook to the Flask application:
 
