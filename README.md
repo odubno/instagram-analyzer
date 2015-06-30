@@ -4,9 +4,7 @@ Welcome!
 
 **Today we’ll take an IPython Notebook that pulls data from the Instagram API and then analyzes the data via Pandas and convert it into a Flask app that also displays charts and graphs using matplotlib based on the data analysis.**
 
-![Alt text](/instagram_scraper_app/static/img/01_instagram_analyzer.png "Landing Page")
-
-![Alt text](/instagram_scraper_app/static/img/02_instagram_analyzer.png "Results Page")
+![Alt text](/instagram_scraper_app/static/img/03_app_images.png "The Full App")
 
 *This is a guest post by ____, a Python developer...*
 
