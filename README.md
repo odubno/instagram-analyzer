@@ -2,11 +2,11 @@
 
 Welcome!
 
-**Today we’ll take an IPython Notebook that pulls data from the Instagram, analyzes the data via Pandas and converts it into a Flask app that will display charts and graphs using matplotlib.**
+**Today we’ll take an IPython Notebook that pulls data from Instagram, analyzes the data via Pandas and converts the IPython Notebookl into a Flask app that will display charts and graphs using matplotlib.**
 
 ![Alt text](/instagram_scraper_app/static/img/03_app_images.png "Landing Page")
 
-*This is a guest post by ____, a Python developer...*
+*This is a guest post by Oleh Dubno, a beginner Python Developer from New York City. He's currently freelancing at [Quovo](www.quovo.com) as a Web Crawling Developer. He began his quest, moving from Accounting to picking up Data Science, in August of 2014. Since then he has finished courses using Python at General Assembly, Thinkful, Coursera, CodeSchool and Udacity. See some of his other projects [here](www.olehdubno.com). He currently has weekly mentoring sessions with Michael Herman, a RealPython mentor.*
 
 ### A. Instagram Analyzer in IPython Notebook
 
