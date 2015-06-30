@@ -8,7 +8,7 @@ Welcome!
 
 *This is a guest post by ____, a Python developer...*
 
-### Instagram Analyzer Using IPython Notebook
+### A. Instagram Analyzer Using IPython Notebook
 
 In the first part, before development, you'll see the gradual progression of using IPython Notebook to get the data from Instagram, clean the data and visulize the data using Matplotlib:
 
@@ -23,7 +23,7 @@ IPython Notebook Files:
 
 > The code from the IPython Notebook links above will be copied into a text editor during the tutorial and will be used in deploying our app. Viewing the above links is recommended only if you'd like to see the code and how it evolves to be used in development. 
 
-### Deploying the Instagram Analyzer
+### B. Deploying the Instagram Analyzer
 
 In the first two parts of deploying our app, we'll begin by structuring the working environment and in the third part we'll work on porting the back-end logic from the [IPython Notebook files](https://github.com/odubno/instagram_scraper/tree/master/IPython_Notebook_Files) to the Flask application:
 
