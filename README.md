@@ -6,9 +6,11 @@ Welcome!
 
 ![Alt text](/instagram_scraper_app/static/img/03_app_images.png "Landing Page")
 
-*This is a guest post by Oleh Dubno and a co-contributor to the code, Christian Tirol.*
+*This is a guest post by Oleh Dubno and a co-contributor, Christian Tirol.*
 
 *Oleh is a beginner Python Developer from New York City. He's currently working as a contractor at <a href="https://www.quovo.com/splash/index.php" target="_blank">Quovo</a> as a Web Crawling Developer. He began his quest, moving from Accounting to picking up Data Science, in August of 2014. Since then he has finished courses using Python at General Assembly, Thinkful, Coursera, CodeSchool and Udacity. See some of his other projects <a href="http://www.olehdubno.com/" target="_blank">here</a>. He currently has weekly mentoring sessions with Michael Herman, a RealPython mentor.*
+
+*Christian is ...*
 
 ### A. Instagram Analyzer in IPython Notebook
 
