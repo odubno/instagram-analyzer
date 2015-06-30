@@ -6,7 +6,7 @@ Welcome!
 
 ![Alt text](/instagram_scraper_app/static/img/01_instagram_analyzer.png "Landing Page")
 
-![Alt text](/instagram_scraper_app/static/img/02_instagram_analyzer.png" Results Page")
+![Alt text](/instagram_scraper_app/static/img/02_instagram_analyzer.png "Results Page")
 
 *This is a guest post by ____, a Python developer...*
 
