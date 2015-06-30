@@ -6,6 +6,8 @@ Welcome!
 
 ADD IMAGE
 
+![Alt text](/instagram_scraper_app/static/img/01_instagram_analyzer.png "Landing Page")
+
 *This is a guest post by ____, a Python developer...*
 
 In the first two parts, we'll begin by structuring our working environment and in the third part we'll work on porting the back-end logic from the IPython Notebook to the Flask application:
