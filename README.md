@@ -8,7 +8,7 @@ Welcome!
 
 *This is a guest post by ____, a Python developer...*
 
-In the first part you'll see the gradual progression of getting the data from Instagram, cleaning the data and visulizing the data using IPython Notebook:
+In the first part, before development, you'll see the gradual progression of getting the data from Instagram, cleaning the data and visulizing the data using Matplotlib:
 
 • [Using the Instagram Client ID to get the data and pull it into a pandas DataFram](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/01_instagram_analyze_json_DataFrame.ipynb)
 
@@ -16,6 +16,7 @@ In the first part you'll see the gradual progression of getting the data from In
 
 • [Visualizing Instagram data using Matplotlib](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/03_instagram_analyze_Matplotlib.ipynb)
 
+>The code used in the IPython Notebook links above will be copied into a text editor during the tutorial to be used in deploying our app. Viewing the above links is recommended only if you'd like to see the code and how it evolves to be used in development. 
 
 In the first two parts, we'll begin by structuring our working environment and in the third part we'll work on porting the back-end logic from the IPython Notebook to the Flask application:
 
