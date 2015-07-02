@@ -98,7 +98,12 @@ $ git remote add origin https://github.com/YourAccount/instagram_analyzer.git
 $ git push -u origin master
 ```
 
-Now add a *.gitignore* **touch .gitignore** file to hide certain files and folders from the public:
+Now add a *.gitignore* using the command:
+
+```
+$ touch .gitignore
+```
+And hide certain files and folders from the public in the .gitignore:
 
 ```
 .DS_Store
