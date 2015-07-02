@@ -2,30 +2,30 @@
 
 Welcome!
 
-**Today we’ll take an IPython Notebook that pulls data from Instagram, analyzes the data via Pandas and converts the IPython Notebookl into a Flask app that will display charts and graphs using matplotlib.**
+**Today we’ll take an IPython Notebook that pulls data from Instagram, analyzes the data via Pandas and converts the IPython Notebook into a Flask app that will display charts and graphs using Matplotlib.**
 
 ![Alt text](/instagram_scraper_app/static/img/03_app_images.png "Landing Page")
 
-*This is a guest post by Oleh Dubno and a co-contributor, Christian Tirol.*
+*This is a guest post by Oleh Dubno with help from Christian Tirol.*
 
-*Oleh is a beginner Python Developer from New York City. He's currently working as a contractor at <a href="https://www.quovo.com/splash/index.php" target="_blank">Quovo</a> as a Web Crawling Developer. He began his quest, moving from Accounting to picking up Data Science, in August of 2014. Since then he has finished courses using Python at General Assembly, Thinkful, Coursera, CodeSchool and Udacity. See some of his other projects <a href="http://www.olehdubno.com/" target="_blank">here</a>. He currently has weekly mentoring sessions with Michael Herman, a RealPython mentor.*
+*Oleh is a beginner Python Developer from New York City. He's currently contracting as a Web Crawling Developer at <a href="https://www.quovo.com/splash/index.php" target="_blank">Quovo</a>, a fintech startup. He began his quest, moving from Accounting to picking up Data Science, in August of 2014. Since then he has finished courses using Python at General Assembly, Thinkful, Coursera, CodeSchool and Udacity. See some of his other projects <a href="http://www.olehdubno.com/" target="_blank">here</a>. He currently has weekly mentoring sessions with Michael Herman, a RealPython mentor.*
 
 *Christian is ...*
 
 ### A. Instagram Analyzer in IPython Notebook
 
-In the first part, before development, you'll see the gradual progression of using IPython Notebook to get the data from Instagram, clean the data and visualize the data using Matplotlib:
+In the first part, before development, you'll see the gradual progression of using IPython Notebook to get data from Instagram, clean the data and visualize everything using Matplotlib:
 
 IPython Notebook Files:
 
 • [Using the Instagram Client ID to get the data and pull everything into a pandas DataFrame](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/01_instagram_analyze_json_DataFrame.ipynb)
 
-• [Creating a function and cleaning Instagram Data](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/02_instagram_analyze_Data_Cleaning.ipynb)
+• [Creating a function using the code form the previous notebook and cleaning Instagram Data](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/02_instagram_analyze_Data_Cleaning.ipynb)
 
-• [Visualizing Instagram data using Matplotlib](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/03_instagram_analyze_Matplotlib.ipynb)
+• [Developing our function and visualizing Instagram data using Matplotlib](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/03_instagram_analyze_Matplotlib.ipynb)
 
 
-> The code from the IPython Notebook links above will be copied into a text editor during the tutorial and will be used in deploying our app. Viewing the above links is recommended only if you'd like to see the code and how it evolves to be used in development. 
+> The code from the IPython Notebook links above will be copied into a text editor during the tutorial and will be used in deploying our app. Viewing the above links is recommended if you'd like to see the code move from the notebook to how it's executed in development. 
 
 ### B. Instagram Analyzer in Development
 
@@ -94,9 +94,11 @@ Add a local Git repo along with a basic *README.md* file:
 ```sh
 $ git init
 $ echo "# Instagram Analyzer" >> README.md
+$ git remote add origin https://github.com/YourAccount/instagram_analyzer.git
+$ git push -u origin master
 ```
 
-Now add a *.gitignore* file to hide certain files and folders from the public:
+Now add a *.gitignore* **touch .gitignore** file to hide certain files and folders from the public:
 
 ```
 .DS_Store
