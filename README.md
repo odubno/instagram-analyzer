@@ -25,7 +25,7 @@ IPython Notebook Files:
 • [Developing our function and visualizing Instagram data using Matplotlib](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/03_instagram_analyze_Matplotlib.ipynb)
 
 
-> The code from the IPython Notebook links above will be copied into a text editor during the tutorial and will be used in deploying our app. Viewing the above links is recommended if you'd like to see the code move from the notebook to how it's executed in development. 
+> The code from the IPython Notebook links above will be copied into a text editor during the tutorial and will be used in deploying our app. Viewing the above links is recommended if you'd like to see the code move from the notebook to development. 
 
 ### B. Instagram Analyzer in Development
 
@@ -126,8 +126,9 @@ Your project directory should now look like this:
 
 ```sh
 ├── README.md
+├── requirements.txt
 ├── run.py
-└── requirements.txt
+└── venv
 ```
 
 Open up *run.py* in your favorite editor (like [Sublime Text 3](https://realpython.com/blog/python/setting-up-sublime-text-3-for-full-stack-python-development/)) and add the following code:
@@ -151,7 +152,7 @@ Run the app locally:
 $ python run.py
 ```
 
-You should see the displayed text of "Python Instagram Analyzer" in action at [http://localhost:5000/](http://localhost:5000/). Once done, kill the server.
+You should see the displayed text of "Python Instagram Analyzer" in action at [http://localhost:5000/](http://localhost:5000/). Once done, kill the server. *CTRL+C*
 
 Now let's get Heroku up and running!
 
@@ -187,6 +188,12 @@ $ git add -A
 $ git commit -m "first commit"
 $ git push heroku master
 ```
+
+To rename the app:
+```
+$ heroku apps:rename newname
+```
+[Link](https://devcenter.heroku.com/articles/renaming-apps#updating-git-remotes) explaining how to rename your app in heroku.
 
 Checkout your app:
 
@@ -251,15 +258,30 @@ $ touch env.sh
 
 Add this file to your *.gitignore* file since it will contain sensitive info.
 
+Current files in inside *.gitignore*:
+```
+.DS_Store
+*.pyc
+venv
+```
+
+After adding your file:
+```
+.DS_Store
+*.pyc
+venv
+env.sh
+```
+
 ## Static Files
 
 Let's add some HTML and CSS to update the structure and style, respectively.
 
 ### HTML
 
-Our *_base.html* will be server as the standard layout for all of our HTML pages:
+Our *_base.html* will serve as the standard layout for all of our HTML pages:
 
-***_base.html**
+***_base.html***
 
 ```html
 <!DOCTYPE html>
