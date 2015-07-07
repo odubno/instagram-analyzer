@@ -367,7 +367,7 @@ Now that we have the *_base.html* added, let's pull the base into our other HTML
 {% endblock %}
 ```
 
-The form will display the form field for entry and a placeholder to indicate to the end user what should be entered - a hashtag, in our case. The user input will then be pulled into the Python script and used when we hit the API.
+The form will display the form field for entry and a placeholder to indicate to the end user what to enter - a hashtag, in our case. The user input will then enter the hashtag. Then the Python script that we will pull in from our IPython Notebook will be used to pull the data from Instagram and run the analysis.
 
 ***instagram_analyzer.html***
 
