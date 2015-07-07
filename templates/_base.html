@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <title>Instagram Analyzer</title>
+    <!-- meta -->
+    <meta name='description' content=" ">
+    <meta name='author' conten=" ">
+    <meta name='viewport' content="width=device-width,initial-scale=1">
+    <!-- styles -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="{{url_for('static', filename='./css/main.css')}}" rel="stylesheet" media="screen">
+    {% block css %}{% endblock %}
+  </head>
+  <body>
+
+    <div class="container">
+
+      <br>
+
+      <!-- messages -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      <div class="row">
+        <div class="col-md-12">
+          {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">
+            <a class="close" title="Close" href="#" data-dismiss="alert">&times;</a>
+            {{message}}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+      {% endwith %}
+
+      <!-- child template -->
+      {% block content %}{% endblock %}
+
+      <br>
+
+      <!-- errors -->
+      {% if error %}
+        <p class="error"><strong>Error:</strong> {{ error }}</p>
+      {% endif %}
+
+    </div>
+
+  </body>
+</html>

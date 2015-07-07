@@ -1,0 +1,24 @@
+{% extends "_base.html" %}
+{% block content %}
+
+<h1>Python Instagram Analyzer</h1>
+<br>
+
+<form class="" role="form" method="post" action="">
+  {{ form.csrf_token }}
+  <p>
+    {{ form.instagram_scrape(class="form-control input-lg", placeholder="Enter Hashtag")}}
+    <span class="error">
+      {% if form.instagram_scrape.errors %}
+        {% for error in form.instagram_scrape.errors %}
+          {{ error }}
+        {% endfor %}
+      {% endif %}
+    </span>
+  </p>
+  <button class="btn btn-default btn-lg" type="submit">Analyze!</button>
+</form>
+
+<br>
+
+{% endblock %}

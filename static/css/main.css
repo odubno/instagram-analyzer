@@ -1,0 +1,41 @@
+/* custom styles */
+
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+
+.container {
+  max-width: 700px;
+  text-align: center;
+}
+
+.input {
+  max-width: 200px;
+}
+
+/* Placeholder Align */
+
+::-webkit-input-placeholder {
+  text-align: center;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+  text-align: center;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+  text-align: center;
+}
+
+:-ms-input-placeholder {
+  text-align: center;
+}
+
+/* Centering Text */
+textarea {
+  text-align: center;
+}
+input {
+  text-align: center;
+}

@@ -1,0 +1,12 @@
+{% extends "_base.html" %}
+{% block content %}
+
+<h2>Hashtag:</h2>
+<div class="well">{{ input }}</div>
+
+<h2>Analysis:</h2>
+<iframe src={{ filename }} frameborder="0" align="middle" height="600" width="650"</iframe>
+
+<h3><a href="/">Search Again?</a></h3>
+
+{% endblock %}
