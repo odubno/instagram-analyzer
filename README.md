@@ -4,7 +4,7 @@ Welcome!
 
 **Today we’ll take an IPython Notebook that pulls data from Instagram, analyzes the data via Pandas and converts the IPython Notebook into a Flask app that will display charts and graphs using Matplotlib.**
 
-![Alt text](/static/img/instagram_analyze_page.jpg "Landing Page")
+![Alt text](/instagram_analyzer_app/static/img/instagram_analyze_page.jpg "Landing Page")
 
 *This is a guest post by Oleh Dubno with help from Christian Tirol.*
 
@@ -214,7 +214,7 @@ Follow the structure of our app below:
 ```
 sh
 $ mkdir instagram_analyzer_app && cd instagram_analyzer_app
-$ touch __init__.py instagram_analyze.py instagram_graphs.py keys.py forms.py config.py
+$ touch __init__.py instagram_analyze.py instagram_graphs.py keys.py forms.py
 $ mkdir templates && cd templates
 $ touch instagram_analyzer.html index.html _base.html
 $ cd ..
@@ -231,7 +231,6 @@ Your app's structure should now look like:
 ├── README.md
 ├── instagram_analyzer_app
 │   ├── __init__.py
-│   ├── config.py
 │   ├── forms.py
 │   ├── instagram_analyze.py
 │   ├── instagram_graphs.py
@@ -273,172 +272,9 @@ venv
 env.sh
 ```
 
-## Static Files
+## Instagram API/ Pandas DataFrame/ Matplotlib
 
-Let's add some HTML and CSS to update the structure and style, respectively.
-
-### HTML
-
-Our *_base.html* will serve as the standard layout for all of our HTML pages:
-
-***_base.html***
-
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset='utf-8'>
-    <title>Instagram Analyzer</title>
-    <!-- meta -->
-    <meta name='description' content=" ">
-    <meta name='author' conten=" ">
-    <meta name='viewport' content="width=device-width,initial-scale=1">
-    <!-- styles -->
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="{{url_for('static', filename='./css/main.css')}}" rel="stylesheet" media="screen">
-    {% block css %}{% endblock %}
-  </head>
-  <body>
-
-    <div class="container">
-
-      <br>
-
-      <!-- messages -->
-      {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-      <div class="row">
-        <div class="col-md-12">
-          {% for category, message in messages %}
-          <div class="alert alert-{{ category }}">
-            <a class="close" title="Close" href="#" data-dismiss="alert">&times;</a>
-            {{message}}
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-      {% endif %}
-      {% endwith %}
-
-      <!-- child template -->
-      {% block content %}{% endblock %}
-
-      <br>
-
-      <!-- errors -->
-      {% if error %}
-        <p class="error"><strong>Error:</strong> {{ error }}</p>
-      {% endif %}
-
-    </div>
-
-  </body>
-</html>
-```
-
-Now that we have the *_base.html* added, let's pull the base into our other HTML files.
-
-***index.html***
-
-```html
-{% extends "_base.html" %}
-{% block content %}
-
-<h1>Python Instagram Analyzer</h1>
-<br>
-
-<form class="" role="form" method="post" action="">
-  {{ form.csrf_token }}
-  <p>
-    {{ form.instagram_scrape(class="form-control input-lg", placeholder="Enter Hashtag")}}
-    <span class="error">
-      {% if form.instagram_scrape.errors %}
-        {% for error in form.instagram_scrape.errors %}
-          {{ error }}
-        {% endfor %}
-      {% endif %}
-    </span>
-  </p>
-  <button class="btn btn-default btn-lg" type="submit">Analyze!</button>
-</form>
-
-<br>
-
-{% endblock %}
-```
-
-The form will display the form field for entry and a placeholder to indicate to the end user what to enter - a hashtag, in our case. The user input will then enter the hashtag. Then the Python script that we will pull in from our IPython Notebook will be used to pull the data from Instagram and run the analysis.
-
-***instagram_analyzer.html***
-
-```html
-{% extends "_base.html" %}
-{% block content %}
-
-<h2>Hashtag:</h2>
-<div class="well">{{ input }}</div>
-
-<h2>Analysis:</h2>
-<iframe src={{ filename }} frameborder="0" align="middle" height="600" width="650"</iframe>
-
-<h3><a href="/">Search Again?</a></h3>
-
-{% endblock %}
-```
-
-Here we will render the display of our analysis. The input will display the user input and the filename will display graphs that show the results of the analysis.
-
-### CSS
-
-Our CSS will format the contents of the page and we'll gain control of its display. Update *main.css* with:
-
-```css
-/* custom styles */
-
-body {
-  padding-top: 50px;
-  padding-bottom: 20px;
-}
-
-.container {
-  max-width: 700px;
-  text-align: center;
-}
-
-.input {
-  max-width: 200px;
-}
-
-/* Placeholder Align */
-
-::-webkit-input-placeholder {
-  text-align: center;
-}
-
-:-moz-placeholder { /* Firefox 18- */
-  text-align: center;
-}
-
-::-moz-placeholder {  /* Firefox 19+ */
-  text-align: center;
-}
-
-:-ms-input-placeholder {
-  text-align: center;
-}
-
-/* Centering Text */
-textarea {
-  text-align: center;
-}
-input {
-  text-align: center;
-}
-```
-
-## Instagram API
-
-Now that we have the HTML and CSS figured out lets take a look at the Instagram API.
+Here we'll be pulling in the code from the IPython Notebook files 
 
 ### Credentials
 
@@ -460,7 +296,7 @@ import os
 CLIENT_ID = os.environ['client_id']
 ```
   
->> This is to keep your Keys hidden during deployment.
+> This will keep your secret Keys hidden during deployment.
 
 Now, when you start up your app, you can run `source env.sh` in the terminal to add the `client_id` variable to the environment.
 
@@ -471,6 +307,14 @@ Here we're pulling in the back-end logic that we worked on in the [first](https:
 The script below uses the Instagram client_id to pull in the 30 most recent Instagram posts into a Pandas DataFrame and cleans up the columns and rows to display it back in a DataFrame. 
 
 Follow the comments in the script for an indepth understanding.
+
+pip install the necessary modules below and update our requirements.
+
+```
+sh
+$ pip install requests==2.6.2 pandas==0.16.1 matplotlib==1.4.3
+$ pip freeze > requirements.txt
+```
 
 In the script below, we'll be importing json_normalize. Here's a [medium article](https://medium.com/@amirziai/flattening-json-objects-in-python-f5343c794b10) that explains how json_normalize works.
 
@@ -500,7 +344,6 @@ def instagram_data(query):
         results.append(df_instance)
         
     df = pd.DataFrame().append(results)
-
 
 	# Our dates are a bit messy. Let's clean it up
 	
@@ -532,8 +375,52 @@ def instagram_data(query):
     return df_clean
 ```
 
-Here's a side by side comaparison of the IPython Notebook script to what we have above. 
+Here's a side by side comparison of:
+The IPython Notebook script on the left and the script ready for deployment on the right. 
 
-![Alt text](/static/img/instagram_anayze_1.jpg "Instagram Analyze IPython Notebook code camparison")
+![Alt text](/instagram_analyzer_app/static/img/instagram_anayze_1.jpg "Instagram Analyze IPython Notebook code camparison")
+
+### Matplotlib Script
+
+Before moving forward with integrating our instagram_analyze.py script with Flask lets modify our instagram_graphs.py to display graphs. We'll be returning to the [third](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/03_instagram_analyze_Matplotlib.ipynb) IPython Notebook to pull in the code that displays our graphs using Matplotlib. 
+
+Please add the script below to *instagram_graphs.py*:
+
+```
+import matplotlib.pyplot as plt
+
+def instagram_graph(instagram_analyzed):
+
+    fig = plt.figure(figsize=(8, 6))
+
+	# Using subplots for multiple graphs
+    plt.subplot2grid((3, 3), (0, 0), colspan=3, rowspan=1)
+    instagram_analyzed['Comments Count'].plot(kind='bar', alpha=.55)
+    plt.title("Total Comment Count Per Post", fontsize=20)
+    plt.ylabel('Total Comments')
+    plt.xlabel('Most Recent to Least Recent')
+
+    plt.subplot2grid((3, 3), (1, 0), colspan=3, rowspan=1)
+    instagram_analyzed['Likes Count'].plot(kind='bar', alpha=.55)
+    plt.title("Total Like Count Per Post", fontsize=20)
+    plt.xlabel('Most Recent to Least Recent')
+    plt.ylabel('Total Likes')
+
+    plt.subplot2grid((3, 3), (2, 0), colspan=3, rowspan=1)
+    plt.hist(instagram_analyzed['Likes Count'])
+    plt.title('Test Graph (Please Ignore)', fontsize=20)
+    plt.xlabel('Amount of Posts')
+    plt.ylabel('Likes')
+    plt.rcParams["figure.figsize"]
+
+    fig.tight_layout()
+```
+### __init__.py and run.py
+
+Below we'll be modifying run.py to work with our script and editing __init__.py. 
+
+__init__.py creates our directories and executes our back-end logic. run.py returns our app.
+
+
 
 
