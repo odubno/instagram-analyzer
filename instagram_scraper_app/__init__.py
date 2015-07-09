@@ -74,8 +74,3 @@ def image(image_name):
 @app.route('/about')
 def home():
     return render_template('about.html')
-
-
-@app.route('/heatmap')
-def heatmap():
-    return render_template('csv-heatmap.html')

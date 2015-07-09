@@ -452,23 +452,25 @@ Once you’ve registered a client, you should have your own Client ID, which wil
 export "client_id=ADD-YOUR-CLIENT-ID-HERE"
 ```
 
-Let's modify the *keys.py* file to pull in our instagram API credentials:
+Let's modify the *keys.py* file, located inside **instagram_analyzer_app** folder, to pull in our Instagram client_id credentials:
 
 ```python
 import os
 
 CLIENT_ID = os.environ['client_id']
 ```
+  
+>> This is to keep your Keys hidden during deployment.
 
-Now, when you start up your app, you can run `source env.sh` in the terminal to add the `client_id` variable to the environment.
+Now, when you start up your app, you can run `source env.sh` in the terminal to add the `client_id` variable to the environment. This will activate your client ID, that is now hidden to be found by your system inside your working environment.
 
 ### Configurations
 
-*config.py* holds the app's main constants:
+*config.py* holds the app's main constants. We'll be importing config into our app:
 
 ```python
 WTF_CSRF_ENABLED = True
-SECRET_KEY = "makesureyouupdateinpr0duction"
+SECRET_KEY = "makesureyouupdateinpr0duction" # leave it as is
 base_url = "https://api.instagram.com/v1"
 cols = [
     'user.username',
