@@ -1,10 +1,6 @@
-from flask import Flask
-app = Flask(__name__)
+from instagram_analyzer_app import app
 
-
-@app.route('/')
-def main():
-    return "Python Instagram Analyzer"
 
 if __name__ == '__main__':
-    app.run()
+    # port = int(os.environ.get('PORT', 5000))
+    app.run(debug=True)

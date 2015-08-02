@@ -4,7 +4,7 @@ import pandas as pd
 
 from keys import CLIENT_ID
 
-def instagram_data(query):
+def instagram_analyzer(query):
     base_url = "https://api.instagram.com/v1"
     url = '{0}/tags/{1}/media/recent?client_id={2}&count=30'.format(
         base_url, query, CLIENT_ID)

@@ -7,10 +7,10 @@
 <form class="" role="form" method="post" action="">
   {{ form.csrf_token }}
   <p>
-    {{ form.instagram_scrape(class="form-control input-lg", placeholder="Enter Hashtag")}}
+    {{ form.instagram_analyze(class="form-control input-lg", placeholder="Enter Hashtag")}}
     <span class="error">
-      {% if form.instagram_scrape.errors %}
-        {% for error in form.instagram_scrape.errors %}
+      {% if form.instagram_analyze.errors %}
+        {% for error in form.instagram_analyze.errors %}
           {{ error }}
         {% endfor %}
       {% endif %}

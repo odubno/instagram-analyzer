@@ -415,12 +415,25 @@ def instagram_graph(instagram_analyzed):
 
     fig.tight_layout()
 ```
-### __init__.py and run.py
+### Routes (__init__.py and run.py)
 
-Below we'll be modifying run.py to work with our script and editing __init__.py. 
+Quick change to the run.py 
 
-__init__.py creates our directories and executes our back-end logic. run.py returns our app.
+```
+from instagram_analyzer_app import app
 
+
+if __name__ == '__main__':
+    # port = int(os.environ.get('PORT', 5000))
+    app.run(debug=True)
+```
+
+> __init__.py creates our directories and executes our back-end logic. run.py returns our app.
+
+Let's create our __init__ file:
+
+```
+test
 
 
 
