@@ -4,7 +4,7 @@ Welcome!
 
 **Today we’ll take an IPython Notebook that pulls data from Instagram, analyzes the data via Pandas and converts the IPython Notebook into a Flask app that will display charts and graphs using Matplotlib.**
 
-![Alt text](/instagram_scraper_app/static/img/03_app_images.png "Landing Page")
+![Alt text](/instagram_analyzer_app/static/img/instagram_analyze_page.jpg "Landing Page")
 
 *This is a guest post by Oleh Dubno with help from Christian Tirol.*
 
@@ -214,7 +214,7 @@ Follow the structure of our app below:
 ```
 sh
 $ mkdir instagram_analyzer_app && cd instagram_analyzer_app
-$ touch __init__.py instagram_analyze.py instagram_graphs.py keys.py forms.py config.py
+$ touch __init__.py instagram_analyze.py instagram_graphs.py keys.py forms.py
 $ mkdir templates && cd templates
 $ touch instagram_analyzer.html index.html _base.html
 $ cd ..
@@ -231,7 +231,6 @@ Your app's structure should now look like:
 ├── README.md
 ├── instagram_analyzer_app
 │   ├── __init__.py
-│   ├── config.py
 │   ├── forms.py
 │   ├── instagram_analyze.py
 │   ├── instagram_graphs.py
@@ -273,172 +272,9 @@ venv
 env.sh
 ```
 
-## Static Files
+## Instagram API/ Pandas DataFrame/ Matplotlib
 
-Let's add some HTML and CSS to update the structure and style, respectively.
-
-### HTML
-
-Our *_base.html* will serve as the standard layout for all of our HTML pages:
-
-***_base.html***
-
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset='utf-8'>
-    <title>Instagram Analyzer</title>
-    <!-- meta -->
-    <meta name='description' content=" ">
-    <meta name='author' conten=" ">
-    <meta name='viewport' content="width=device-width,initial-scale=1">
-    <!-- styles -->
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="{{url_for('static', filename='./css/main.css')}}" rel="stylesheet" media="screen">
-    {% block css %}{% endblock %}
-  </head>
-  <body>
-
-    <div class="container">
-
-      <br>
-
-      <!-- messages -->
-      {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-      <div class="row">
-        <div class="col-md-12">
-          {% for category, message in messages %}
-          <div class="alert alert-{{ category }}">
-            <a class="close" title="Close" href="#" data-dismiss="alert">&times;</a>
-            {{message}}
-          </div>
-          {% endfor %}
-        </div>
-      </div>
-      {% endif %}
-      {% endwith %}
-
-      <!-- child template -->
-      {% block content %}{% endblock %}
-
-      <br>
-
-      <!-- errors -->
-      {% if error %}
-        <p class="error"><strong>Error:</strong> {{ error }}</p>
-      {% endif %}
-
-    </div>
-
-  </body>
-</html>
-```
-
-Now that we have the *_base.html* added, let's pull the base into our other HTML files.
-
-***index.html***
-
-```html
-{% extends "_base.html" %}
-{% block content %}
-
-<h1>Python Instagram Analyzer</h1>
-<br>
-
-<form class="" role="form" method="post" action="">
-  {{ form.csrf_token }}
-  <p>
-    {{ form.instagram_scrape(class="form-control input-lg", placeholder="Enter Hashtag")}}
-    <span class="error">
-      {% if form.instagram_scrape.errors %}
-        {% for error in form.instagram_scrape.errors %}
-          {{ error }}
-        {% endfor %}
-      {% endif %}
-    </span>
-  </p>
-  <button class="btn btn-default btn-lg" type="submit">Analyze!</button>
-</form>
-
-<br>
-
-{% endblock %}
-```
-
-The form will display the form field for entry and a placeholder to indicate to the end user what to enter - a hashtag, in our case. The user input will then enter the hashtag. Then the Python script that we will pull in from our IPython Notebook will be used to pull the data from Instagram and run the analysis.
-
-***instagram_analyzer.html***
-
-```html
-{% extends "_base.html" %}
-{% block content %}
-
-<h2>Hashtag:</h2>
-<div class="well">{{ input }}</div>
-
-<h2>Analysis:</h2>
-<iframe src={{ filename }} frameborder="0" align="middle" height="600" width="650"</iframe>
-
-<h3><a href="/">Search Again?</a></h3>
-
-{% endblock %}
-```
-
-Here we will render the display of our analysis. The input will display the user input and the filename will display graphs that show the results of the analysis.
-
-### CSS
-
-Our CSS will format the contents of the page and we'll gain control of its display. Update *main.css* with:
-
-```css
-/* custom styles */
-
-body {
-  padding-top: 50px;
-  padding-bottom: 20px;
-}
-
-.container {
-  max-width: 700px;
-  text-align: center;
-}
-
-.input {
-  max-width: 200px;
-}
-
-/* Placeholder Align */
-
-::-webkit-input-placeholder {
-  text-align: center;
-}
-
-:-moz-placeholder { /* Firefox 18- */
-  text-align: center;
-}
-
-::-moz-placeholder {  /* Firefox 19+ */
-  text-align: center;
-}
-
-:-ms-input-placeholder {
-  text-align: center;
-}
-
-/* Centering Text */
-textarea {
-  text-align: center;
-}
-input {
-  text-align: center;
-}
-```
-
-## Instagram API
-
-Now that we have the HTML and CSS figured out lets take a look at the Instagram API.
+Here we'll be pulling in the code from the IPython Notebook files 
 
 ### Credentials
 
@@ -460,343 +296,140 @@ import os
 CLIENT_ID = os.environ['client_id']
 ```
   
->> This is to keep your Keys hidden during deployment.
+> This will keep your secret Keys hidden during deployment.
 
-Now, when you start up your app, you can run `source env.sh` in the terminal to add the `client_id` variable to the environment. This will activate your client ID, that is now hidden to be found by your system inside your working environment.
+Now, when you start up your app, you can run `source env.sh` in the terminal to add the `client_id` variable to the environment.
 
-### Configurations
+###Instagram Analyze Script
 
-*config.py* holds the app's main constants. We'll be importing config into our app:
+Here we're pulling in the back-end logic that we worked on in the [first](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/01_instagram_analyze_json_DataFrame.ipynb) and the [second](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/02_instagram_analyze_Data_Cleaning.ipynb) IPython Notebook. 
 
-```python
-WTF_CSRF_ENABLED = True
-SECRET_KEY = "makesureyouupdateinpr0duction" # leave it as is
-base_url = "https://api.instagram.com/v1"
-cols = [
-    'user.username',
-    'caption.text',
-    'tags',
-    'comments.count',
-    'likes.count',
-    'filter',
-    'type',
-    'created_time',
-    'user.full_name',
-    'user.id',
-    'link',
-    'location.latitude',
-    'location.longitude'
-]
+The script below uses the Instagram client_id to pull in the 30 most recent Instagram posts into a Pandas DataFrame and cleans up the columns and rows to display it back in a DataFrame. 
+
+Follow the comments in the script for an indepth understanding.
+
+pip install the necessary modules below and update our requirements.
+
 ```
-
-With that, we can now get to the code.
-
-### Forms
-
-The *forms.py* file validates the user input and ensures that data is entered and the length of the input is no less than 2 characters. To simplify things, we use the [Flask-WTF](https://flask-wtf.readthedocs.org/en/v0.9.5/) package:
-
-```sh
-$ pip install flask-wtf==0.9.5
-$ flask freeze > requirements.txt
-```
-
-Now update *forms.py*:
-
-```python
-from flask_wtf import Form
-from wtforms import TextField
-from wtforms.validators import DataRequired, length
-
-
-class InstagramAnalyzerForm(Form):
-    keyword = TextField(
-        'Keyword',
-        validators=[DataRequired(), length(min=2)]
-    )
-```
-
-Commit and push your code to Github and Heroku.
-
-### Analyzer Script
-
-The fun begins. Here, we'll be pulling utilizing *keys.py*, *config.py*, *forms.py* and all the pre-packaged Python modules to help us with-
-
-- Pulling data from the Instagram API,
-- Cleaning the data, and
-- Using Pandas to display the results in a Pandas' [DataFrame](http://pandas.pydata.org/pandas-docs/version/0.16.1/generated/pandas.DataFrame.html#pandas-dataframe).
-
-Add the following code to *instagram_analyze.py*:
-
-```python
-import requests
-import datetime
-import pandas as pd
-from pandas.io.json import json_normalize
-
-from keys import CLIENT_ID
-from config import base_url, cols
-
-
-def get(url):
-    '''
-    returns str(requests.get(url).json()['pagination']['next_url']
-    for a specified url
-    '''
-    r = requests.get(url)
-    j = r.json()
-    if 'pagination' in j:
-        try:
-            pagination = j['pagination']
-            if 'next_url' in pagination:
-                try:
-                    next_url = pagination['next_url']
-                    return str(next_url)
-                except Exception, e:
-                    return str(e)
-        except Exception, e:
-            return str(e)
-
-
-def df_slice(df, cols):
-    '''
-    replaces '.' with spaces in selected column titles of a specified dataframe
-    cols contained in config
-    '''
-    new_cols = list()
-    new_df = pd.DataFrame()
-    for col in cols:
-        if col in df:
-            new_cols.append(col)
-    new_df = df[cols]
-    return new_df.rename(columns=lambda x: x.replace('.', ' ').title())
-
-
-def instagram_analyzer(query, n):
-    '''
-    returns dataframe
-    iterates through and compiles a dataframe
-    of n pages of instagram data from a specified url
-    '''
-    url = '{0}/tags/{1}/media/recent?client_id={2}&count=30'.format(
-        base_url, query, CLIENT_ID)
-    urls = list()
-    results = list()
-
-    urls.append(str(url))
-
-    for _ in range(n):
-        x = get(url)
-        urls.append(str(x))
-        url = get(x)
-
-    for url in urls:
-        r = requests.get(url)
-        j = r.json()
-        if 'data in j':
-            try:
-                data = j['data']
-                df_instance = json_normalize(data)
-                results.append(df_instance)
-            except Exception, e:
-                return 'Error: Could not find data.', str(e)
-
-    df = pd.DataFrame().append(results)
-    df = df.reset_index()
-    df = df.drop('index', axis=1)
-
-    # further df cleans
-    df['created_time'] = [y.replace(y, datetime.datetime.fromtimestamp(
-        int(str(y))).strftime('%Y-%m-%d %H:%M:%S')) for y in df['created_time']]
-    # applies df_slice to slice dataframe;
-    # selects columns specified in config, cleans column titles
-    df = df_slice(df, cols)
-
-    return df
-```
-
-THIS NEEDS TO BE CLEANED UP AND BETTER EXPLAINED:
-1. Our first function of the script grabs the url
-1. You'll find that we're using "pagination" and "next_url" to iterate through Instagram data and pull in more than 33 posts.
-1. Instagram limits us to only 33 of its most recent posts per search.
-1. We do some cleaning of the data and return it in a DataFrame.
-1. I'm not explicitly mentioning IPython Notebook, but know that I tested all this code in IPython Notebook before moving it over to development.
-
-TIE THIS BACK TO THE IPYTHON NOTEBOOK. THAT'S THE POINT OF THIS POST. IPYTHON -> FLASK
-
-Install the dependencies:
-
-```sh
-$ pip install requests==2.6.2 pandas==0.16.1
+sh
+$ pip install requests==2.6.2 pandas==0.16.1 matplotlib==1.4.3
 $ pip freeze > requirements.txt
 ```
 
-Commit and push your code to Github and Heroku.
+In the script below, we'll be importing json_normalize. Here's a [medium article](https://medium.com/@amirziai/flattening-json-objects-in-python-f5343c794b10) that explains how json_normalize works.
 
-### Graph Script
+```
+import requests
+from pandas.io.json import json_normalize
+import pandas as pd
 
-To generate the graphs, add the following code to instagram_graphs.py*:
+from keys import CLIENT_ID
 
-```python
+def instagram_data(query):
+    base_url = "https://api.instagram.com/v1"
+    url = '{0}/tags/{1}/media/recent?client_id={2}&count=30'.format(
+        base_url, query, CLIENT_ID)
+
+    page = requests.get(url)
+    page_json = page.json()
+    
+    # The format of our json are 3 different dictionaries: *pagination*, *meta* and *data*. We're interested in *data*. 
+
+    # *data* is a list of nested dictionaries. What json_normalize will do is flatten everything and create columns for nested dictionary titles.
+
+    results = []
+    if 'data' in page_json: 
+        data = page_json['data']
+        df_instance = json_normalize(data)
+        results.append(df_instance)
+        
+    df = pd.DataFrame().append(results)
+
+  # Our dates are a bit messy. Let's clean it up
+  
+    df['created_time'] = [
+    y.replace(y, datetime.datetime.fromtimestamp(int(str(y))).strftime(
+    '%Y-%m-%d %H:%M:%S')) for y in df['created_time']]
+
+  # These are the columns that we personally took interest in.
+    cols = [
+        'user.username',
+        'caption.text',
+        'tags',
+        'comments.count',
+        'likes.count',
+        'filter',
+        'type',
+        'created_time',
+        'user.full_name',
+        'user.id',
+        'link',
+        'location.latitude',
+        'location.longitude'
+    ]
+  
+  # Minor ocd cleaning before returning our data set.
+    df_cols = df[cols]
+    df_clean = df_cols.rename(columns=lambda x: x.replace('.',' ').title())
+
+    return df_clean
+```
+
+Here's a side by side comparison of:
+The IPython Notebook script on the left and the script ready for deployment on the right. 
+
+![Alt text](/instagram_analyzer_app/static/img/instagram_anayze_1.jpg "Instagram Analyze IPython Notebook code camparison")
+
+### Matplotlib Script
+
+Before moving forward with integrating our instagram_analyze.py script with Flask lets modify our instagram_graphs.py to display graphs. We'll be returning to the [third](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/03_instagram_analyze_Matplotlib.ipynb) IPython Notebook to pull in the code that displays our graphs using Matplotlib. 
+
+Please add the script below to *instagram_graphs.py*:
+
+```
 import matplotlib.pyplot as plt
 
-
-def instagram_graph(instagram_scraped):
-    '''
-    Displays all the graphs
-    '''
+def instagram_graph(instagram_analyzed):
 
     fig = plt.figure(figsize=(8, 6))
 
-    # axis 1
+  # Using subplots for multiple graphs
     plt.subplot2grid((3, 3), (0, 0), colspan=3, rowspan=1)
-    instagram_scraped['Comments Count'].plot(kind='bar', alpha=.55)
-    plt.title("Total Comments Count")
+    instagram_analyzed['Comments Count'].plot(kind='bar', alpha=.55)
+    plt.title("Total Comment Count Per Post", fontsize=20)
+    plt.ylabel('Total Comments')
+    plt.xlabel('Most Recent to Least Recent')
 
-    # axis 2
     plt.subplot2grid((3, 3), (1, 0), colspan=3, rowspan=1)
-    instagram_scraped['Likes Count'].plot(kind='bar', alpha=.55)
-    plt.title("Total Likes Count")
+    instagram_analyzed['Likes Count'].plot(kind='bar', alpha=.55)
+    plt.title("Total Like Count Per Post", fontsize=20)
+    plt.xlabel('Most Recent to Least Recent')
+    plt.ylabel('Total Likes')
 
-    # axis 3
     plt.subplot2grid((3, 3), (2, 0), colspan=3, rowspan=1)
-    plt.hist(instagram_scraped['Likes Count'])
-    plt.title('Distribution of Likes on Instagram Posts', fontsize=20)
-    plt.xlabel('Amount of Posts', fontsize=18)
-    plt.ylabel('Likes', fontsize=16)
+    plt.hist(instagram_analyzed['Likes Count'])
+    plt.title('Test Graph (Please Ignore)', fontsize=20)
+    plt.xlabel('Amount of Posts')
+    plt.ylabel('Likes')
     plt.rcParams["figure.figsize"]
 
     fig.tight_layout()
 ```
+### Routes (__init__.py and run.py)
 
-This code is designed to work with the DataFrame that gets created in *instagram_analyze.py* in order to create charts based on the analysis of data pulled from Instagram.
+Updating run.py 
 
-THIS NEEDS TO BE CLEANED UP AND BETTER EXPLAINED
-TIE THIS BACK TO THE IPYTHON NOTEBOOK. THAT'S THE POINT OF THIS POST. IPYTHON -> FLASK
-
-Don't forget to install Matplotlib:
-
-```sh
-$ pip install matplotlib==1.4.3
-$ pip freeze > requirements.txt
 ```
-
-Commit and push your code to Github and Heroku.
-
-### Routes
-
-Now, let's pull everything togther un the *\_\_init\_\_.py* file:
-
-```python
-from cStringIO import StringIO
-
-from flask import Flask, render_template, request, \
-    url_for, redirect, make_response
-
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
-
-from forms import InstagramAnalyzerForm
-from instagram_analyze import instagram_analyzer
-from instagram_graphs import instagram_graph
-
-
-app = Flask(__name__)
-app.config.from_object('instagram_analyzer_app.config')
-
-# routes
-
-
-@app.route('/', methods=['GET', 'POST'])
-def main():
-    form = InstagramAnalyzerForm(request.form)
-    if form.validate_on_submit():
-        text = form.keyword.data
-        return redirect(url_for('instagram_analyze', user_input=text))
-    return render_template('index.html', form=form)
-
-
-@app.route("/instagram_analyze/<user_input>")
-def instagram_analyze(user_input):
-
-    return render_template(
-        'instagram_analyzer.html',
-        input=user_input,
-        filename=user_input+".png"
-    )
-
-
-@app.route("/instagram_analyze/<image_name>.png")
-def image(image_name):
-
-    # Pulls in the analyzer and creates the DataFrame
-    data = instagram_analyzer(image_name, 0)
-
-    # formats the DataFrame to display plots
-    instagram_graph(data)
-
-    # renders matplotlib image to Flask view
-    canvas = FigureCanvas(plt.gcf())
-    output = StringIO()
-    canvas.print_png(output)
-
-    response = make_response(output.getvalue())
-    response.mimetype = 'image/png'
-
-    return response
-```
-
-The `main()` function grabs the user input from the form and then redirects the user to the `instagram_analyze/<user_input>` route where the image is formated with a ".png" extension, passed to the template, and rendered for the end user.
-
-From there, the `image()` function is fired where we grab the data and clean it from Instagram (`data = instagram_analyzer(image_name, 0)`) and then eventually a Matplotlib graph is created.  `StringIO` us used to render the graph and display it as a png file in the template.
-
-YOU MAY NEED TO CLEAN UP THE ROUTES
-
-## Run it Locally
-
-Our final step is to simply change the *run.py* to:
-
-```python
 from instagram_analyzer_app import app
 
 
 if __name__ == '__main__':
+    # port = int(os.environ.get('PORT', 5000))
     app.run(debug=True)
 ```
 
-Run it locally:
+> __init__.py creates our directories and executes our back-end logic. run.py returns our app.
 
-```sh
-$ python run.py
+Let's create our __init__ file:
+
 ```
-
-Test it out. See what happens!
-
-ADD IMAGE
-
-## Update Heroku
-
-Commit your changes and then push to GitHub and Heroku.
-
-> Keep in mind that we've added a number of dependencies since our last push, and each time you add or update dependnecies on the *requirements.txt* file, Heroku must download them. This will take some time. Be patient.
-
-Wait! We're not done just yet. We still need to add the Instagram Client ID as an [environment/config](https://devcenter.heroku.com/articles/config-vars) variable:
-
-```sh
-$ heroku config:set client_id=ADD-YOUR-CLIENT-ID-HERE
-```
-
-This command sets the variable in the environment so that it gets picked up by the *keys.py* file.
-
-Now check out your app in the browser:
-
-```sh
-$ heroku open
-```
-
-ADD IMAGE
-
-## Conclusion
-
-ADD SUMMARY!
-
-Please add you questions/comments below. Thank you!!!
