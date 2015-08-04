@@ -5,13 +5,17 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import matplotlib.pyplot as plt
 
 
-from instagram_analyze import instagram_scraper
+from instagram_analyze import instagram_analyzer
 from instagram_graphs import instagram_graph
-from forms import InstagramScraper
+from forms import InstagramAnalyzer
 
 
 app = Flask(__name__)
-app.config.from_object('instagram_scraper_app.config')
+# Update parameters required by the Instagram. The secret_key could be anything
+app.config.update(
+    WTF_CSRF_ENABLED = True
+    ,SECRET_KEY = "pass"
+    )
 
 
 # routes
@@ -19,43 +23,43 @@ app.config.from_object('instagram_scraper_app.config')
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
-    form = InstagramScraper(request.form)
+    form = InstagramAnalyzer(request.form)
     if form.validate_on_submit():
-        text = form.instagram_scrape.data
-        return redirect(url_for('instagram_scrape', user_input=text))
+        text = form.instagram_analyze.data
+        return redirect(url_for('instagram_analyze', user_input=text))
     return render_template('index.html', form=form)
 
 
-@app.route("/instagram_scrape/<user_input>")  # 1
-def instagram_scrape(user_input):
+@app.route("/instagram_analyze/<user_input>")  # 1
+def instagram_analyze(user_input):
 
     return render_template(
-        'instagram_scraper.html',
+        'instagram_analyzer.html',
         input=user_input,
         filename=user_input+".png"  # 2
     )
 
 """
-The beginning of the route @app.route("/instagram_scrape/<user_input>") picks
+The beginning of the route @app.route("/instagram_analyze/<user_input>") picks
 up what the user had passed as a search. ".png" is then appended to user_input to create
 the image title. 
 
 The ending of the url will show up as the input and reference the filename.
-Both routes have "/instagram_scrape/..." this causes the response route to render
+Both routes have "/instagram_analyze/..." this causes the response route to render
 the user_input with the ".png" ending
-@app.route("/instagram_scrape/<image_name>.png")
+@app.route("/instagram_analyze/<image_name>.png")
 
 
 """
 
 
-@app.route("/instagram_scrape/<image_name>.png")  # 3
+@app.route("/instagram_analyze/<image_name>.png")  # 3
 def image(image_name):
     # pulls in the scraper and creates the DataFrame
-    instagram_scraped = instagram_scraper(image_name, 0)
+    instagram_analyzed = instagram_analyzer(image_name, 0)
 
     # formats the DataFrame to display plots
-    instagram_graph(instagram_scraped)
+    instagram_graph(instagram_analyzed)
 
     # rendering matplotlib image to Flask view
     canvas = FigureCanvas(plt.gcf())

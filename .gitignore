@@ -1,14 +1,6 @@
-<<<<<<< HEAD
 .DS_Store
 *.pyc
 *.db
 venv
 env.sh
-=======
-venv
 env
-.DS_Store
-*.pyc
-*.db
-env.sh
->>>>>>> 64d839dfd6a9f9b7ac0299ec6c5ccbdee56ee42b

@@ -18,18 +18,18 @@ In the first part, before development, you'll see the gradual progression of usi
 
 IPython Notebook Files:
 
-• [Using the Instagram Client ID to get the data and pull everything into a pandas DataFrame](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/01_instagram_analyze_json_DataFrame.ipynb)
+• [Using the Instagram Client ID to get the data and pull everything into a pandas DataFrame](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/01_instagram_analyze_json_DataFrame.ipynb)
 
-• [Creating a function using the code form the previous notebook and cleaning Instagram Data](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/02_instagram_analyze_Data_Cleaning.ipynb)
+• [Creating a function using the code form the previous notebook and cleaning Instagram Data](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/02_instagram_analyze_Data_Cleaning.ipynb)
 
-• [Developing our function and visualizing Instagram data using Matplotlib](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/03_instagram_analyze_Matplotlib.ipynb)
+• [Developing our function and visualizing Instagram data using Matplotlib](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/03_instagram_analyze_Matplotlib.ipynb)
 
 
 > The code from the IPython Notebook links above will be copied into a text editor during the tutorial and will be used in deploying our app. Viewing the above links is recommended if you'd like to see the code move from the notebook to development. 
 
 ### B. Instagram Analyzer in Development
 
-In the first two parts of deploying our app, we'll begin by structuring the working environment and in the third part we'll work on porting the back-end logic from the [IPython Notebook files](https://github.com/odubno/instagram_scraper/tree/master/IPython_Notebook_Files) to the Flask application:
+In the first two parts of deploying our app, we'll begin by structuring the working environment and in the third part we'll work on porting the back-end logic from the [IPython Notebook files](https://github.com/odubno/instagram_analyzer/tree/master/IPython_Notebook_Files) to the Flask application:
 
 1. *Part One*: Setup the local development environment along with the basic Flask app.
 1. *Part Two*: Setup the production environment on Heroku and push the current application to the cloud.
@@ -302,7 +302,7 @@ Now, when you start up your app, you can run `source env.sh` in the terminal to 
 
 ###Instagram Analyze Script
 
-Here we're pulling in the back-end logic that we worked on in the [first](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/01_instagram_analyze_json_DataFrame.ipynb) and the [second](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/02_instagram_analyze_Data_Cleaning.ipynb) IPython Notebook. 
+Here we're pulling in the back-end logic that we worked on in the [first](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/01_instagram_analyze_json_DataFrame.ipynb) and the [second](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/02_instagram_analyze_Data_Cleaning.ipynb) IPython Notebook. 
 
 The script below uses the Instagram client_id to pull in the 30 most recent Instagram posts into a Pandas DataFrame and cleans up the columns and rows to display it back in a DataFrame. 
 
@@ -382,7 +382,7 @@ The IPython Notebook script on the left and the script ready for deployment on t
 
 ### Matplotlib Script
 
-Before moving forward with integrating our instagram_analyze.py script with Flask lets modify our instagram_graphs.py to display graphs. We'll be returning to the [third](https://github.com/odubno/instagram_scraper/blob/master/IPython_Notebook_Files/03_instagram_analyze_Matplotlib.ipynb) IPython Notebook to pull in the code that displays our graphs using Matplotlib. 
+Before moving forward with integrating our instagram_analyze.py script with Flask lets modify our instagram_graphs.py to display graphs. We'll be returning to the [third](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/03_instagram_analyze_Matplotlib.ipynb) IPython Notebook to pull in the code that displays our graphs using Matplotlib. 
 
 Please add the script below to *instagram_graphs.py*:
 
