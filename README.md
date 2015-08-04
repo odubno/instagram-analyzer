@@ -434,6 +434,7 @@ Let's create our __init__ file:
 
 ```
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 ADD IMAGE
 
@@ -449,5 +450,7 @@ Please add you questions/comments below. Thank you!!!
 =======
 Please add you questions/comments below. Thank you!!!
 >>>>>>> 64d839dfd6a9f9b7ac0299ec6c5ccbdee56ee42b
+=======
+>>>>>>> 28d1c6c79160e346ff6b9372fa1e6f2ba87f2755
 =======
 >>>>>>> 28d1c6c79160e346ff6b9372fa1e6f2ba87f2755
