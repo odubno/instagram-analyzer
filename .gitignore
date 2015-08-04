@@ -4,4 +4,3 @@ env
 *.pyc
 *.db
 env.sh
-.ipynb_checkpoints
