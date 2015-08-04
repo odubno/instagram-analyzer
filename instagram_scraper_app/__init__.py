@@ -37,10 +37,10 @@ def instagram_scrape(user_input):
 
 """
 The beginning of the route @app.route("/instagram_scrape/<user_input>") picks
-up what the user had passed as a hashtag. The user_input is then passed in for
-filename with a ".png" ending.
+up what the user had passed as a search. ".png" is then appended to user_input to create
+the image title. 
 
-The route ending is the user_input.
+The ending of the url will show up as the input and reference the filename.
 Both routes have "/instagram_scrape/..." this causes the response route to render
 the user_input with the ".png" ending
 @app.route("/instagram_scrape/<image_name>.png")
