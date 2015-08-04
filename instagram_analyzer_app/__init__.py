@@ -6,9 +6,16 @@ import matplotlib.pyplot as plt
 
 from instagram_analyze import instagram_analyzer
 from instagram_graphs import instagram_graph
+from forms import InstagramAnalyzer
 
 app = Flask(__name__)
-app.config.from_object('instagram_analyzer_app.config')
+# Update parameters required by the Instagram. The secret_key could be anything
+app.config.update(
+    WTF_CSRF_ENABLED = True
+    ,SECRET_KEY = "pass"
+    )
+
+# Routes
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
@@ -44,7 +51,7 @@ the user_input with the ".png" ending
 @app.route("/instagram_analyze/<image_name>.png")  # 3
 def image(image_name):
     # pulls in the scraper and creates the DataFrame
-    data = instagram_analyzer(image_name, 0)
+    data = instagram_analyzer(image_name)
 
     # formats the DataFrame to display plots
     instagram_graph(data)

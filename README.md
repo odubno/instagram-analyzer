@@ -417,7 +417,7 @@ def instagram_graph(instagram_analyzed):
 ```
 ### Routes (__init__.py and run.py)
 
-Quick change to the run.py 
+Updating run.py 
 
 ```
 from instagram_analyzer_app import app
@@ -433,7 +433,7 @@ if __name__ == '__main__':
 Let's create our __init__ file:
 
 ```
-test
+
 
 
 
