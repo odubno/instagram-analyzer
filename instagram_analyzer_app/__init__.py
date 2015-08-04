@@ -56,7 +56,7 @@ the user_input with the ".png" ending
 @app.route("/instagram_analyze/<image_name>.png")  # 3
 def image(image_name):
     # pulls in the scraper and creates the DataFrame
-    instagram_analyzed = instagram_analyzer(image_name, 0)
+    instagram_analyzed = instagram_analyzer(image_name)
 
     # formats the DataFrame to display plots
     instagram_graph(instagram_analyzed)
