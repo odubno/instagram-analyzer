@@ -1,0 +1,7 @@
+* derive sentiment
+    - apply n-gram helper functions to master function
+    - apply part-of-speech / predicate identification helper function to master function
+    - apply frequency normalization function to master function
+  
+* filter spam posts
+    - for aggregated hashtag sentiment, remove duplicate posts from individual users

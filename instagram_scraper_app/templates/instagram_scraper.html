@@ -1,0 +1,13 @@
+{% extends "_base.html" %}
+
+{% block content %}
+
+<center>
+  <h2>Hashtag:</h2>
+  <div class="well input">{{ input }}</div>
+  <h2>Analysis:</h2>
+  <iframe src={{ filename }} frameborder="0" align="middle" height="600" width="800"></iframe>
+  <h3><a href="/"> Searcg Again?</a></h3>
+</center>
+
+{% endblock %}

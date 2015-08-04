@@ -799,7 +799,11 @@ ADD IMAGE
 
 ADD SUMMARY!
 
+<<<<<<< HEAD
 Please add you questions/comments below. Thank you!!!
 
 
 
+=======
+Please add you questions/comments below. Thank you!!!
+>>>>>>> 64d839dfd6a9f9b7ac0299ec6c5ccbdee56ee42b
