@@ -2,4 +2,5 @@
 *.pyc
 *.db
 venv
+env.sh
 env
