@@ -415,20 +415,241 @@ def instagram_graph(instagram_analyzed):
 
     fig.tight_layout()
 ```
-### Routes (__init__.py and run.py)
+### Routes (*__init__.py* and *run.py*)
 
-Updating run.py 
+Updating *run.py* 
 
 ```
 from instagram_analyzer_app import app
-
 
 if __name__ == '__main__':
     # port = int(os.environ.get('PORT', 5000))
     app.run(debug=True)
 ```
 
-> __init__.py creates our directories and executes our back-end logic. run.py returns our app.
+> *__init__.py* creates our directories and executes our back-end logic. run.py returns our app.
 
-Let's create our __init__ file:
+Inside our instagram_analyzer_folder lets open up your __init__ file. This is where we'll tie our backend logic together to the front-end, that we'll go over soon. The routes create our desried urls and the necessary HTML requests to get and post information. 
 
+> Follow the comments in the script to gain a better understanding of the code and how everything gets mapped. 
+
+```
+from cStringIO import StringIO
+from flask import Flask, render_template, request, \
+  flash, url_for, redirect, make_response, send_file
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+import matplotlib.pyplot as plt
+
+
+from instagram_analyze import instagram_analyzer
+from instagram_graphs import instagram_graph
+from forms import InstagramAnalyzer
+
+
+app = Flask(__name__)
+
+# For form protection. Note that the SECRET_KEY could litterally be any string you'd like.
+app.config.update(
+    WTF_CSRF_ENABLED = 
+    ,SECRET_KEY = "pass"
+    )
+
+# ROUTES
+
+@app.route('/', methods=['GET', 'POST'])
+def main():
+    form = InstagramAnalyzer(request.form)
+    if form.validate_on_submit():
+        text = form.instagram_analyze.data
+        return redirect(url_for('instagram_analyze', user_input=text))
+    return render_template('index.html', form=form)
+
+
+@app.route("/instagram_analyze/<user_input>")  # 1
+def instagram_analyze(user_input):
+
+    return render_template(
+        'instagram_analyzer.html',
+        input=user_input,
+        filename=user_input+".png"  # 2
+    )
+
+"""
+The beginning of the route @app.route("/instagram_analyze/<user_input>") picks
+up what the user had passed as a search. ".png" is then appended to user_input to create
+the image title. 
+
+The ending of the url will show up as the input and reference the filename.
+Both routes have "/instagram_analyze/..." this causes the response route to render
+the user_input with the ".png" ending
+@app.route("/instagram_analyze/<image_name>.png")
+"""
+
+@app.route("/instagram_analyze/<image_name>.png")  # 3
+def image(image_name):
+    # pulls in the scraper and creates the DataFrame
+    instagram_analyzed = instagram_analyzer(image_name)
+
+    # formats the DataFrame to display plots
+    instagram_graph(instagram_analyzed)
+
+    # rendering matplotlib image to Flask view
+    canvas = FigureCanvas(plt.gcf())
+    output = StringIO()
+    canvas.print_png(output)
+    # make_response converts the return value from a view
+    # function to a real response object that is an instance
+    # of response_class.
+    response = make_response(output.getvalue())
+
+    response.mimetype = 'image/png'
+
+    return response
+```
+
+Our *__init__.py* file references a several HTML files. Let's go to our templates folder and create those. 
+
+In order to avoid repeating our HTML structure across all of our code, we'll create a _base.py that will extend and employ template inheritance.
+
+*_base.html*:
+
+```
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <title>Instagram Analyzer</title>
+    
+    <!-- meta -->
+    <meta name='description' content=" ">
+    <meta name='author' conten=" ">
+    <meta name='viewport' content="width=device-width,initial-scale=1">
+
+    <!-- styles -->
+    <link href="{{url_for('static', filename='./css/bootstrap.min.css')}}" rel="stylesheet" media="screen">
+   
+    <link href="{{url_for('static', filename='./css/main.css')}}" rel="stylesheet" media="screen">
+
+
+    {% block css %}{% endblock %}
+  </head>
+  <body>
+
+    <div class="container">
+
+      <br>
+
+      <!-- messages -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      <div class="row">
+        <div class="col-md-12">
+          {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">
+            <a class="close" title="Close" href="#" data-dismiss="alert">&times;</a>
+            {{message}}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+      {% endwith %}
+
+      <!-- child template -->
+      {% block content %}{% endblock %}
+
+      <br>
+
+      <!-- errors -->
+      {% if error %}
+        <p class="error"><strong>Error:</strong> {{ error }}</p>
+      {% endif %}
+
+    </div>
+
+  </body>
+</html>
+```
+
+Now that we updated *_base.html*, let's create the other HTML files and pull in base.
+
+*index.html*
+Here we'll create our form with a post method for users to search for hashtags. 
+
+```
+{% extends "_base.html" %}
+{% block content %}
+
+<h1>Python Instagram Analyzer</h1>
+
+<br>
+
+<center>
+  <form class="input" role="form" method="post" action="">
+    {{ form.csrf_token }}
+    <p>
+      {{ form.instagram_analyze(class="form-control input-lg", placeholder="Enter Hashtag")}}
+      <span class="error">
+        {% if form.instagram_analyze.errors %}
+          {% for error in form.instagram_analyze.errors %}
+            {{ error }}
+          {% endfor %}
+        {% endif %}
+      </span>
+    </p>
+    <button class="btn btn-default btn-lg" type="submit">Analyze!</button>
+  </form>
+
+  <br>
+
+  <p>Click <a href="/about">here</a> to read about the app.</p>
+
+</center>
+
+{% endblock %}
+```
+
+*instagram_analyzer.html*
+Whatever the user passes on the submit form will be rendered as the filename. Refer to the structure of *__init__.py* and see the filename usecase. We'll be displaying our matplotlib graphs inside an iframe and sourcing the filename as explained above.
+
+```
+{% extends "_base.html" %}
+
+{% block content %}
+
+<center>
+  <h2>Hashtag:</h2>
+  <div class="well input">{{ input }}</div>
+  <h2>Analysis:</h2>
+  <iframe src={{ filename }} frameborder="0" align="middle" height="600" width="800"></iframe>
+  <h3><a href="/"> Search Again?</a></h3>
+</center>
+
+{% endblock %}
+```
+
+That's pretty much it for the HTML. Let's actually create an *about.html* page:
+
+```
+{% extends "_base.html" %}
+{% block content %}
+
+<h1>About</h1>
+<br>
+<p> A Python base Instagram API call with the goal to see quick visual performance results of any hashtag.</p>
+<br>
+<h4>Contributors</h4>
+<a href="https://github.com/c-trl" target="_blank">Christian Tirol</a>
+<br>
+<a href="https://github.com/odubno" target="_blank">Oleh Dubno</a>
+<br><br>
+<p>Click <a href="/">here</a> to go back home.</p>
+<p>Click <a href="https://github.com/odubno/instagram_scraper">here</a> for the GitHub code.</p>
+
+
+{% endblock %}
+```
+
+Things to always keep in mind:
+> Always run source env.sh before running the app.
+> Remember to push your code up to github and then to heroku for deployment.

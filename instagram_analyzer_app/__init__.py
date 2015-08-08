@@ -17,8 +17,7 @@ app.config.update(
     ,SECRET_KEY = "pass"
     )
 
-
-# routes
+# Routes
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -36,7 +35,7 @@ def instagram_analyze(user_input):
     return render_template(
         'instagram_analyzer.html',
         input=user_input,
-        filename=user_input+".png"  # 2
+        filename=user_input+".png"  # 2 Hardcoding the png which will help us display the graphs
     )
 
 """
@@ -48,10 +47,7 @@ The ending of the url will show up as the input and reference the filename.
 Both routes have "/instagram_analyze/..." this causes the response route to render
 the user_input with the ".png" ending
 @app.route("/instagram_analyze/<image_name>.png")
-
-
 """
-
 
 @app.route("/instagram_analyze/<image_name>.png")  # 3
 def image(image_name):
