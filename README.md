@@ -507,6 +507,8 @@ def image(image_name):
     return response
 ```
 
+# HTML
+
 Our *__init__.py* file references a several HTML files. Let's go to our templates folder and create those. 
 
 In order to avoid repeating our HTML structure across all of our code, we'll create a _base.py that will extend and employ template inheritance.
