@@ -10,7 +10,7 @@ Welcome!
 
 *Oleh is a beginner Python Developer from New York City. He's currently contracting as a Web Crawling Developer at <a href="https://www.quovo.com/splash/index.php" target="_blank">Quovo</a>, a fintech startup. He began his quest, moving from Accounting to picking up Data Science, in August of 2014. Since then he has finished courses using Python at General Assembly, Thinkful, Coursera, CodeSchool and Udacity. See some of his other projects <a href="http://www.olehdubno.com/" target="_blank">here</a>. He currently has weekly mentoring sessions with Michael Herman, a RealPython mentor.*
 
-*Christian is ...*
+*<a href="mailto:tirol.christian@gmail.com">Christian</a> is an Analyst working in New York City with the Analytics and Reporting Infrastructure teams at <a href="http://www.adroitdigital.com/">Adroit Digital<a/>, a MediaMath subsidiary.  He has a background in Economics and E-Commerce, and is working towards a career in Data Science.  Christian has also completed General Assembly's Data Science course, and continues to grow his experience with Python.  He recently started a <a href="http://c-trl.github.io">blog</a>, which is currently hosted by <a href="http://www.github.com/c-trl">GitHub</a>.*
 
 ### A. Instagram Analyzer in IPython Notebook
 
