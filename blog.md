@@ -586,6 +586,11 @@ Within the *instagram_analyzer.html* file, whatever the user passes on the submi
 
 ## Conclusion
 
+We learned how to use Python to pull in the most recent Instagram posts in IPython Notebook and deploy our results on Heroku. 
+
+Modifications moving forward may include pulling in more than 30 most recent posts at a time, improving our HTML/CSS layout and upgrading the information revealed in the Matplotlib graphs. 
+
+
 Try it out:
 
 ![Alt text](/instagram_analyzer_app/static/img/instagram_analyze_page.jpg "Landing Page")
