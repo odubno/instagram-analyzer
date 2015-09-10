@@ -1,4 +1,3 @@
-# This is a test
 # Instagram Analyzer - from IPython to Flask
 
 Welcome!
