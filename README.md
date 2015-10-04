@@ -26,7 +26,8 @@ In the first two parts of deploying our app, we'll begin by structuring the work
 
 
 ### TODO  RL posts for setting up local environment. 
-1. *Part One*: Setup the local development environment along with the basic Flask app. (_ this )
+1. *Part One*: Setup the local development environment along with the basic Flask app.  - [ ] TODO  RL posts for setting up local environment. 
+
 1. *Part Two*: Setup the production environment on Heroku and push the current application to the cloud.
 1. *Part Three*: Add in the back-end logic to access the Instagram API, process the data with Pandas/Numpy, and create the charts with matplotlib.
 
