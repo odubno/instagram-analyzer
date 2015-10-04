@@ -496,10 +496,10 @@ We learned how to use Python to pull in the most recent Instagram posts in IPyth
 Modifications moving forward may include pulling in more than 30 most recent posts at a time, improving our HTML/CSS layout and upgrading the information revealed in the Matplotlib graphs. 
 
 
-Try it out:
+Try it out: <a href="http://instagram-analyzer.herokuapp.com/">Instagram-Analyzer</a>
 
 ![Alt text](/instagram_analyzer_app/static/img/instagram_analyze_page.jpg "Landing Page")
-<a href="http://instagram-analyzer.herokuapp.com/">Instagram-Analyzer</a>
+
 
 Things to always keep in mind:
 > Always run source env.sh before running the app.
