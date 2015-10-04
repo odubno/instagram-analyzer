@@ -2,7 +2,9 @@
 
 Welcome!
 
-**Today we’ll detail how to convert an IPython Notebook - which pulls data from Instagram and analyzes the data via Pandas - into a Flask web application.**
+**We're excited to present how to take an IPython Notebook, containing all of the data work, and strip out the relevant parts to build out the Flask back-end and then add a nice front-end so that the work can be displayed in a browser for the world to see.**
+
+**We’ll detail how to convert an IPython Notebook - which pulls data from Instagram and analyzes the data via Pandas - into a Flask web application.**
 
 ADD IMAGE
 
@@ -28,12 +30,10 @@ In the first two parts of deploying our app, we'll begin by structuring the work
 ### TODO  RL posts for setting up local environment. 
 1. *Part One*: Setup the local development environment along with the basic Flask app.  
 
-- [ ] TODO  RL posts for setting up local environment. 
+- [ ] Reference RL posts for setting up local environment. 
 
 1. *Part Two*: Setup the production environment on Heroku and push the current application to the cloud.
 1. *Part Three*: Add in the back-end logic to access the Instagram API, process the data with Pandas/Numpy, and create the charts with matplotlib.
-
-We're excited to present how to take an IPython Notebook, containing all of the data work, and strip out the relevant parts to build out the Flask back-end and then add a nice front-end so that the work can be displayed in a browser for the world to see.
 
 > Keep in mind that this is a low-level tutorial for those looking to get familiar with Flask, understand the development workflow, convert code from IPython Notebook to development, and deploy a basic app to Heroku.
 
