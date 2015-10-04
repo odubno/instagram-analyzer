@@ -6,7 +6,6 @@ Welcome!
 
 **We’ll detail how to convert an IPython Notebook - which pulls data from Instagram and analyzes the data via Pandas - into a Flask web application.**
 
-- [ ] what image?
 ADD IMAGE
 
 *This is a guest post by Oleh Dubno with help from Christian Tirol. <a href="mailto:olehdubno@gmail.com">Oleh</a> is a Python Developer from New York City, currently working at <a href="https://www.quovo.com/splash/index.php" target="_blank">Quovo</a>, a fintech startup. <a href="mailto:tirol.christian@gmail.com">Christian</a> is an Analyst working in New York City with the Analytics and Reporting Infrastructure teams at <a href="http://www.adroitdigital.com/">Adroit Digital<a/>, a MediaMath subsidiary.*
@@ -23,7 +22,7 @@ Before diving into Flask, let's look at the gradual progression of using IPython
 - [Creating a function using the code form the previous notebook and cleaning Instagram Data](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/02_instagram_analyze_Data_Cleaning.ipynb)
 - [Developing our function and visualizing Instagram data using Matplotlib](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/03_instagram_analyze_Matplotlib.ipynb)
 
-### Instagram Analyzer in Development, an overview
+### Instagram Analyzer in Development - An Overview
 
 In the first two parts of deploying our app, we'll begin by structuring the working environment, both locally and in the cloud, and in the third part we'll work on porting the back-end logic from the [IPython Notebook files](https://github.com/odubno/instagram_analyzer/tree/master/IPython_Notebook_Files) to the Flask application:
 
@@ -39,6 +38,8 @@ In the first two parts of deploying our app, we'll begin by structuring the work
 > Keep in mind that this is a low-level tutorial for those looking to get familiar with Flask, understand the development workflow, convert code from IPython Notebook to development, and deploy a basic app to Heroku.
 
 Enjoy!
+
+> You can grab the basic project structure from here. This just has a boiler plate here. You'll have just have to add in the rest of the project.
 
 ### Dependencies for the app:
 
@@ -96,6 +97,8 @@ Let's quickly setup a basic environment for local development utilizing the foll
 
 ## Heroku Setup
 
+> create an .md file for how to setup heroku and reference it here.
+
 Given you have the Heroku [Toolbelt](https://toolbelt.heroku.com/) installed, follow the steps below to get the app up and running. *For more info on using Python with Heroku, check out the official [Heroku documenation](https://devcenter.heroku.com/articles/getting-started-with-python#introduction)*.
 
 Create a Procfile and add the following code:
@@ -149,7 +152,7 @@ Here we'll be pulling in the code from the IPython Notebook files
 
 ### Credentials
 
-Before any work in Python, you’ll need to first register a new client with Instagram. Once you’re logged into Instagram, you can do that [here](https://instagram.com/developer/clients/register/). An arbitrary URL and URI can be used for the sake of this exercise.
+Before any work in Python, you’ll need to first register a new application with Instagram. Once you’re logged into Instagram, you can do that [here](https://instagram.com/developer/clients/register/). An arbitrary URL and URI can be used for the sake of this exercise.
 
 Once you’ve registered a client, you should have your own Client ID, which will be used to connect to the API. Add this to the *env.sh* file, like so:
 
