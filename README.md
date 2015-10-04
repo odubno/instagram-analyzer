@@ -6,13 +6,13 @@ Welcome!
 
 ADD IMAGE
 
-*This is a guest post by Oleh Dubno with help from Christian Tirol. Oleh is a Python Developer from New York City, currently working at <a href="https://www.quovo.com/splash/index.php" target="_blank">Quovo</a>, a fintech startup. <a href="mailto:tirol.christian@gmail.com">Christian</a> is an Analyst working in New York City with the Analytics and Reporting Infrastructure teams at <a href="http://www.adroitdigital.com/">Adroit Digital<a/>, a MediaMath subsidiary.*
+*This is a guest post by Oleh Dubno with help from Christian Tirol. <a href="mailto:olehdubno@gmail.com">Oleh</a> is a Python Developer from New York City, currently working at <a href="https://www.quovo.com/splash/index.php" target="_blank">Quovo</a>, a fintech startup. <a href="mailto:tirol.christian@gmail.com">Christian</a> is an Analyst working in New York City with the Analytics and Reporting Infrastructure teams at <a href="http://www.adroitdigital.com/">Adroit Digital<a/>, a MediaMath subsidiary.*
 
 ## Getting Started
 
 ### Instagram Analyzer in IPython Notebook
 
-Before diving into Flask, let's looks at the gradual progression of using an IPython Notebook to grab data from Instagram, clean the data, and then visualize everything using Matplotlib...
+Before diving into Flask, let's look at the gradual progression of using IPython Notebook to grab data from Instagram, clean the data in Pandas and then visualize everything using Matplotlib.
 
 **IPython Notebook Files**:
 
