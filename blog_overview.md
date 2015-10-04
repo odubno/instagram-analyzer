@@ -2,6 +2,7 @@
 
 1. Intro
   - what the user is building - and why? (thesis)
+    - 
   - tools/main dependencies
   - link to final code
   - what is a web app? HTTP requests, routing, view handlers, templating
@@ -16,3 +17,5 @@
   - Templating
 1. Conclusion
   - How can the end user use the boilerplate to create a Flask app? Which parts of the blog post are more objective and which are relative to the reader's Ipython scripts
+
+
