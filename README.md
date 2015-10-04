@@ -6,6 +6,7 @@ Welcome!
 
 **We’ll detail how to convert an IPython Notebook - which pulls data from Instagram and analyzes the data via Pandas - into a Flask web application.**
 
+- [ ] what image?
 ADD IMAGE
 
 *This is a guest post by Oleh Dubno with help from Christian Tirol. <a href="mailto:olehdubno@gmail.com">Oleh</a> is a Python Developer from New York City, currently working at <a href="https://www.quovo.com/splash/index.php" target="_blank">Quovo</a>, a fintech startup. <a href="mailto:tirol.christian@gmail.com">Christian</a> is an Analyst working in New York City with the Analytics and Reporting Infrastructure teams at <a href="http://www.adroitdigital.com/">Adroit Digital<a/>, a MediaMath subsidiary.*
@@ -70,90 +71,28 @@ We'll also be using the latest version of Python 2.
 
 ## Structure
 
-Let's quickly setup a basic environment for local development utilizing the following tools - [virtualenv](http://www.virtualenv.org/en/latest/), [Flask](http://flask.pocoo.org/), and [Heroku](https://heroku.com).
-
-Create a project directory and create/activate a virtualenv:
-
 ```sh
-$ mkdir instagram_analyzer && cd instagram_analyzer
-$ virtualenv venv
-$ source venv/bin/activate
-```
-
-> **Remember**: The virtualenv allows us to neutralize our environment and work exclusively with the tools necessary for our app.
-
-Install Flask and create the *requirements.txt* file, which will become important later when Heroku deploying to Heroku:
-
-``` sh
-$ pip install Flask==0.10.1
-$ pip freeze > requirements.txt
-```
-
-Add a local Git repo along with a basic *README.md* file:
-
-```sh
-$ git init
-$ echo "# Instagram Analyzer" >> README.md
-```
-
-Now add a *.gitignore*:
-
-```sh
-$ touch .gitignore
-```
-
-And add the following files and folders:
-
-```
-.DS_Store
-*.pyc
-venv
-```
-
-> It's good practice to add system files (like *.DS_Store), dependency folers (like "venv"), and any sensitive information (more on this later) to the *.gitignore* file.
-
-Then add a remote Git repo on Github and commit your changes locally before pushing your current code up to Github.
-
-So far so good. Now lets create our basic project structure.
-
-```sh
-$ touch run.py
-```
-
-Your project directory should now look like this:
-
-
-```sh
+├── Procfile
 ├── README.md
+├── instagram_analyzer_app
+│   ├── __init__.py
+│   ├── forms.py
+│   ├── instagram_analyze.py
+│   ├── instagram_graphs.py
+│   ├── keys.py
+│   ├── static
+│   │   ├── css
+│   │   │   └── main.css
+│   │   └── js
+│   └── templates
+│       ├── _base.html
+│       ├── index.html
+│       └── instagram_analyzer.html
 ├── requirements.txt
-├── run.py
-└── venv
+└── run.py
 ```
 
-Open *run.py* in your favorite editor (like [Sublime Text 3](https://realpython.com/blog/python/setting-up-sublime-text-3-for-full-stack-python-development/)) and add the following code:
-
-```python
-from flask import Flask
-app = Flask(__name__)
-
-
-@app.route('/')
-def main():
-    return "Python Instagram Analyzer"
-
-if __name__ == '__main__':
-    app.run()
-```
-
-Run the app locally:
-
-```sh
-$ python run.py
-```
-
-You should see the displayed text of "Python Instagram Analyzer" in action at [http://localhost:5000/](http://localhost:5000/). Kill the server when done.
-
-Now let's get Heroku up and running!
+Let's quickly setup a basic environment for local development utilizing the following tools - [virtualenv](http://www.virtualenv.org/en/latest/), [Flask](http://flask.pocoo.org/), and [Heroku](https://heroku.com).
 
 ## Heroku Setup
 
@@ -194,45 +133,6 @@ Checkout your app in action!
 $ heroku open
 ```
 
-## More Structure
-
-Lets beef up the structure!
-
-```sh
-$ mkdir instagram_analyzer_app && cd instagram_analyzer_app
-$ touch __init__.py instagram_analyze.py instagram_graphs.py keys.py forms.py
-$ mkdir templates && cd templates
-$ touch instagram_analyzer.html index.html _base.html
-$ cd ..
-$ mkdir static && cd static
-$ mkdir css js && cd css
-$ touch main.css
-$ cd ../../..
-```
-
-Your app's structure should now look like:
-
-```sh
-├── Procfile
-├── README.md
-├── instagram_analyzer_app
-│   ├── __init__.py
-│   ├── forms.py
-│   ├── instagram_analyze.py
-│   ├── instagram_graphs.py
-│   ├── keys.py
-│   ├── static
-│   │   ├── css
-│   │   │   └── main.css
-│   │   └── js
-│   └── templates
-│       ├── _base.html
-│       ├── index.html
-│       └── instagram_analyzer.html
-├── requirements.txt
-└── run.py
-```
-
 Next, we'll work on creating our Instagram analyzer within *instagram_analyze.py*. to access the [Instagram API](https://instagram.com/developer/) to pull relevant data. We will only use a Client ID (which will be created later) for this, so we are [limited](https://instagram.com/developer/limits/) to 5,000 requests per hour.
 
 Create an *env.sh* file inside our root directory to house the Client ID:
@@ -267,15 +167,15 @@ import os
 CLIENT_ID = os.environ['client_id']
 ```
 
-Now, when you start up your app, you can run `source env.sh` in the terminal to add the `client_id` variable to the environment.
+> For environ to work make sure to run `source env.sh` in the terminal to add the `client_id` variable to the environment.
 
 ### Instagram Analyze Script
 
-Here we're pulling in the back-end logic that we worked on in the [first](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/01_instagram_analyze_json_DataFrame.ipynb) and the [second](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/02_instagram_analyze_Data_Cleaning.ipynb) IPython Notebook.
+Here we're pulling in the back-end logic from IPython Notebook [first](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/01_instagram_analyze_json_DataFrame.ipynb) and the [second](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/02_instagram_analyze_Data_Cleaning.ipynb) IPython Notebook.
 
-The script below uses the Instagram client_id to pull in the 30 most recent Instagram posts into a Pandas DataFrame and cleans up the columns and rows to display it back in a DataFrame.
+The script below uses the Instagram client_id to pull in the 30 most recent Instagram posts into a Pandas DataFrame and clean the columns and rows up to display our data.
 
-Follow the comments in the script for an indepth understanding.
+Follow the comments in the script for a better understanding.
 
 Install the necessary modules:
 
@@ -598,8 +498,10 @@ Modifications moving forward may include pulling in more than 30 most recent pos
 
 Try it out:
 
-![Alt text](/instagram_analyzer_app/static/img/instagram_analyze_page.jpg "Landing Page")
+![Alt text](/instagram_analyzer_app/static/img/instagram_analyze_page.jpg <a href="http://instagram-analyzer.herokuapp.com/">Oleh</a>)
 
 Things to always keep in mind:
 > Always run source env.sh before running the app.
 > Remember to push your code up to github and then to heroku for deployment.
+
+# Check the app our here:
