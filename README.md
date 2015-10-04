@@ -498,8 +498,7 @@ Modifications moving forward may include pulling in more than 30 most recent pos
 
 Try it out: <a href="http://instagram-analyzer.herokuapp.com/">Instagram-Analyzer</a>
 
-![Alt text](/instagram_analyzer_app/static/img/instagram_analyze_page.jpg "Landing Page")
-
+<a href="http://instagram-analyzer.herokuapp.com/"><img src="/instagram_analyzer_app/static/img/instagram_analyze_page.jpg" alt="Instagram Analyzer"></a>
 
 Things to always keep in mind:
 > Always run source env.sh before running the app.
