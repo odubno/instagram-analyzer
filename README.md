@@ -146,53 +146,28 @@ Add the following code to *instagram_analyze.py*:
 import requests
 from pandas.io.json import json_normalize
 import pandas as pd
+import datetime
 
 from keys import CLIENT_ID
 
-def instagram_data(query):
+def instagram_analyzer(query):
     base_url = "https://api.instagram.com/v1"
     url = '{0}/tags/{1}/media/recent?client_id={2}&count=30'.format(
         base_url, query, CLIENT_ID)
-
-    page = requests.get(url)
-    page_json = page.json()
-
-    # The format of our json are 3 different dictionaries: *pagination*, *meta* and *data*. We're interested in *data*.
-
-    # *data* is a list of nested dictionaries. What json_normalize will do is flatten everything and create columns for nested dictionary titles.
-
+    r = requests.get(url)
+    j = r.json()  
     results = []
-    if 'data' in page_json:
-        data = page_json['data']
+    if 'data' in j: 
+        data = j['data']
         df_instance = json_normalize(data)
         results.append(df_instance)
-
+        
     df = pd.DataFrame().append(results)
 
-  # Our dates are a bit messy. Let's clean it up
-
-    df['created_time'] = [
-    y.replace(y, datetime.datetime.fromtimestamp(int(str(y))).strftime(
-    '%Y-%m-%d %H:%M:%S')) for y in df['created_time']]
-
-  # These are the columns that we personally took interest in.
     cols = [
-        'user.username',
-        'caption.text',
-        'tags',
         'comments.count',
         'likes.count',
-        'filter',
-        'type',
-        'created_time',
-        'user.full_name',
-        'user.id',
-        'link',
-        'location.latitude',
-        'location.longitude'
-    ]
-
-  # Minor ocd cleaning before returning our data set.
+    ]   
     df_cols = df[cols]
     df_clean = df_cols.rename(columns=lambda x: x.replace('.',' ').title())
 
@@ -272,7 +247,7 @@ app = Flask(__name__)
 # For form protection. Note that the SECRET_KEY could litterally be any string you'd like.
 # If this is production then do make the key impossible to guess.
 app.config.update(
-    WTF_CSRF_ENABLED =
+    WTF_CSRF_ENABLED = True
     ,SECRET_KEY = "pass"
     )
 
