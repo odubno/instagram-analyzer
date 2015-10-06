@@ -94,6 +94,9 @@ Let's quickly setup a basic environment for local development utilizing the foll
 
 ## Heroku Setup
 
+Heroku setup in not necessary, but nice if you'd like to showcase your app on the web. 
+
+Check [Heroku Setup](https://github.com/odubno/instagram_analyzer/blob/master/heroku_setup.md) to integrate it with your app.  
 
 
 ## Instagram, Pandas, and Matplotlib
