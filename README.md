@@ -317,6 +317,7 @@ from forms import InstagramAnalyzer
 app = Flask(__name__)
 
 # For form protection. Note that the SECRET_KEY could litterally be any string you'd like.
+# If this is production then do make the key impossible to guess.
 app.config.update(
     WTF_CSRF_ENABLED =
     ,SECRET_KEY = "pass"
