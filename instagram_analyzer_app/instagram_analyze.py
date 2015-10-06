@@ -19,23 +19,9 @@ def instagram_analyzer(query):
         
     df = pd.DataFrame().append(results)
 
-    df['created_time'] = [
-    y.replace(y, datetime.datetime.fromtimestamp(int(str(y))).strftime(
-    '%Y-%m-%d %H:%M:%S')) for y in df['created_time']]
     cols = [
-        'user.username',
-        'caption.text',
-        'tags',
         'comments.count',
         'likes.count',
-        'filter',
-        'type',
-        'created_time',
-        'user.full_name',
-        'user.id',
-        'link',
-        'location.latitude',
-        'location.longitude'
     ]   
     df_cols = df[cols]
     df_clean = df_cols.rename(columns=lambda x: x.replace('.',' ').title())
