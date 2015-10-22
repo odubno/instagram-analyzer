@@ -2,41 +2,33 @@
 
 Welcome!
 
-**We're excited to present how to take an IPython Notebook, containing all of the data work, and strip out the relevant parts to build out the Flask back-end and then add a nice front-end so that the work can be displayed in a browser for the world to see.**
-
-**We’ll detail how to convert an IPython Notebook - which pulls data from Instagram and analyzes the data via Pandas - into a Flask web application.**
+**This post details how to convert an IPython Notebook into a Flask web application.** More specifically, we'll take an IPython Notebook, containing all of the data work, strip out the relevant parts to build out the Flask back-end, and then add a nice front-end so that the work can be displayed in a browser for the world to see.
 
 ADD IMAGE
 
-*This is a guest post by Oleh Dubno with help from Christian Tirol. <a href="mailto:olehdubno@gmail.com">Oleh</a> is a Python Developer from New York City, currently working at <a href="https://www.quovo.com/splash/index.php" target="_blank">Quovo</a>, a fintech startup. <a href="mailto:tirol.christian@gmail.com">Christian</a> is an Analyst working in New York City with the Analytics and Reporting Infrastructure teams at <a href="http://www.adroitdigital.com/">Adroit Digital<a/>, a MediaMath subsidiary.*
+*This is a guest post by Oleh Dubno with help from Christian Tirol. <a href="mailto:olehdubno@gmail.com">Oleh</a> is a Python Developer from NYC, currently working at <a href="https://www.quovo.com/splash/index.php" target="_blank">Quovo</a>, a fintech startup. <a href="mailto:tirol.christian@gmail.com">Christian</a> is an Analyst working in New York City with the Analytics and Reporting Infrastructure teams at <a href="http://www.adroitdigital.com/">Adroit Digital<a/>.*
 
 ## Getting Started
 
 ### Instagram Analyzer in IPython Notebook
 
-Before diving into Flask, let's look at the gradual progression of using IPython Notebook to grab data from Instagram, clean the data in Pandas and then visualize everything using Matplotlib.
+Before diving into Flask, let's look at the gradual progression of using IPython Notebook to grab data from Instagram, clean the data in Pandas, and then visualize everything using Matplotlib.
 
 **IPython Notebook Files**:
 
-- [Using the Instagram Client ID to get the data and pull everything into a pandas DataFrame](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/01_instagram_analyze_json_DataFrame.ipynb)
-- [Creating a function using the code form the previous notebook and cleaning Instagram Data](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/02_instagram_analyze_Data_Cleaning.ipynb)
-- [Developing our function and visualizing Instagram data using Matplotlib](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/03_instagram_analyze_Matplotlib.ipynb)
+- [Grab the data from Instragram](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/01_instagram_analyze_json_DataFrame.ipynb)
+- [Clean the Instagram Data](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/02_instagram_analyze_Data_Cleaning.ipynb)
+- [Visualize the Instagram data via Matplotlib](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/03_instagram_analyze_Matplotlib.ipynb)
 
 ### Instagram Analyzer in Development - An Overview
 
 In the first two parts of deploying our app, we'll begin by structuring the working environment, both locally and in the cloud, and in the third part we'll work on porting the back-end logic from the [IPython Notebook files](https://github.com/odubno/instagram_analyzer/tree/master/IPython_Notebook_Files) to the Flask application:
 
+1. *Part One*: Set up the local development environment along with the basic Flask app.
+1. *Part Two*: Set up the production environment on Heroku and push the current application to the cloud.
+1. *Part Three*: Add in the back-end logic to access the Instagram API, process the data with Pandas/Numpy, and create the charts with Matplotlib.
 
-1. *Part One*: Setup the local development environment along with the basic Flask app.  
-
-1. *Part Two*: Setup the production environment on Heroku and push the current application to the cloud.
-1. *Part Three*: Add in the back-end logic to access the Instagram API, process the data with Pandas/Numpy, and create the charts with matplotlib.
-
-> Keep in mind that this is a low-level tutorial for those looking to get familiar with Flask, understand the development workflow, convert code from IPython Notebook to development, and deploy a basic app to Heroku.
-
-Enjoy!
-
-> You can grab the basic project structure from here. This just has a boiler plate here. You'll have just have to add in the rest of the project.
+*Make sure to grab the boilerplate structure from the [Github repo](ADD LINK).*
 
 ### Dependencies for the app:
 
@@ -90,13 +82,13 @@ We'll also be using the latest version of Python 2.
 └── run.py
 ```
 
-Let's quickly setup a basic environment for local development utilizing the following tools - [virtualenv](http://www.virtualenv.org/en/latest/), [Flask](http://flask.pocoo.org/), and [Heroku](https://heroku.com).
+Let's quickly setup a basic environment for local development utilizing the following tools and services - [virtualenv](http://www.virtualenv.org/en/latest/), [Flask](http://flask.pocoo.org/), and [Heroku](https://heroku.com).
 
 ## Heroku Setup
 
-Heroku setup in not necessary, but nice if you'd like to showcase your app on the web. 
+Heroku setup in not necessary, but nice if you'd like to showcase your app on the web.
 
-Check [Heroku Setup](https://github.com/odubno/instagram_analyzer/blob/master/heroku_setup.md) to integrate it with your app.  
+Check [Heroku Setup](https://github.com/odubno/instagram_analyzer/blob/master/heroku_setup.md) to integrate it with your app.
 
 
 ## Instagram, Pandas, and Matplotlib
@@ -155,19 +147,19 @@ def instagram_analyzer(query):
     url = '{0}/tags/{1}/media/recent?client_id={2}&count=30'.format(
         base_url, query, CLIENT_ID)
     r = requests.get(url)
-    j = r.json()  
+    j = r.json()
     results = []
-    if 'data' in j: 
+    if 'data' in j:
         data = j['data']
         df_instance = json_normalize(data)
         results.append(df_instance)
-        
+
     df = pd.DataFrame().append(results)
 
     cols = [
         'comments.count',
         'likes.count',
-    ]   
+    ]
     df_cols = df[cols]
     df_clean = df_cols.rename(columns=lambda x: x.replace('.',' ').title())
 
@@ -423,9 +415,9 @@ Within the *instagram_analyzer.html* file, whatever the user passes on the submi
 
 ## Conclusion
 
-We learned how to use Python to pull in the most recent Instagram posts in IPython Notebook and deploy our results on Heroku. 
+We learned how to use Python to pull in the most recent Instagram posts in IPython Notebook and deploy our results on Heroku.
 
-Modifications moving forward may include pulling in more than 30 most recent posts at a time, improving our HTML/CSS layout and upgrading the information revealed in the Matplotlib graphs. 
+Modifications moving forward may include pulling in more than 30 most recent posts at a time, improving our HTML/CSS layout and upgrading the information revealed in the Matplotlib graphs.
 
 
 Try it out: <a href="http://instagram-analyzer.herokuapp.com/">Instagram-Analyzer</a>
