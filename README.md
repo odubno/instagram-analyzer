@@ -2,7 +2,7 @@
 
 Welcome!
 
-**This post details how to convert an IPython Notebook into a Flask web application.** More specifically, we'll take an IPython Notebook, containing all of the data work, strip out the relevant parts to build out the Flask back-end, and then add a nice front-end so that the work can be displayed in a browser for the world to see.
+**This post details how to convert an IPython Notebook into a Flask web application.** More specifically, we'll take an IPython Notebook, containing all of the data work, strip out the relevant parts to build out the Flask back-end, and then add a nice front-end so that the world can see your work.
 
 ADD IMAGE
 
