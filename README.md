@@ -8,114 +8,79 @@ ADD IMAGE
 
 *This is a guest post by Oleh Dubno with help from Christian Tirol. <a href="mailto:olehdubno@gmail.com">Oleh</a> is a Python Developer from NYC, currently working at <a href="https://www.quovo.com/splash/index.php" target="_blank">Quovo</a>, a fintech startup. <a href="mailto:tirol.christian@gmail.com">Christian</a> is an Analyst working in New York City with the Analytics and Reporting Infrastructure teams at <a href="http://www.adroitdigital.com/">Adroit Digital<a/>.*
 
-## Getting Started
+## Workflow
 
-### Instagram Analyzer in IPython Notebook
+Before diving into Flask, take a look at, and interact with, the IPython Notebooks:
 
-Before diving into Flask, let's look at the gradual progression of using IPython Notebook to grab data from Instagram, clean the data in Pandas, and then visualize everything using Matplotlib.
+- [Extract data from Instagram](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/01_instagram_analyze_json_DataFrame.ipynb)
+- [Clean the data](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/02_instagram_analyze_Data_Cleaning.ipynb)
+- [Visualize the data via Matplotlib](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/03_instagram_analyze_Matplotlib.ipynb)
 
-**IPython Notebook Files**:
-
-- [Grab the data from Instragram](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/01_instagram_analyze_json_DataFrame.ipynb)
-- [Clean the Instagram Data](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/02_instagram_analyze_Data_Cleaning.ipynb)
-- [Visualize the Instagram data via Matplotlib](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/03_instagram_analyze_Matplotlib.ipynb)
-
-### Instagram Analyzer in Development - An Overview
-
-In the first two parts of deploying our app, we'll begin by structuring the working environment, both locally and in the cloud, and in the third part we'll work on porting the back-end logic from the [IPython Notebook files](https://github.com/odubno/instagram_analyzer/tree/master/IPython_Notebook_Files) to the Flask application:
+Make sure you understand the code in this Notebooks as they set the basis for the Flask app. Now, we can being the conversion process, from IPython to Flask:
 
 1. *Part One*: Set up the local development environment along with the basic Flask app.
-1. *Part Two*: Set up the production environment on Heroku and push the current application to the cloud.
-1. *Part Three*: Add in the back-end logic to access the Instagram API, process the data with Pandas/Numpy, and create the charts with Matplotlib.
+1. *Part Two*: Add in the back-end logic to access the Instagram API, process the data with Pandas/Numpy, and create the charts with Matplotlib.
 
-*Make sure to grab the boilerplate structure from the [Github repo](ADD LINK).*
+## Part One - Getting Started
 
-### Dependencies for the app:
+Grab the boilerplate from the Github [repo](https://github.com/realpython/instagram-analyzer):
 
 ```sh
-Flask==0.10.1
-Flask-WTF==0.11
-Jinja2==2.7.3
-MarkupSafe==0.23
-WTForms==2.0.2
-Werkzeug==0.10.4
-gunicorn==19.3.0
-httplib2==0.9.1
-itsdangerous==0.24
-matplotlib==1.4.3
-mock==1.0.1
-nose==1.3.6
-numpy==1.9.2
-pandas==0.16.1
-pyparsing==2.0.3
-python-dateutil==2.4.2
-python-instagram==1.3.1
-pytz==2015.2
-requests==2.6.2
-simplejson==3.6.5
-six==1.9.0
-wsgiref==0.1.2
+$ git clone git@github.com:realpython/instagram-analyzer.git
+$ cd instagram-analyzer
+$ git checkout tags/v1
 ```
 
-We'll also be using the latest version of Python 2.
-
-## Structure
+Check out the [dependencies](https://github.com/realpython/instagram-analyzer/blob/master/requirements.txt) and Python version as well as the project structure:
 
 ```sh
-├── Procfile
-├── README.md
-├── instagram_analyzer_app
-│   ├── __init__.py
-│   ├── forms.py
-│   ├── instagram_analyze.py
-│   ├── instagram_graphs.py
-│   ├── keys.py
-│   ├── static
-│   │   ├── css
-│   │   │   └── main.css
-│   │   └── js
-│   └── templates
-│       ├── _base.html
-│       ├── index.html
-│       └── instagram_analyzer.html
+├── _config.py
+├── app
+│   ├── __init__.py
+│   ├── forms.py
+│   ├── instagram_analyze.py
+│   ├── instagram_graphs.py
+│   ├── static
+│   │   ├── css
+│   │   │   └── main.css
+│   │   └── js
+│   └── templates
+│       ├── _base.html
+│       ├── analysis.html
+│       └── index.html
 ├── requirements.txt
 └── run.py
 ```
 
-Let's quickly setup a basic environment for local development utilizing the following tools and services - [virtualenv](http://www.virtualenv.org/en/latest/), [Flask](http://flask.pocoo.org/), and [Heroku](https://heroku.com).
-
-## Heroku Setup
-
-Heroku setup in not necessary, but nice if you'd like to showcase your app on the web.
-
-Check [Heroku Setup](https://github.com/odubno/instagram_analyzer/blob/master/heroku_setup.md) to integrate it with your app.
-
-
-## Instagram, Pandas, and Matplotlib
-
-Here we'll be pulling in the code from the IPython Notebook files
-
-### Credentials
-
-Before any work in Python, you’ll need to first register a new application with Instagram. Once you’re logged into Instagram, you can do that [here](https://instagram.com/developer/clients/register/). An arbitrary URL and URI can be used for the sake of this exercise.
-
-Once you’ve registered a client, you should have your own Client ID, which will be used to connect to the API. Add this to the *env.sh* file, like so:
+Activate your [virtualenv](http://www.virtualenv.org/en/latest/) and install the dependencies:
 
 ```sh
-#!/bin/bash
-
-export "client_id=ADD-YOUR-CLIENT-ID-HERE"
+$ virtualenv env
+$ source env/bin/activate
+$ pip install -r requirements.txt
 ```
 
-Let's modify the *keys.py* file, located inside "instagram_analyzer_app" folder, to pull in our Instagram client_id credentials:
+Test this out before moving on to the second part:
+
+```sh
+$ python run.py
+```
+
+Navigate in your browser to [localhost:5000](localhost:5000), and you should see "Hello World!". Now, let's convert our IPython scripts over to the Flask app!
+
+## Part Two - IPython to Flask
+
+Here we'll be pulling in the code from the IPython Notebook files, iteratively...
+
+### Instagram Registration
+
+Before any work in Python, you’ll need to first register a new application with Instagram. Once you’re logged into Instagram, you set up the app [here](https://instagram.com/developer/clients/register/). An arbitrary URL and URI can be used for the sake of this exercise.
+
+Once you’ve registered a client, you should have your own Client ID, which will be used to connect to the API. Add this to the *_config.py* file, like so:
 
 ```python
-import os
-
-CLIENT_ID = os.environ['client_id']
+ADD CODE
 ```
-
-> For environ to work make sure to run `source env.sh` in the terminal to add the `client_id` variable to the environment.
 
 ### Instagram Analyze Script
 
