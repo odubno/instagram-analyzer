@@ -181,11 +181,11 @@ Comments Count  Likes Count
 
 ADD IMAGE (comparing notebook to the script)
 
-### Matplotlib Script
+### Data Visualiztion
 
-Before moving forward with integrating our *instagram_analyze.py* script with Flask lets modify our *instagram_graphs.py* to display graphs. We'll be returning to the [third](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/03_instagram_analyze_Matplotlib.ipynb) IPython Notebook to pull in the code that displays our graphs using Matplotlib.
+Next, let's integrate the third](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/03_instagram_analyze_Matplotlib.ipynb) IPython Notebook into our app, which utilizes Matplotlib to create charts and graphs.
 
-Add the code below to *instagram_graphs.py*:
+Add the following code to *instagram_graphs.py*:
 
 ```python
 import matplotlib.pyplot as plt
@@ -194,7 +194,7 @@ def instagram_graph(instagram_analyzed):
 
     fig = plt.figure(figsize=(8, 6))
 
-  # Using subplots for multiple graphs
+    # Using subplots for multiple graphs
     plt.subplot2grid((3, 3), (0, 0), colspan=3, rowspan=1)
     instagram_analyzed['Comments Count'].plot(kind='bar', alpha=.55)
     plt.title("Total Comment Count Per Post", fontsize=20)
@@ -216,6 +216,7 @@ def instagram_graph(instagram_analyzed):
 
     fig.tight_layout()
 ```
+
 ### Routes (*\_\_init\_\_.py* and *run.py*)
 
 Update *run.py*:
