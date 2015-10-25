@@ -181,7 +181,7 @@ Comments Count  Likes Count
 
 ADD IMAGE (comparing notebook to the script)
 
-### Data Visualiztion
+### Data Visualization
 
 Next, let's integrate the third](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/03_instagram_analyze_Matplotlib.ipynb) IPython Notebook into our app, which utilizes Matplotlib to create charts and graphs.
 
@@ -254,7 +254,7 @@ def main():
 @app.route("/instagram_analyze/<user_input>")
 def instagram_analyze(user_input):
     return render_template(
-        'instagram_analyzer.html',
+        'analysis.html',
         input=user_input,
         filename=user_input+".png"  # create image title based on user input
     )
@@ -285,7 +285,9 @@ Make sure to read through the inline comments in this script to better understan
 
 ### HTML
 
-In order to avoid repeating our HTML structure, we'll create a *\_base.py* that will extend and employ template inheritance:
+ADD INFO ABOUT JINJA, LINK TO REAL PYTHON BLOG POST
+
+In order to avoid repeating common parts of the HTML structure, we'll create a *\_base.py* that employs [template inheritance](https://realpython.com/blog/python/primer-on-jinja-templating/#template-inheritance):
 
 ```html
 <!DOCTYPE html>
@@ -293,18 +295,9 @@ In order to avoid repeating our HTML structure, we'll create a *\_base.py* that 
   <head>
     <meta charset='utf-8'>
     <title>Instagram Analyzer</title>
-
-    <!-- meta -->
-    <meta name='description' content=" ">
-    <meta name='author' conten=" ">
-    <meta name='viewport' content="width=device-width,initial-scale=1">
-
     <!-- styles -->
-    <link href="{{url_for('static', filename='./css/bootstrap.min.css')}}" rel="stylesheet" media="screen">
-
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{url_for('static', filename='./css/main.css')}}" rel="stylesheet" media="screen">
-
-
     {% block css %}{% endblock %}
   </head>
   <body>
@@ -351,7 +344,7 @@ Now let's create an *index.html* file, which extends from the base template:
 {% extends "_base.html" %}
 {% block content %}
 
-<h1>Python Instagram Analyzer</h1>
+<h1 class="text-center">Python Instagram Analyzer</h1>
 
 <br>
 
@@ -371,16 +364,12 @@ Now let's create an *index.html* file, which extends from the base template:
     <button class="btn btn-default btn-lg" type="submit">Analyze!</button>
   </form>
 
-  <br>
-
-  <p>Click <a href="/about">here</a> to read about the app.</p>
-
 </center>
 
 {% endblock %}
 ```
 
-Within the *instagram_analyzer.html* file, whatever the user passes on the submit form will be rendered as the filename. Refer to the structure of *\_\_init\_\_.py* and see this in action. We'll be displaying our matplotlib graphs inside an iframe and sourcing the filename as explained above.
+Within the *analysis.html* file, the text that the end user submits in the form will be rendered as the image filename. Refer back to *\_\_init\_\_.py* to see this in action. We'll be displaying our matplotlib graphs inside an iframe and sourcing the filename as explained above.
 
 ```html
 {% extends "_base.html" %}
@@ -398,17 +387,33 @@ Within the *instagram_analyzer.html* file, whatever the user passes on the submi
 {% endblock %}
 ```
 
+### Forms
+
+BRIEFLY EXPLAIN WHAT's HAPPENING HERE
+
+```python
+from flask_wtf import Form
+from wtforms import TextField
+from wtforms.validators import DataRequired, length
+
+
+class InstagramAnalyzer(Form):
+    instagram_analyze = TextField(
+        'Analyze', validators=[DataRequired(), length(min=2)])
+```
+
+## Test
+
+DETAIL HOW TO RUN THE APP
+
 ## Conclusion
 
-We learned how to use Python to pull in the most recent Instagram posts in IPython Notebook and deploy our results on Heroku.
-
-Modifications moving forward may include pulling in more than 30 most recent posts at a time, improving our HTML/CSS layout and upgrading the information revealed in the Matplotlib graphs.
+1. WHAT DID WE LEARN?
+1. WHAT ELSE CAN WE DO? Modifications moving forward may include pulling in more than 30 most recent posts at a time, improving our HTML/CSS layout and upgrading the information revealed in the Matplotlib graphs.
 
 
 Try it out: <a href="http://instagram-analyzer.herokuapp.com/">Instagram-Analyzer</a>
 
 <a href="http://instagram-analyzer.herokuapp.com/"><img src="/instagram_analyzer_app/static/img/instagram_analyze_page.jpg" alt="Instagram Analyzer"></a>
 
-Things to always keep in mind:
-> Always run source env.sh before running the app.
-> Remember to push your code up to github and then to heroku for deployment.
+Cheers!
