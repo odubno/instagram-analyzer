@@ -217,29 +217,16 @@ def instagram_graph(instagram_analyzed):
     fig.tight_layout()
 ```
 
-### Routes (*\_\_init\_\_.py* and *run.py*)
+### Routes
 
-Update *run.py*:
-
-```python
-from instagram_analyzer_app import app
-
-if __name__ == '__main__':
-    # port = int(os.environ.get('PORT', 5000))
-    app.run(debug=True)
-```
-
-> *\_\_init\_\_.py* creates our directories and executes our back-end logic, while *run.py* returns our app.
-
-Inside the "instagram_analyzer_app" open up your *\_\_init\_\_.py file and add:
+Update  *\_\_init\_\_.py* like so:
 
 ```python
 from cStringIO import StringIO
-from flask import Flask, render_template, request, \
-  flash, url_for, redirect, make_response, send_file
+from flask import Flask, render_template, request, url_for, redirect, \
+    make_response
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import matplotlib.pyplot as plt
-
 
 from instagram_analyze import instagram_analyzer
 from instagram_graphs import instagram_graph
@@ -247,15 +234,13 @@ from forms import InstagramAnalyzer
 
 
 app = Flask(__name__)
-
-# For form protection. Note that the SECRET_KEY could litterally be any string you'd like.
-# If this is production then do make the key impossible to guess.
 app.config.update(
-    WTF_CSRF_ENABLED = True
-    ,SECRET_KEY = "pass"
-    )
+    WTF_CSRF_ENABLED=True,
+    SECRET_KEY='my precious'
+)
 
-# ROUTES
+
+# routes
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
@@ -266,51 +251,39 @@ def main():
     return render_template('index.html', form=form)
 
 
-@app.route("/instagram_analyze/<user_input>")  # 1
+@app.route("/instagram_analyze/<user_input>")
 def instagram_analyze(user_input):
-
     return render_template(
         'instagram_analyzer.html',
         input=user_input,
-        filename=user_input+".png"  # 2
+        filename=user_input+".png"  # create image title based on user input
     )
 
-"""
-The beginning of the route @app.route("/instagram_analyze/<user_input>") picks
-up what the user had passed as a search. ".png" is then appended to user_input to create
-the image title.
 
-The ending of the url will show up as the input and reference the filename.
-Both routes have "/instagram_analyze/..." this causes the response route to render
-the user_input with the ".png" ending
 @app.route("/instagram_analyze/<image_name>.png")
-"""
-
-@app.route("/instagram_analyze/<image_name>.png")  # 3
 def image(image_name):
-    # pulls in the scraper and creates the DataFrame
+
+    # create the DataFrame
     instagram_analyzed = instagram_analyzer(image_name)
 
-    # formats the DataFrame to display plots
+    # format the DataFrame to display plots
     instagram_graph(instagram_analyzed)
 
-    # rendering matplotlib image to Flask view
+    # render matplotlib image to Flask view
     canvas = FigureCanvas(plt.gcf())
     output = StringIO()
     canvas.print_png(output)
-    # make_response converts the return value from a view
-    # function to a real response object that is an instance
-    # of response_class.
-    response = make_response(output.getvalue())
 
+    # create response
+    response = make_response(output.getvalue())
     response.mimetype = 'image/png'
 
     return response
 ```
 
-Now to the front-end...
+Make sure to read through the inline comments in this script to better understand what's happening. With that, let's jump to the front-end...
 
-## HTML
+### HTML
 
 In order to avoid repeating our HTML structure, we'll create a *\_base.py* that will extend and employ template inheritance:
 
