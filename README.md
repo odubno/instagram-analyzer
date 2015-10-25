@@ -74,48 +74,46 @@ Here we'll be pulling in the code from the IPython Notebook files, iteratively..
 
 ### Instagram Registration
 
-Before any work in Python, you’ll need to first register a new application with Instagram. Once you’re logged into Instagram, you set up the app [here](https://instagram.com/developer/clients/register/). An arbitrary URL and URI can be used for the sake of this exercise.
+Before any work in Python, you’ll need to first register a new application with Instagram. First, sign up for Instagram (if necessary), and then log in. Once you’re logged in, you can set up an app from the [Developer Portal](https://instagram.com/developer/clients/register/). An arbitrary URL and URI can be used for the sake of this exercise.
 
 Once you’ve registered a client, you should have your own Client ID, which will be used to connect to the API. Add this to the *_config.py* file, like so:
 
 ```python
-ADD CODE
+INSTAGRAM_CLIENT_ID = '0755d115c19d38939d357b33fe8138bc'
 ```
 
-### Instagram Analyze Script
+Finally, move the config file into "app" directory.
 
-Here we're pulling in the back-end logic from IPython Notebook [first](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/01_instagram_analyze_json_DataFrame.ipynb) and the [second](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/02_instagram_analyze_Data_Cleaning.ipynb) IPython Notebook.
+### Data Extraction and Analysis
 
-The script below uses the Instagram client_id to pull in the 30 most recent Instagram posts into a Pandas DataFrame and clean the columns and rows up to display our data.
+Within the *instagram_analyze.py* script, we will add the back-end logic from the first two IPython Notebooks - [data extraction](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/01_instagram_analyze_json_DataFrame.ipynb) and [data cleansing](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/02_instagram_analyze_Data_Cleaning.ipynb).
 
-Follow the comments in the script for a better understanding.
-
-Install the necessary modules:
+Start by installing the necessary packages:
 
 ```sh
 $ pip install requests==2.6.2 pandas==0.16.1 matplotlib==1.4.3
 $ pip freeze > requirements.txt
 ```
 
-Add the following code to *instagram_analyze.py*:
+Now add the following code to *instagram_analyze.py*:
 
 ```python
 import requests
 from pandas.io.json import json_normalize
 import pandas as pd
-import datetime
 
-from keys import CLIENT_ID
+from _config import INSTAGRAM_CLIENT_ID
+
 
 def instagram_analyzer(query):
     base_url = "https://api.instagram.com/v1"
     url = '{0}/tags/{1}/media/recent?client_id={2}&count=30'.format(
-        base_url, query, CLIENT_ID)
-    r = requests.get(url)
-    j = r.json()
+        base_url, query, INSTAGRAM_CLIENT_ID)
+    request = requests.get(url)
+    json_results = request.json()
     results = []
-    if 'data' in j:
-        data = j['data']
+    if 'data' in json_results:
+        data = json_results['data']
         df_instance = json_normalize(data)
         results.append(df_instance)
 
@@ -126,14 +124,62 @@ def instagram_analyzer(query):
         'likes.count',
     ]
     df_cols = df[cols]
-    df_clean = df_cols.rename(columns=lambda x: x.replace('.',' ').title())
+    df_clean = df_cols.rename(columns=lambda x: x.replace('.', ' ').title())
 
     return df_clean
 ```
 
-Here's a side by side comparison of The IPython Notebook script (on the left) and the above script ready for deployment (on the right).
+Here we make a call to the Instagram API to pull in the thirty most recent Instagram posts. The posts are then added to a Pandas DataFrame and cleaned to better display the data.
 
-![Alt text](/instagram_analyzer_app/static/img/instagram_anayze_1.jpg "Instagram Analyze IPython Notebook code camparison")
+Want to test this script? Add the following code to the bottom-
+
+```python
+print(instagram_analyzer('javascript'))
+```
+
+-and then run the script-
+
+```sh
+$ python app/instagram_analyze.py
+```
+
+You should see something like:
+
+```sh
+Comments Count  Likes Count
+0                1            8
+1                0            7
+2                0          116
+3                1            8
+4                0           11
+5                0            8
+6                0            6
+7                0           11
+8                0           16
+9                0           28
+10               0           15
+11               0           20
+12               0           40
+13               1           21
+14               5           15
+15               1           43
+16               0           12
+17               3           48
+18               3           24
+19               3           66
+20               5           76
+21               4           40
+22               2           19
+23               1           33
+24               0           30
+25               1           26
+26               1           46
+27               1           26
+28               7          158
+29               2           20
+```
+
+ADD IMAGE (comparing notebook to the script)
 
 ### Matplotlib Script
 
