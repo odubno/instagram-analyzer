@@ -179,7 +179,9 @@ Comments Count  Likes Count
 29               2           20
 ```
 
-ADD IMAGE (comparing notebook to the script)
+Image comparing notebook to the script
+
+<a><img src="/instagram_analyzer_app/static/img/script_vs_notebook_1.jpg" alt="Instagram Analyzer"></a>
 
 ### Data Visualization
 
