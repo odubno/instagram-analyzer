@@ -185,7 +185,7 @@ Image comparing notebook to the script
 
 ### Data Visualization
 
-Next, let's integrate the third](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/03_instagram_analyze_Matplotlib.ipynb) IPython Notebook into our app, which utilizes Matplotlib to create charts and graphs.
+Next, let's integrate the [third](https://github.com/odubno/instagram_analyzer/blob/master/IPython_Notebook_Files/03_instagram_analyze_Matplotlib.ipynb) IPython Notebook into our app, which utilizes Matplotlib to create charts and graphs.
 
 Add the following code to *instagram_graphs.py*:
 
