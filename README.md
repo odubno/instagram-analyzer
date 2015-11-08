@@ -221,6 +221,8 @@ def instagram_graph(instagram_analyzed):
 
 ### Routes
 
+Here, we're defining the basic route structure, accepting POST and GET requests. In order to render the Matplotlib graphs as output, we'll pass the user_input as a .png inside of the route. 
+
 Update  *\_\_init\_\_.py* like so:
 
 ```python
