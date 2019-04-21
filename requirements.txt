@@ -1,4 +1,4 @@
-Flask==0.10.1
+Flask==0.12.3
 Flask-WTF==0.12
 funcsigs==0.4
 gunicorn==19.3.0
